@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:54:54 by tponutha          #+#    #+#             */
-/*   Updated: 2023/01/29 02:34:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:53:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,13 @@ void	*stack_memmove(void *dst, const void *src, size_t byte)
 		}
 	}
 	return (dst);
+}
+
+void	stack_num_swap(int *a, int *b)
+{
+	int	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
