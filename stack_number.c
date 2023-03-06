@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:39:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/06 18:14:52 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:37:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ static int	sb_first_partition(int *arr, int low, int high)
 		}
 		j++;
 	}
-	stack_num_swap(&arr[i + 1], &arr[low]);
-	return (i + 1);
+	stack_num_swap(&arr[i], &arr[low]);
+	return (i);
 }
 
 static void	sb_quicksort(int *arr, int low, int high)
