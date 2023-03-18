@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 23:47:56 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/16 09:42:09 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:01:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 // if alloc node fail then free mem
 
-static t_listmem	*lm_create_node(void *mem)
+static t_mem	*lm_create_node(void *mem)
 {
-	t_listmem	*node;
+	t_mem	*node;
 
-	node = malloc(sizeof(t_listmem));
+	node = malloc(sizeof(t_mem));
 	if (node == NULL)
 	{
 		free(mem);
@@ -29,9 +29,9 @@ static t_listmem	*lm_create_node(void *mem)
 	return (node);
 }
 
-static void	lm_insert_node(t_listmem **head, t_listmem *node)
+static void	lm_insert_node(t_mem **head, t_mem *node)
 {
-	t_listmem	*oldhead;
+	t_mem	*oldhead;
 
 	if (node == NULL)
 		return ;
@@ -40,9 +40,9 @@ static void	lm_insert_node(t_listmem **head, t_listmem *node)
 	(*head)->next = oldhead;
 }
 
-void	*lm_malloc(size_t byte, size_t n, t_listmem **head)
+void	*lm_malloc(size_t byte, size_t n, t_mem **head)
 {
-	t_listmem	*node;
+	t_mem		*node;
 	void		*mem;
 
 	if (byte == SIZE_MAX || n == SIZE_MAX)
@@ -72,9 +72,9 @@ static void	*ft_memset(void *ptr, int c, size_t byte)
 	return (ptr);
 }
 
-void	*lm_calloc(size_t byte, size_t n, t_listmem **head)
+void	*lm_calloc(size_t byte, size_t n, t_mem **head)
 {
-	t_listmem	*node;
+	t_mem		*node;
 	void		*mem;
 
 	if (byte == SIZE_MAX || n == SIZE_MAX)
@@ -86,6 +86,7 @@ void	*lm_calloc(size_t byte, size_t n, t_listmem **head)
 	if (node == NULL)
 		return (NULL);
 	lm_insert_node(head, node);
+
 	return (ft_memset(mem, 0, byte));
 }
 
