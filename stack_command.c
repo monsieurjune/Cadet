@@ -6,16 +6,16 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:57:23 by tponutha          #+#    #+#             */
-/*   Updated: 2023/01/28 21:57:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	stack_swap(t_stack **stack)
+void	stack_swap(t_node **stack)
 {
-	t_stack	*first;
-	t_stack	*second;
+	t_node	*first;
+	t_node	*second;
 
 	if (*stack == NULL)
 		return ;
@@ -27,9 +27,9 @@ void	stack_swap(t_stack **stack)
 	stack_push(stack, second);
 }
 
-void	stack_pop_push(t_stack **dest, t_stack **src)
+void	stack_pop_push(t_node **dest, t_node **src)
 {
-	t_stack	*node;
+	t_node	*node;
 
 	if (*src == NULL)
 		return ;
@@ -37,10 +37,10 @@ void	stack_pop_push(t_stack **dest, t_stack **src)
 	stack_push(dest, node);
 }
 
-void	stack_rotate(t_stack **stack)
+void	stack_rotate(t_node **stack)
 {
-	t_stack	*head;
-	t_stack	*node;
+	t_node	*head;
+	t_node	*node;
 
 	if (*stack == NULL)
 		return ;
@@ -53,10 +53,10 @@ void	stack_rotate(t_stack **stack)
 	head->next = node;
 }
 
-void	stack_reverse_rotate(t_stack **stack)
+void	stack_reverse_rotate(t_node **stack)
 {
-	t_stack	*head;
-	t_stack	*almost_last;
+	t_node	*head;
+	t_node	*almost_last;
 
 	if (*stack == NULL)
 		return ;
@@ -70,4 +70,11 @@ void	stack_reverse_rotate(t_stack **stack)
 	}
 	almost_last->next = NULL;
 	stack_push(stack, head);
+}
+
+void	stack_exit(t_mem **head)
+{
+	lm_flush(head);
+	write(2, "Error\n", 6);
+	exit(EXIT_SUCCESS);
 }

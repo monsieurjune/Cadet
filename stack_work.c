@@ -6,25 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 05:55:23 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 16:51:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:53:48 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-static t_stack	*stack_create_node(int value, t_listmem **head)
-{
-	t_stack	*node;
-
-	node = lm_malloc(sizeof(t_stack), 1, head);
-	if (node == NULL)
-		stack_exit(head);
-	node->value = value;
-	node->next = NULL;
-	return (node);
-}
-
-void	stack_push(t_stack **stack, t_stack *node)
+void	stack_push(t_node **stack, t_node *node)
 {
 	if (node == NULL)
 		return ;
@@ -37,9 +25,9 @@ void	stack_push(t_stack **stack, t_stack *node)
 	}
 }
 
-t_stack	*stack_pop(t_stack **stack)
+t_node	*stack_pop(t_node **stack)
 {
-	t_stack	*head;
+	t_node	*head;
 
 	if (*stack == NULL)
 		return (NULL);
@@ -49,10 +37,22 @@ t_stack	*stack_pop(t_stack **stack)
 	return (head);
 }
 
-t_stack	*stack_build(int *arr, int lastpos, t_listmem **head)
+static t_node	*stack_create_node(int value, t_mem **head)
 {
-	t_stack	*stack;
-	t_stack	*node;
+	t_node	*node;
+
+	node = lm_malloc(sizeof(t_node), 1, head);
+	if (node == NULL)
+		stack_exit(head);
+	node->value = value;
+	node->next = NULL;
+	return (node);
+}
+
+t_node	*stack_build(int *arr, int lastpos, t_mem **head)
+{
+	t_node	*stack;
+	t_node	*node;
 
 	stack = NULL;
 	while (lastpos > 0)
@@ -65,9 +65,21 @@ t_stack	*stack_build(int *arr, int lastpos, t_listmem **head)
 	return (stack);
 }
 
-void	stack_exit(t_listmem **head)
+t_stack	stack_initialize(int *arr, int lastpos, t_mem **head)
 {
-	lm_flush(head);
-	write(2, "Error\n", 6);
-	exit(EXIT_SUCCESS);
+	t_stack	stack;
+	t_node	*run;
+
+	if (arr != NULL)
+	{
+		stack.head = stack_build(arr, lastpos, head);
+		run = stack.head;
+		while (run->next != NULL)
+			run = run->next;
+		stack.tail = run;
+		return (stack);
+	}
+	stack.head = NULL;
+	stack.tail = NULL;
+	return (stack);
 }

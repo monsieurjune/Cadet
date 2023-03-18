@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:39:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 16:41:44 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	sb_intswap(int *a, int *b)
 	*b = temp;
 }
 
-static int	*sb_clone_arr(int *arr, int size, t_listmem **head)
+static int	*sb_clone_arr(int *arr, int size, t_mem **head)
 {
 	int	*clone;
 
@@ -64,7 +64,7 @@ static void	sb_quicksort(int *arr, int low, int high)
 	sb_quicksort(arr, pi + 1, high);
 }
 
-int	stack_isduplicate(int *arr, int size, t_listmem **head)
+int	stack_isduplicate(int *arr, int size, t_mem **head)
 {
 	int	i;
 	int	*copy;
@@ -87,7 +87,7 @@ int	stack_isduplicate(int *arr, int size, t_listmem **head)
 /*
 #include <stdio.h>
 #include <time.h>
-int	*random_num_gen(int size, t_listmem **head)
+int	*random_num_gen(int size, t_mem **head)
 {
 	time_t	s;
 
@@ -124,7 +124,7 @@ int main(int ac, char **av)
 {
 	(void)ac;
 
-	t_listmem *head = NULL;
+	t_mem *head = NULL;
 	
 	int size = atoi(av[1]);
 	int *arr = random_num_gen(size, &head);

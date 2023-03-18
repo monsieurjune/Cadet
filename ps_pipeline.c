@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:46:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/01/29 05:40:44 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ps_print_cmd(int cmd)
 		write(1, STR_REV_ROTATE_AB, 4);
 }
 
-static void	ps_do_both(int cmd, t_stack **a, t_stack **b)
+static void	ps_do_both(int cmd, t_node **a, t_node **b)
 {
 	if (cmd == SWAP_AB)
 	{
@@ -57,7 +57,7 @@ static void	ps_do_both(int cmd, t_stack **a, t_stack **b)
 	}
 }
 
-void	ps_pipeline(int cmd, t_stack **a, t_stack **b)
+void	ps_pipeline(int cmd, t_node **a, t_node **b)
 {
 	if (cmd == SWAP_A)
 		stack_swap(a);
@@ -83,7 +83,7 @@ void	ps_pipeline(int cmd, t_stack **a, t_stack **b)
 /*
 #include <stdio.h>
 #include <string.h>
-void test_print(t_stack *a, t_stack *b)
+void test_print(t_node *a, t_node *b)
 {
 	printf("a	b\n");
 	while (a != NULL || b != NULL)
@@ -109,14 +109,14 @@ void test_print(t_stack *a, t_stack *b)
 int	main(int ac, char **av)
 {
 	int i = 1;
-	t_listmem	*head = NULL;
+	t_mem	*head = NULL;
 	int *arr = lm_malloc(sizeof(int), ac - 1, &head);
 	while (i < ac)
 	{
 		arr[i - 1] = atoi(av[i]);
 		i++;
 	}
-	t_stack	*a, *b;
+	t_node	*a, *b;
 	a = stack_build(arr, ac - 1, &head);
 	b = NULL;
 	test_print(a, b);

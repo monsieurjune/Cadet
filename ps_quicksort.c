@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pushswap.h                                         :+:      :+:    :+:   */
+/*   ps_quicksort.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 01:35:46 by tponutha          #+#    #+#             */
+/*   Created: 2023/03/18 16:56:28 by tponutha          #+#    #+#             */
 /*   Updated: 2023/03/18 17:25:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSHSWAP_H
-# define PUSHSWAP_H
-# include "stack.h"
+#include "pushswap.h"
 
-// ps_pipeline.c
-void	ps_pipeline(int cmd, t_node **a, t_node **b);
+void	ps_quicksort(t_node **a, t_node **b)
+{
 
-#endif
+}

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:06:59 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/16 10:34:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static _Bool	sub_issame(const char *s, char c)
 	return (1);
 }
 
-static char	*sub_strcdup(const char *src, char c, t_listmem **spt)
+static char	*sub_strcdup(const char *src, char c, t_mem **spt)
 {
 	size_t	len;
 	char	*dest;
@@ -36,7 +36,7 @@ static char	*sub_strcdup(const char *src, char c, t_listmem **spt)
 	return (dest);
 }
 
-static char	**box(const char *s, char c, size_t len, size_t i, t_listmem **spt)
+static char	**box(const char *s, char c, size_t len, size_t i, t_mem **spt)
 {
 	char	flag;
 	char	**box;
@@ -68,7 +68,7 @@ This split is different from libft conterpart
 - via stack_exit chaeck by NULL
 */
 
-char	**ft_split(char const *s, char c, t_listmem **spt)
+char	**ft_split(char const *s, char c, t_mem **spt)
 {
 	char	flag;
 	size_t	len;

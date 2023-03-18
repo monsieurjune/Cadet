@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 08:57:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 16:48:37 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static size_t	sb_argvlen(int ac, char **av)
 -> alloc once then copy later
 */
 
-static char	*sb_str_transform(int ac, char **av, t_listmem **spt)
+static char	*sb_str_transform(int ac, char **av, t_mem **spt)
 {
 	char	*str;
 	int		i;
@@ -55,7 +55,7 @@ static char	*sb_str_transform(int ac, char **av, t_listmem **spt)
 	return (str);
 }
 
-static void	sb_int_exit(t_listmem **spt, t_listmem **head)
+static void	sb_int_exit(t_mem **spt, t_mem **head)
 {
 	lm_flush(head);
 	stack_exit(spt);
@@ -68,7 +68,7 @@ Using stack_atol to give value
 	- if got (LONG_MIN) then call stack_exit
 */
 
-static int	*sb_intarr(char **box, int len, t_listmem **spt, t_listmem **head)
+static int	*sb_intarr(char **box, int len, t_mem **spt, t_mem **head)
 {
 	long	temp;
 	int		i;
@@ -97,9 +97,9 @@ static int	*sb_intarr(char **box, int len, t_listmem **spt, t_listmem **head)
 - head always NULL so handle after malloced int array
 */
 
-int	*stack_check_n_return(int ac, int *len, char **av, t_listmem **head)
+int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head)
 {
-	t_listmem	*spt;
+	t_mem	*spt;
 	char		**box;
 	char		*str;
 	int			*arr;
