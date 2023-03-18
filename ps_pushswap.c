@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:32:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/16 09:00:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:50:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,44 @@
 /*
 PUSHSWAP INSTRUCTION
 1: check error in av
+2: check if it sorted yet
+3: if everything correct then
+	- init value
+	- sort it
 */
 
+static int	sb_issorted(int *arr, int len)
+{
+	int	i;
 
+	i = 1;
+	if (len == 1)
+		return (TRUE);
+	while (i < len)
+	{
+		if (arr[i] < arr[i - 1])
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
 
 int	main(int ac, char **av)
 {
 	t_listmem	*ps_mem;
 	t_stack		*a;
 	t_stack		*b;
+	int			*arr;
+	int			len;
 
 	if (ac <= 1)
 		return (0);
-	ps_mem = NULL;
-	
+	arr = stack_check_n_return(ac, &len, av, &ps_mem);
+	if (!sb_issorted(arr, len))
+	{
+		a = stack_build(arr, len, &ps_mem);
+		b = NULL;
+	}
 	lm_flush(&ps_mem);
 	return (0);
 }

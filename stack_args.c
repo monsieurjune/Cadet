@@ -6,13 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 08:57:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/16 16:37:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:48:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
-
-static int	sb_int_transform(char **box, );
 
 // size = all_argv_len + (ac - 1) + 1
 // size = all_argv_len + ac
@@ -50,20 +48,56 @@ static char	*sb_str_transform(int ac, char **av, t_listmem **spt)
 		stack_exit(spt);
 	while (i < ac)
 	{
-		(void)ft_strlcat(str, av[i], size);
-		(void)ft_strlcat(str, " ", size);
+		str = ft_strncat(str, av[i], size);
+		str = ft_strncat(str, " ", size);
 		i++;
 	}
 	return (str);
 }
 
-/* check if args are in correct
-- correct -> return int array
-- not correct -> call stack_exit
-- allocation fail -> call stack_exit 
+static void	sb_int_exit(t_listmem **spt, t_listmem **head)
+{
+	lm_flush(head);
+	stack_exit(spt);
+}
+
+/* Transform array of string to array of int
+Using stack_atol to give value
+- if right format then give long (convert to int later)
+- if wrong format then give LONG_MIN
+	- if got (LONG_MIN) then call stack_exit
 */
 
-int	*stack_check_n_return(int ac, char **av)
+static int	*sb_intarr(char **box, int len, t_listmem **spt, t_listmem **head)
+{
+	long	temp;
+	int		i;
+	int		*arr;
+
+	i = 0;
+	arr = lm_malloc(sizeof(int), len, head);
+	if (arr == NULL)
+		sb_int_exit(spt, head);
+	while (i < len)
+	{
+		temp = stack_atoi(box[i]);
+		if (temp == LONG_MIN)
+			sb_int_exit(spt, head);
+		arr[i] = (int)temp;
+		i++;
+	}
+	return (arr);
+}
+
+/* check if args are in correct
+- correct -> return int array
+- correct but sorted -> retrun NULL
+- not correct -> call stack_exit
+- allocation fail -> call stack_exit
+- head always NULL so handle after malloced int array
+*/
+
+int	*stack_check_n_return(int ac, int *len, char **av, t_listmem **head)
 {
 	t_listmem	*spt;
 	char		**box;
@@ -71,9 +105,17 @@ int	*stack_check_n_return(int ac, char **av)
 	int			*arr;
 
 	spt = NULL;
+	head = NULL;
+	*len = 0;
 	str = sb_str_transform(ac, av, &spt);
 	box = ft_split(str, ' ', &spt);
 	if (box == NULL)
 		stack_exit(&spt);
-	arr = sb_int_transform();
+	while (box[*len] != 0)
+		(*len)++;
+	arr = sb_intarr(box, *len, &spt, head);
+	lm_flush(&spt);
+	if (stack_isduplicate(arr, *len, head))
+		stack_exit(head);
+	return (arr);
 }

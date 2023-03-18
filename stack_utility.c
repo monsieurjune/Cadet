@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:54:54 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/16 16:05:43 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 10:01:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,16 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (srclen);
 }
 
-static size_t	sub_total(char *dest, const char *src, size_t size)
-{
-	size_t	total;
-
-	total = ft_strclen(dest, 0);
-	if (total > size)
-		total = size;
-	total += ft_strclen(src, 0);
-	return (total);
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+char	*ft_strncat(char *dst, const char *src, size_t size)
 {
 	size_t	i;
-	size_t	total;
 	size_t	destlen;
 
 	if (dst == 0 || src == 0)
 		return (0);
 	destlen = ft_strclen(dst, 0);
-	total = sub_total(dst, src, size);
 	if (destlen + 1 >= size)
-		return (total);
+		return (dst);
 	i = 0;
 	while (src[i] != 0 && destlen + i + 1 < size)
 	{
@@ -98,5 +85,5 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		i++;
 	}
 	dst[destlen + i] = 0;
-	return (total);
+	return (dst);
 }

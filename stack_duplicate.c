@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_number.c                                     :+:      :+:    :+:   */
+/*   stack_duplicate.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:39:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/16 09:15:56 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:41:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
+
+static void	sb_intswap(int *a, int *b)
+{
+	int	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
 
 static int	*sb_clone_arr(int *arr, int size, t_listmem **head)
 {
@@ -19,8 +28,7 @@ static int	*sb_clone_arr(int *arr, int size, t_listmem **head)
 	clone = lm_malloc(sizeof(int), size, head);
 	if (clone == NULL)
 		return (NULL);
-	clone = ft_memmove(clone, arr, sizeof(int) * size);
-	return (clone);
+	return (ft_memmove(clone, arr, sizeof(int) * size));
 }
 
 static int	sb_first_partition(int *arr, int low, int high)
@@ -37,11 +45,11 @@ static int	sb_first_partition(int *arr, int low, int high)
 		if (arr[j] < pivot)
 		{
 			i++;
-			ft_intswap(&arr[i], &arr[j]);
+			sb_intswap(&arr[i], &arr[j]);
 		}
 		j++;
 	}
-	ft_intswap(&arr[i], &arr[low]);
+	sb_intswap(&arr[i], &arr[low]);
 	return (i);
 }
 
