@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:32:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/01/29 05:50:51 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/16 09:00:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,15 @@ PUSHSWAP INSTRUCTION
 
 int	main(int ac, char **av)
 {
-	t_listmem	*ps;
+	t_listmem	*ps_mem;
 	t_stack		*a;
 	t_stack		*b;
 
 	if (ac <= 1)
 		return (0);
-	ps = NULL;
-	a = stack_check_array(ac, av, &ps);
-	if (a == NULL)
-		stack_exit(&ps);
-	b = NULL;
+	ps_mem = NULL;
 	
-	lm_flush(&ps);
+	lm_flush(&ps_mem);
 	return (0);
 }
 

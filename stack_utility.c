@@ -6,35 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:54:54 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/06 17:53:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:05:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void	*stack_memset(void *ptr, int c, size_t byte)
-{
-	size_t	i;
-
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (i < byte)
-	{
-		((unsigned char *)ptr)[i] = ((unsigned char *)&c)[0];
-		i++;
-	}
-	return (ptr);
-}
-
-void	stack_exit(t_listmem **head)
-{
-	lm_flush(head);
-	write(2, "Error\n", 6);
-	exit(EXIT_SUCCESS);
-}
-
-void	*stack_memmove(void *dst, const void *src, size_t byte)
+void	*ft_memmove(void *dst, const void *src, size_t byte)
 {
 	size_t	i;
 	size_t	diff;
@@ -58,11 +36,67 @@ void	*stack_memmove(void *dst, const void *src, size_t byte)
 	return (dst);
 }
 
-void	stack_num_swap(int *a, int *b)
+size_t	ft_strclen(const char *str, char c)
 {
-	int	temp;
+	size_t	len;
 
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	len = 0;
+	if (!str)
+		return (len);
+	while (str[len] || str[len] != c)
+		len++;
+	return (len);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	srclen;
+
+	srclen = ft_strclen(src, 0);
+	if (!dst || size < 1 || !src)
+		return (srclen);
+	i = 0;
+	if (size > srclen + 1)
+		size = srclen + 1;
+	while (i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[size - 1] = 0;
+	return (srclen);
+}
+
+static size_t	sub_total(char *dest, const char *src, size_t size)
+{
+	size_t	total;
+
+	total = ft_strclen(dest, 0);
+	if (total > size)
+		total = size;
+	total += ft_strclen(src, 0);
+	return (total);
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	total;
+	size_t	destlen;
+
+	if (dst == 0 || src == 0)
+		return (0);
+	destlen = ft_strclen(dst, 0);
+	total = sub_total(dst, src, size);
+	if (destlen + 1 >= size)
+		return (total);
+	i = 0;
+	while (src[i] != 0 && destlen + i + 1 < size)
+	{
+		dst[destlen + i] = src[i];
+		i++;
+	}
+	dst[destlen + i] = 0;
+	return (total);
 }

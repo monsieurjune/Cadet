@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 05:55:23 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/06 15:13:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/16 09:23:15 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_stack	*stack_create_node(int value, t_listmem **head)
 
 	node = lm_malloc(sizeof(t_stack), 1, head);
 	if (node == NULL)
-		return (NULL);
+		stack_exit(head);
 	node->value = value;
 	node->next = NULL;
 	return (node);
@@ -58,11 +58,16 @@ t_stack	*stack_build(int *arr, int lastpos, t_listmem **head)
 	while (lastpos > 0)
 	{
 		node = stack_create_node(arr[lastpos - 1], head);
-		if (node == NULL)
-			stack_exit(head);
 		stack_push(&stack, node);
 		lastpos--;
 	}
 	lm_free(arr, head);
 	return (stack);
+}
+
+void	stack_exit(t_listmem **head)
+{
+	lm_flush(head);
+	write(2, "Error\n", 6);
+	exit(EXIT_SUCCESS);
 }

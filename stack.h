@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:53:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/06 17:54:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:05:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ typedef struct	s_stack
 	struct s_stack	*next;
 }	t_stack;
 
+typedef struct	s_split
+{
+	char			**box;
+	int				n;
+	struct s_split	*next;
+}	t_split;
 
 // stack_work.c
 t_stack	*stack_build(int *arr, int size, t_listmem **head);
@@ -64,17 +70,21 @@ void	stack_swap(t_stack **stack);
 void	stack_pop_push(t_stack **dest, t_stack **src);
 void	stack_rotate(t_stack **stack);
 void	stack_reverse_rotate(t_stack **stack);
+void	stack_exit(t_listmem **head);
+
+// stack_split.c
+char	**ft_split(char const *s, char c, t_listmem **spt);
 
 // stack_utility.c
-void	*stack_memset(void *ptr, int c, size_t byte);
-void	stack_exit(t_listmem **head);
-void	*stack_memmove(void *dst, const void *src, size_t byte);
-void	stack_num_swap(int *a, int *b);
+void	*ft_memmove(void *dst, const void *src, size_t byte);
+size_t	ft_strclen(const char *str, char c);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
 // stack_number.c
 int		stack_isduplicate(int *arr, int size, t_listmem **head);
 
 // stack_format.c
-t_stack	*stack_check_array(int ac, char **av, t_listmem **head);
+//t_stack	*stack_check_array(int ac, char **av, t_listmem **head);
 
 #endif
