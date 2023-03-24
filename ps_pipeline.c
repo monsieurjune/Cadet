@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:46:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:37:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ps_print_cmd(int cmd)
 		write(1, STR_REV_ROTATE_AB, 4);
 }
 
-static void	ps_do_both(int cmd, t_node **a, t_node **b)
+static void	ps_do_both(int cmd, t_stack *a, t_stack *b)
 {
 	if (cmd == SWAP_AB)
 	{
@@ -57,7 +57,7 @@ static void	ps_do_both(int cmd, t_node **a, t_node **b)
 	}
 }
 
-void	ps_pipeline(int cmd, t_node **a, t_node **b)
+void	ps_pipeline(int cmd, t_stack *a, t_stack *b)
 {
 	if (cmd == SWAP_A)
 		stack_swap(a);
@@ -83,22 +83,22 @@ void	ps_pipeline(int cmd, t_node **a, t_node **b)
 /*
 #include <stdio.h>
 #include <string.h>
-void test_print(t_node *a, t_node *b)
+void test_print(t_stack a, t_stack b)
 {
 	printf("a	b\n");
-	while (a != NULL || b != NULL)
+	while (a.head != NULL || b.head != NULL)
 	{
-		if (a != NULL)
+		if (a.head != NULL)
 		{
-			printf("%d	", a->value);
-			a = a->next;
+			printf("%d	", a.head->value);
+			a.head = a.head->next;
 		}
 		else
 			printf("_	");
-		if (b != NULL)
+		if (b.head != NULL)
 		{
-			printf("%d\n", b->value);
-			b = b->next;
+			printf("%d\n", b.head->value);
+			b.head = b.head->next;
 		}
 		else
 			printf("_\n");
@@ -116,9 +116,8 @@ int	main(int ac, char **av)
 		arr[i - 1] = atoi(av[i]);
 		i++;
 	}
-	t_node	*a, *b;
-	a = stack_build(arr, ac - 1, &head);
-	b = NULL;
+	t_stack	a = stack_build(arr, ac - 1, &head);
+	t_stack b = stack_build(NULL, 0, &head);
 	test_print(a, b);
 	char read[10];
 	while (1)

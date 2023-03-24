@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 08:57:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:46:06 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	*sb_intarr(char **box, int len, t_mem **spt, t_mem **head)
 
 int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head)
 {
-	t_mem	*spt;
+	t_mem		*spt;
 	char		**box;
 	char		*str;
 	int			*arr;

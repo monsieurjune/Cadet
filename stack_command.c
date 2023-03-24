@@ -6,20 +6,18 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:57:23 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:34:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	stack_swap(t_node **stack)
+void	stack_swap(t_stack *stack)
 {
 	t_node	*first;
 	t_node	*second;
 
-	if (*stack == NULL)
-		return ;
-	if ((*stack)->next == NULL)
+	if (stack->head == stack->tail)
 		return ;
 	first = stack_pop(stack);
 	second = stack_pop(stack);
@@ -27,49 +25,41 @@ void	stack_swap(t_node **stack)
 	stack_push(stack, second);
 }
 
-void	stack_pop_push(t_node **dest, t_node **src)
+void	stack_pop_push(t_stack *dest, t_stack *src)
 {
 	t_node	*node;
 
-	if (*src == NULL)
+	if (src->head == NULL)
 		return ;
 	node = stack_pop(src);
 	stack_push(dest, node);
 }
 
-void	stack_rotate(t_node **stack)
+void	stack_rotate(t_stack *stack)
 {
-	t_node	*head;
 	t_node	*node;
 
-	if (*stack == NULL)
-		return ;
-	if ((*stack)->next == NULL)
+	if (stack->head == stack->tail)
 		return ;
 	node = stack_pop(stack);
-	head = *stack;
-	while (head->next != NULL)
-		head = head->next;
-	head->next = node;
+	stack->tail->next = node;
+	node->prev = stack->tail;
+	stack->tail = node;
 }
 
-void	stack_reverse_rotate(t_node **stack)
+void	stack_reverse_rotate(t_stack *stack)
 {
-	t_node	*head;
+	t_node	*node;
 	t_node	*almost_last;
 
-	if (*stack == NULL)
+	if (stack->head == stack->tail)
 		return ;
-	if ((*stack)->next == NULL)
-		return ;
-	head = *stack;
-	while (head->next != NULL)
-	{
-		almost_last = head;
-		head = head->next;
-	}
+	node = stack->tail;
+	almost_last = stack->tail->prev;
 	almost_last->next = NULL;
-	stack_push(stack, head);
+	node->prev = NULL;
+	stack->tail = almost_last;
+	stack_push(stack, node);
 }
 
 void	stack_exit(t_mem **head)

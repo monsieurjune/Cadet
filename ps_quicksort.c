@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:56:28 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:25:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:50:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void	ps_quicksort(t_node **a, t_node **b)
+void	ps_quicksort(t_stack *a, t_stack *b)
 {
-
+    
 }

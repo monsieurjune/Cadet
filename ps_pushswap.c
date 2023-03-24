@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:32:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:43:16 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static int	sb_issorted(int *arr, int len)
 
 int	main(int ac, char **av)
 {
-	t_mem	*ps_mem;
-	t_node		*a;
-	t_node		*b;
+	t_mem		*ps_mem;
+	t_stack		a;
+	t_stack		b;
 	int			*arr;
 	int			len;
 
@@ -51,7 +51,8 @@ int	main(int ac, char **av)
 	if (!sb_issorted(arr, len))
 	{
 		a = stack_build(arr, len, &ps_mem);
-		b = NULL;
+		b = stack_build(NULL, 0, &ps_mem);
+		lm_free(arr, &ps_mem);
 	}
 	lm_flush(&ps_mem);
 	return (0);

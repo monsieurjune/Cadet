@@ -6,35 +6,43 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 05:55:23 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:53:48 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:06:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	stack_push(t_node **stack, t_node *node)
+void	stack_push(t_stack *stack, t_node *node)
 {
 	if (node == NULL)
 		return ;
-	if (*stack == NULL)
-		*stack = node;
+	if (stack->head == NULL)
+	{
+		stack->head = node;
+		stack->tail = node;
+	}
 	else
 	{
-		node->next = *stack;
-		*stack = node;
+		stack->head->prev = node;
+		node->next = stack->head;
+		stack->head = node;
 	}
 }
 
-t_node	*stack_pop(t_node **stack)
+t_node	*stack_pop(t_stack *stack)
 {
-	t_node	*head;
+	t_node	*node;
 
-	if (*stack == NULL)
+	if (stack->head == NULL)
 		return (NULL);
-	head = *stack;
-	*stack = (*stack)->next;
-	head->next = NULL;
-	return (head);
+	node = stack->head;
+	stack->head = stack->head->next;
+	if (stack->head != NULL)
+		stack->head->prev = NULL;
+	else
+		stack->tail = NULL;
+	node->next = NULL;
+	return (node);
 }
 
 static t_node	*stack_create_node(int value, t_mem **head)
@@ -45,16 +53,20 @@ static t_node	*stack_create_node(int value, t_mem **head)
 	if (node == NULL)
 		stack_exit(head);
 	node->value = value;
+	node->prev = NULL;
 	node->next = NULL;
 	return (node);
 }
 
-t_node	*stack_build(int *arr, int lastpos, t_mem **head)
+t_stack	stack_build(int *arr, int lastpos, t_mem **head)
 {
-	t_node	*stack;
+	t_stack	stack;
 	t_node	*node;
 
-	stack = NULL;
+	stack.head = NULL;
+	stack.tail = NULL;
+	if (arr == NULL)
+		return (stack);
 	while (lastpos > 0)
 	{
 		node = stack_create_node(arr[lastpos - 1], head);
@@ -62,24 +74,5 @@ t_node	*stack_build(int *arr, int lastpos, t_mem **head)
 		lastpos--;
 	}
 	lm_free(arr, head);
-	return (stack);
-}
-
-t_stack	stack_initialize(int *arr, int lastpos, t_mem **head)
-{
-	t_stack	stack;
-	t_node	*run;
-
-	if (arr != NULL)
-	{
-		stack.head = stack_build(arr, lastpos, head);
-		run = stack.head;
-		while (run->next != NULL)
-			run = run->next;
-		stack.tail = run;
-		return (stack);
-	}
-	stack.head = NULL;
-	stack.tail = NULL;
 	return (stack);
 }

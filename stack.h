@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:53:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:28:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:39:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 typedef struct	s_node
 {
 	int				value;
+	struct s_node	*prev;
 	struct s_node	*next;
 }	t_node;
 
@@ -60,16 +61,15 @@ typedef struct	s_stack
 }	t_stack;
 
 // stack_work.c
-t_node	*stack_build(int *arr, int size, t_mem **head);
-t_node	*stack_pop(t_node **stack);
-void	stack_push(t_node **stack, t_node *node);
-void	stack_pop_push(t_node **dest, t_node **src);
+t_stack	stack_build(int *arr, int lastpos, t_mem **head);
+t_node	*stack_pop(t_stack *stack);
+void	stack_push(t_stack *stack, t_node *node);
 
 // stack_command.c
-void	stack_swap(t_node **stack);
-void	stack_pop_push(t_node **dest, t_node **src);
-void	stack_rotate(t_node **stack);
-void	stack_reverse_rotate(t_node **stack);
+void	stack_swap(t_stack *stack);
+void	stack_pop_push(t_stack *dest, t_stack *src);
+void	stack_rotate(t_stack *stack);
+void	stack_reverse_rotate(t_stack *stack);
 void	stack_exit(t_mem **head);
 
 // stack_split.c
@@ -82,7 +82,7 @@ long	stack_atoi(char *str);
 int		stack_isduplicate(int *arr, int size, t_mem **head);
 
 // stack_args.c
-int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head);
+int		*stack_check_n_return(int ac, int *len, char **av, t_mem **head);
 
 // stack_utility.c
 void	*ft_memmove(void *dst, const void *src, size_t byte);
