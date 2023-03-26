@@ -6,26 +6,37 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/29 03:48:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/01/26 18:31:36 by tponutha         ###   ########.fr        #
+#    Updated: 2023/03/25 18:12:03 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Main properties
-NAME		= libftprintf.a
-TESTER_PATH	= ../
+NAME		= push_swap
+TESTER_PATH	= ./push_swap_tester
 
 # Complier & shell thing
-COM		= gcc
+COM		= cc
 RM		= rm -f
 CFLAG	= -Wall -Werror -Wextra
 
+# Listmem Directory
+MEM_DIR		= ./
+MEM_FILE	= listfree.c listmem.c
+MEM_SRCS	= $(addprefix $(MEM_DIR), $(MEM_FILE))
+
+# Stack Directory
+STACK_DIR	= ./
+STACK_FILE	= stack_args.c stack_atoi.c stack_command.c stack_duplicate.c \
+				stack_split.c stack_utility.c stack_work.c
+STACK_SRCS	= $(addprefix $(STACK_DIR), $(STACK_FILE))
+
 # Main Directory
 MAIN_DIR	= ./
-MAIN_FILE	= ft_printf.c ft_hex.c ft_number.c ft_string.c
+MAIN_FILE	= ps_node.c ps_pipeline.c ps_pushswap.c ps_quicksort.c
 MAIN_SRCS	= $(addprefix $(MAIN_DIR), $(MAIN_FILE))
 
 # Complie Process
-SRCS	= $(MAIN_SRCS)
+SRCS	= $(MAIN_SRCS) $(MEM_SRCS) $(STACK_SRCS)
 OBJ		= $(SRCS:.c=.o)
 IFLAG	= -I$(MAIN_DIR)
 .c.o:
@@ -33,11 +44,14 @@ IFLAG	= -I$(MAIN_DIR)
 
 # MAIN RULES
 $(NAME):	$(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	$(COM) $(CFLAG) $(OBJ) -o $(NAME)
 
 all:	$(NAME)
 
 bonus:	$(NAME)
+
+debug:	$(OBJ)
+	@$(COM) $(CFLAG) -g $(SRCS) -o $(NAME)
 
 clean:
 	@$(RM) $(OBJ)
@@ -45,11 +59,13 @@ clean:
 fclean:	clean
 	@$(RM) $(NAME)
 
+dclean: fclean
+	@$(RM) -r push_swap.dSYM
+
 re:	fclean all
 
 # ETC RULES
 norm:
 	@norminette -R CheckForbiddenSourceHeader $(SRCS)
-
 
 .PHONY: all clean fclean re bonus test clone

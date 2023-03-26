@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:53:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/24 21:39:24 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:04:20 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,20 @@
 # define REV_ROTATE_AB 11
 
 // Define String
-# define STR_SWAP_A "sa\n"
-# define STR_SWAP_B "sb\n"
-# define STR_SWAP_AB "ss\n"
-# define STR_PUSH_A "pa\n"
-# define STR_PUSH_B "pb\n"
-# define STR_ROTATE_A "ra\n"
-# define STR_ROTATE_B "rb\n"
-# define STR_ROTATE_AB  "rr\n"
-# define STR_REV_ROTATE_A "rra\n"
-# define STR_REV_ROTATE_B "rrb\n"
-# define STR_REV_ROTATE_AB "rrr\n"
+# define STR_SWAP_A "sa"
+# define STR_SWAP_B "sb"
+# define STR_SWAP_AB "ss"
+# define STR_PUSH_A "pa"
+# define STR_PUSH_B "pb"
+# define STR_ROTATE_A "ra"
+# define STR_ROTATE_B "rb"
+# define STR_ROTATE_AB  "rr"
+# define STR_REV_ROTATE_A "rra"
+# define STR_REV_ROTATE_B "rrb"
+# define STR_REV_ROTATE_AB "rrr"
 
 // Define node of stack
-typedef struct	s_node
+typedef struct s_node
 {
 	int				value;
 	struct s_node	*prev;
@@ -54,7 +54,7 @@ typedef struct	s_node
 }	t_node;
 
 // Define main part of stack
-typedef struct	s_stack
+typedef struct s_stack
 {
 	struct s_node	*head;
 	struct s_node	*tail;

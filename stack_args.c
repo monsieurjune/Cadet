@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 08:57:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/24 21:46:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:38:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static char	*sb_str_transform(int ac, char **av, t_mem **spt)
 	str = lm_malloc(sizeof(char), size, spt);
 	if (str == NULL)
 		stack_exit(spt);
+	str[0] = 0;
 	while (i < ac)
 	{
 		str = ft_strncat(str, av[i], size);
@@ -105,7 +106,7 @@ int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head)
 	int			*arr;
 
 	spt = NULL;
-	head = NULL;
+	*head = NULL;
 	*len = 0;
 	str = sb_str_transform(ac, av, &spt);
 	box = ft_split(str, ' ', &spt);
@@ -119,3 +120,19 @@ int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head)
 		stack_exit(head);
 	return (arr);
 }
+
+/*
+#include <stdio.h>
+int	main(int ac, char **av)
+{
+	int		*arr;
+	int		len;
+	t_mem	*head;
+
+	arr = stack_check_n_return(ac, &len, av, &head);
+	for (int i = 0; i < len; i++)
+		printf("%d.) %d\n", i, arr[i]);
+	lm_flush(&head);
+	return (0);
+}
+*/

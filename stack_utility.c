@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:54:54 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/24 21:39:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 14:08:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ size_t	ft_strclen(const char *str, char c)
 	len = 0;
 	if (!str)
 		return (len);
-	while (str[len] || str[len] != c)
+	while (str[len] && str[len] != c)
 		len++;
 	return (len);
 }

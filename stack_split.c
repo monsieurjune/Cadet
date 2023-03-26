@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:06:59 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 14:08:41 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*sub_strcdup(const char *src, char c, t_mem **spt)
 	size_t	len;
 	char	*dest;
 
-	len = ft_strclen(src, 0);
+	len = ft_strclen(src, c);
 	dest = lm_malloc(sizeof(char), len + 1, spt);
 	if (!dest)
 		return (NULL);
@@ -36,16 +36,18 @@ static char	*sub_strcdup(const char *src, char c, t_mem **spt)
 	return (dest);
 }
 
-static char	**box(const char *s, char c, size_t len, size_t i, t_mem **spt)
+static char	**box(const char *s, char c, size_t len, t_mem **spt)
 {
 	char	flag;
 	char	**box;
 	size_t	j;
+	size_t	i;
 
 	box = lm_calloc(len + 1, sizeof(char *), spt);
 	j = 0;
+	i = 0;
 	flag = 1;
-	while (s[i] && box)
+	while (s[i] && box != NULL)
 	{
 		if (flag && s[i] != c)
 		{
@@ -87,5 +89,5 @@ char	**ft_split(char const *s, char c, t_mem **spt)
 			flag = 1;
 		i++;
 	}
-	return (box(s, c, len, 0, spt));
+	return (box(s, c, len, spt));
 }
