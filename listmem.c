@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 23:47:56 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 18:01:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:36:29 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ void	*lm_calloc(size_t byte, size_t n, t_mem **head)
 
 	if (byte == SIZE_MAX || n == SIZE_MAX)
 		return (NULL);
-	mem = malloc(byte * n);
+	byte *= n;
+	mem = malloc(byte);
 	if (mem == NULL)
 		return (NULL);
 	node = lm_create_node(mem);
 	if (node == NULL)
 		return (NULL);
 	lm_insert_node(head, node);
-
 	return (ft_memset(mem, 0, byte));
 }
 

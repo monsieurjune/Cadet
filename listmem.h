@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 23:47:24 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:26:58 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 14:07:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 typedef struct s_mem
 {
-	void				*mem;
+	void			*mem;
 	struct s_mem	*next;
 }	t_mem;
 
