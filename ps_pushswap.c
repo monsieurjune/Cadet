@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:32:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/24 21:43:16 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 18:35:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,33 @@ PUSHSWAP INSTRUCTION
 3: if everything correct then
 	- init value
 	- sort it
+*/
+
+/*
+#include <stdio.h>
+#include <string.h>
+void test_print(t_stack a, t_stack b)
+{
+	printf("a	b\n");
+	while (a.head != NULL || b.head != NULL)
+	{
+		if (a.head != NULL)
+		{
+			printf("%d	", a.head->value);
+			a.head = a.head->next;
+		}
+		else
+			printf("_	");
+		if (b.head != NULL)
+		{
+			printf("%d\n", b.head->value);
+			b.head = b.head->next;
+		}
+		else
+			printf("_\n");
+	}
+	printf("\n-------------------\n");
+}
 */
 
 static int	sb_issorted(int *arr, int len)
@@ -54,6 +81,7 @@ int	main(int ac, char **av)
 		b = stack_build(NULL, 0, &ps_mem);
 		lm_free(arr, &ps_mem);
 	}
+	ps_quicksort(&a, &b, a.head, a.tail);
 	lm_flush(&ps_mem);
 	return (0);
 }
