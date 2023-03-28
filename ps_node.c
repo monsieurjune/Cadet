@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 12:36:47 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 20:51:38 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/27 04:04:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,26 @@
 [more negative]
 */
 
-int	ps_node_search(t_node *top, t_node *find)
+int	ps_node_search(t_node *start, int find)
 {
 	t_node	*bottom;
 	int		i;
 
 	i = 0;
-	bottom = top;
-	if (top == find)
+	bottom = start;
+	if (start->value == find)
 		return (0);
-	while (top != NULL || bottom != NULL)
+	while (start != NULL || bottom != NULL)
 	{
-		if (top != NULL)
+		if (start != NULL)
 		{
-			if (top == find)
+			if (start->value == find)
 				return (i);
-			top = top->prev;
+			start = start->prev;
 		}
 		if (bottom != NULL)
 		{
-			if (bottom == find)
+			if (bottom->value == find)
 				return (-i);
 			bottom = bottom->next;
 		}
@@ -66,7 +66,7 @@ negative = near tail
 zero = not found
 */
 
-int	ps_node_depth(t_stack stack, t_node *node)
+int	ps_node_depth(t_stack stack, int find)
 {
 	int	i;
 
@@ -75,13 +75,13 @@ int	ps_node_depth(t_stack stack, t_node *node)
 	{
 		if (stack.head != NULL)
 		{
-			if (stack.head == node)
+			if (stack.head->value == find)
 				return (i);
 			stack.head = stack.head->next;
 		}
 		if (stack.tail != NULL)
 		{
-			if (stack.tail == node)
+			if (stack.tail->value == find)
 				return (-i);
 			stack.tail = stack.tail->prev;
 		}
@@ -90,11 +90,11 @@ int	ps_node_depth(t_stack stack, t_node *node)
 	return (0);
 }
 
-void	ps_a_to_b(t_stack *a, t_stack *b, t_node *node)
+void	ps_a_to_b(t_stack *a, t_stack *b, int val)
 {
 	int	i;
 
-	i = ps_node_depth(*a, node);
+	i = ps_node_depth(*a, val);
 	if (i > 0)
 	{
 		while (i > 2)

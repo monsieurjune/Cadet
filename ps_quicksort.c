@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:56:28 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/26 18:19:17 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/27 04:59:16 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_node	*sb_search_less(int pivot, t_node *low, t_node *high)
 - return pivot's node 
 */
 
-static t_node	*sb_partition(t_stack *a, t_stack *b, t_node *l, t_node **h)
+static t_node	*sb_partfefefition(t_stack *a, t_stack *b, t_node *l, t_node **h)
 {
 	t_node	*move;
 	int		pivot;
@@ -62,25 +62,42 @@ static t_node	*sb_partition(t_stack *a, t_stack *b, t_node *l, t_node **h)
 
 /*	Quick sort idea
 1.) Separate Stack into 2 stack
-	- chose pivot (first partition)
-	- <pivot -> send to b
-	- >pivot ->stay below pivot
-2.) Patitioning A stack (in aswnding order)
-	-
+	- choose pivot (first partition)
+	- put pivot to Stack B 
+	- <pivot -> send to B
+	- >pivot -> do nothing
+	- when done, send pivot back to A ???
+2.) Patitioning A stack (in asending order)
+	- choose pivot (first partiotion)
+	- memolise top of B
+	- <pivot -> send to B
+	- do it recursively, until
+		- there is less than 1 adject value to pivot
+		- swap it if pivot > adject
+	- then put back from B to A
 3.) Partiotioning B Stack (in desending order)
 	-
 4.) Put B back to A
 */
 
-void	ps_quicksort(t_stack *a, t_stack *b, t_node *low, t_node *high)
-{
-	t_node	*pi;
+// first partition
 
-	if (ps_node_search(low, high) >= 0)
+void	sb_partition(t_stack *a, t_stack *b, int low, int high)
+{
+
+}
+
+void	ps_quicksort(t_stack *a, t_stack *b, int low, int high)
+{
+	if (low > high)
+	{
+		if (a->head->value > a->tail->value)
+			ps_pipeline(SWAP_A, a, b);
 		return ;
-	pi = sb_partition(a, b, low, &high);
-	ps_quicksort(a, b, low, pi->prev);
-	ps_quicksort(a, b, pi->next, high);
+	}
+	else
+		//
+	
 }
 
 
