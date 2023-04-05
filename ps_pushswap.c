@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:32:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 18:35:26 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/01 07:01:21 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	main(int ac, char **av)
 		a = stack_build(arr, len, &ps_mem);
 		b = stack_build(NULL, 0, &ps_mem);
 		lm_free(arr, &ps_mem);
+		ps_quicksort(&a, &b, a.tail->value);
 	}
-	ps_quicksort(&a, &b, a.head, a.tail);
 	lm_flush(&ps_mem);
 	return (0);
 }

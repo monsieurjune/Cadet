@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:53:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 16:04:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/01 01:27:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_stack
 {
 	struct s_node	*head;
 	struct s_node	*tail;
+	int				n;
 }	t_stack;
 
 // stack_work.c

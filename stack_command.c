@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:57:23 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 14:09:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/01 01:29:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	stack_rotate(t_stack *stack)
 	stack->tail->next = node;
 	node->prev = stack->tail;
 	stack->tail = node;
+	stack->n += 1;
 }
 
 void	stack_reverse_rotate(t_stack *stack)
@@ -59,6 +60,7 @@ void	stack_reverse_rotate(t_stack *stack)
 	almost_last->next = NULL;
 	node->prev = NULL;
 	stack->tail = almost_last;
+	stack->n -= 1;
 	stack_push(stack, node);
 }
 

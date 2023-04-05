@@ -6,11 +6,12 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 08:57:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 13:38:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/01 07:00:49 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
+#include <stdio.h>
 
 // size = all_argv_len + (ac - 1) + 1
 // size = all_argv_len + ac
@@ -56,12 +57,6 @@ static char	*sb_str_transform(int ac, char **av, t_mem **spt)
 	return (str);
 }
 
-static void	sb_int_exit(t_mem **spt, t_mem **head)
-{
-	lm_flush(head);
-	stack_exit(spt);
-}
-
 /* Transform array of string to array of int
 Using stack_atol to give value
 - if right format then give long (convert to int later)
@@ -78,12 +73,18 @@ static int	*sb_intarr(char **box, int len, t_mem **spt, t_mem **head)
 	i = 0;
 	arr = lm_malloc(sizeof(int), len, head);
 	if (arr == NULL)
-		sb_int_exit(spt, head);
+	{
+		lm_flush(head);
+		stack_exit(spt);
+	}
 	while (i < len)
 	{
 		temp = stack_atoi(box[i]);
 		if (temp == LONG_MIN)
-			sb_int_exit(spt, head);
+		{
+			lm_flush(head);
+			stack_exit(spt);
+		}
 		arr[i] = (int)temp;
 		i++;
 	}

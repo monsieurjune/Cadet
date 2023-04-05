@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 10:17:06 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 14:07:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/01 07:21:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static long	sb_format_check(char *str)
 	if (str == NULL)
 		return (LONG_MIN);
 	str += (*str == '+' || *str == '-');
+	if (*str == 0)
+		return (LONG_MIN);
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
@@ -58,7 +60,7 @@ long	stack_atoi(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		sum = (sum * 10) + (str[i] - '0');
-		if (sum > INT_MAX + 1l)
+		if (neg * sum < INT_MIN || neg * sum > INT_MAX)
 			return (LONG_MIN);
 		i++;
 	}

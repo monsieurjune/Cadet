@@ -1,70 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_node.c                                          :+:      :+:    :+:   */
+/*   ps_utility.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 12:36:47 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/27 04:04:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/06 00:54:52 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-/* Search Hierachy
-[more positive]
-+m <- head
-...
-+x <- Search Node (above start)
-...
-+3
-+2
-+1
-0 <- Start Node ^ v
--1
--2
--3
-...
--y <- Search Node (under start)
-...
--n <- tail
-[more negative]
-*/
-
-int	ps_node_search(t_node *start, int find)
+int ps_bottom_index(t_stack a, int bottom)
 {
-	t_node	*bottom;
-	int		i;
+    int	i;
 
 	i = 0;
-	bottom = start;
-	if (start->value == find)
-		return (0);
-	while (start != NULL || bottom != NULL)
+	if (a.head == NULL)
+		return (-1);
+	while (a.head != a.tail && a.head->prev != a.tail)
 	{
-		if (start != NULL)
-		{
-			if (start->value == find)
-				return (i);
-			start = start->prev;
-		}
-		if (bottom != NULL)
-		{
-			if (bottom->value == find)
-				return (-i);
-			bottom = bottom->next;
-		}
+		if (a.head->value == bottom)
+			return (i);
+		a.head = a.head->next;
+		if (a.tail->value == bottom)
+			return (a.n - i - 1);
+		a.tail = a.tail->prev;
 		i++;
 	}
-	return (INT_MAX);
+	if (a.head->value == bottom)
+		return (i);
+	return (-1);
 }
-
-/* DEPTH
-positive = near head
-negative = near tail
-zero = not found
-*/
 
 int	ps_node_depth(t_stack stack, int find)
 {
@@ -90,19 +58,47 @@ int	ps_node_depth(t_stack stack, int find)
 	return (0);
 }
 
-void	ps_a_to_b(t_stack *a, t_stack *b, int val)
+int	ps_find_less(t_stack a, int pivot)
 {
-	int	i;
+    int	i;
 
-	i = ps_node_depth(*a, val);
+	i = 1;
+	if (a.head == NULL)
+		return (0);
+	while (a.head != a.tail && a.head->prev != a.tail)
+	{
+		if (a.head->value < pivot)
+			return (i);
+		a.head = a.head->next;
+		if (a.tail->value < pivot)
+			return (-1 * i);
+		a.tail = a.tail->prev;
+		i++;
+	}
+	if (a.head->value < pivot)
+		return (i);
+	return (0);
+}
+
+long	diff_abs(long a, long b)
+{
+	long	c;
+
+	c = a - b;
+	if (c < 0)
+		return (-c);
+	return (c);
+}
+
+void	ps_a_to_b(t_stack *a, t_stack *b, int i)
+{
 	if (i > 0)
 	{
-		while (i > 2)
+		while (i > 1)
 		{
 			ps_pipeline(ROTATE_A, a, b);
 			i--;
 		}
-		ps_pipeline(SWAP_A, a, b);
 		ps_pipeline(PUSH_B, a, b);
 	}
 	else if (i < 0)

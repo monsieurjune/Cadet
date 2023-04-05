@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:46:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 17:01:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/01 05:29:49 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,26 +90,53 @@ void	ps_putback_to_a(t_stack *a, t_stack *b)
 /*
 #include <stdio.h>
 #include <string.h>
+int sb_bottom_index(t_stack a, int bottom)
+{
+    int	i;
+
+	i = 0;
+	if (a.head == NULL)
+		return (-1);
+	while (a.head != a.tail && a.head->prev != a.tail)
+	{
+		if (a.head->value == bottom)
+			return (i);
+		a.head = a.head->next;
+		if (a.tail->value == bottom)
+			return (a.n - i - 1);
+		a.tail = a.tail->prev;
+		i++;
+	}
+	if (a.head->value == bottom)
+		return (i);
+	return (-1);
+}
+
 void test_print(t_stack a, t_stack b)
 {
+	t_node	*runa = a.head;
+	t_node	*runb = b.head;
+
 	printf("a	b\n");
-	while (a.head != NULL || b.head != NULL)
+	while (runa != NULL || runb != NULL)
 	{
-		if (a.head != NULL)
+		if (runa != NULL)
 		{
-			printf("%d	", a.head->value);
-			a.head = a.head->next;
+			printf("%d	", runa->value);
+			runa = runa->next;
 		}
 		else
 			printf("_	");
-		if (b.head != NULL)
+		if (runb != NULL)
 		{
-			printf("%d\n", b.head->value);
-			b.head = b.head->next;
+			printf("%d\n", runb->value);
+			runb = runb->next;
 		}
 		else
 			printf("_\n");
 	}
+	printf("Size A : %d     , Size B : %d\n", a.n ,b.n);
+	printf("Bottom A : %d\n", sb_bottom_index(a, 0));
 	printf("\n-------------------\n");
 }
 
@@ -123,6 +150,7 @@ int	main(int ac, char **av)
 		arr[i - 1] = atoi(av[i]);
 		i++;
 	}
+	printf("%d\n", ac - 1);
 	t_stack	a = stack_build(arr, ac - 1, &head);
 	t_stack b = stack_build(NULL, 0, &head);
 	test_print(a, b);
