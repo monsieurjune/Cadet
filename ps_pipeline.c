@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:46:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/01 05:29:49 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:10:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,26 @@ void	ps_pipeline(int cmd, t_stack *a, t_stack *b)
 	ps_print_cmd(cmd);
 }
 
-void	ps_putback_to_a(t_stack *a, t_stack *b)
+void	ps_a_to_b(t_stack *a, t_stack *b, int i)
 {
-	while (b->head != NULL)
-		ps_pipeline(PUSH_A, a, b);
+	if (i > 0)
+	{
+		while (i > 1)
+		{
+			ps_pipeline(ROTATE_A, a, b);
+			i--;
+		}
+		ps_pipeline(PUSH_B, a, b);
+	}
+	else if (i < 0)
+	{
+		while (i <= -1)
+		{
+			ps_pipeline(REV_ROTATE_A, a, b);
+			i++;
+		}
+		ps_pipeline(PUSH_B, a, b);
+	}
 }
 
 /*
@@ -135,14 +151,13 @@ void test_print(t_stack a, t_stack b)
 		else
 			printf("_\n");
 	}
-	printf("Size A : %d     , Size B : %d\n", a.n ,b.n);
-	printf("Bottom A : %d\n", sb_bottom_index(a, 0));
 	printf("\n-------------------\n");
 }
 
 int	main(int ac, char **av)
 {
 	int i = 1;
+	int cmd;
 	t_mem	*head = NULL;
 	int *arr = lm_malloc(sizeof(int), ac - 1, &head);
 	while (i < ac)
@@ -160,7 +175,8 @@ int	main(int ac, char **av)
 		scanf("%s", read);
 		if (strcmp("EXIT", read) == 0)
 			break;
-		int cmd = atoi(read);
+		if (strcmp("sa", read) == 0)
+			cmd = SWAP_A
 		ps_pipeline(cmd, &a, &b);
 		test_print(a, b);
 	}
