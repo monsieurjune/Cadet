@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   listmem.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minerva <minerva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 23:47:24 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/25 14:07:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/10 22:09:30 by minerva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LISTMEM_H
 # define LISTMEM_H
 # include <stdlib.h>
+# include <stdint.h>
 
 typedef struct s_mem
 {

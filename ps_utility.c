@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ps_utility.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minerva <minerva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 12:36:47 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/10 13:04:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/10 23:15:58 by minerva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	ps_handle_three(t_stack *a, t_stack *b, int high, int index)
 		return (void)ps_sort_three(a, b, high);
 }
 
-static int	sb_find_next_min(t_stack a, int high, long pmin)
+static int	sb_find_min(t_stack a, int high)
 {
 	int	min;
 
 	min = INT_MAX;
 	while (1)
 	{
-		if (a.head->value < min && a.head->value > pmin)
+		if (a.head->value < min)
 			min = a.head->value;
 		if (a.head->value == high)
 			break ;
@@ -66,19 +66,28 @@ static int	sb_find_next_min(t_stack a, int high, long pmin)
 
 int	ps_median_pivot(t_stack a, int high)
 {
-	long	pmin;
-	int		med;
-	int		i;
+	t_node	*run_i;
+	t_node	*run_j;
+	int		n;
 
-	i = (ps_bottom_index(a, high) + 2) / 2;
-	pmin = LONG_MIN;
-	while (i > 0)
+	run_i = a.head;
+	while (1)
 	{
-		med = sb_find_next_min(a, high, pmin);
-		pmin = med;
-		i--;
+		n = 0;
+		run_j = a.head;
+		while (1)
+		{
+			n += run_i->value < run_j->value;
+			n -= run_i->value > run_j->value;
+			if (run_j->value == high)
+				break ;
+			run_j = run_j->next;
+		}
+		if ((n >= -1 && n <= 1) || run_i->value == high)
+			break ;
+		run_i = run_i->next;
 	}
-	return (med);
+	return (run_i->value);
 }
 
 void	ps_sort_three(t_stack *a, t_stack *b, int high)
@@ -86,7 +95,7 @@ void	ps_sort_three(t_stack *a, t_stack *b, int high)
 	int	i;
 	int	k;
 
-	i = ps_bottom_index(*a, sb_find_next_min(*a, high, LONG_MIN));
+	i = ps_bottom_index(*a, sb_find_min(*a, high));
 	if (a->n == 3)
 	{
 		if (i == 0)

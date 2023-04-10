@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minerva <minerva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:35:46 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/10 00:27:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/10 23:22:46 by minerva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 # include "stack.h"
-#include <stdio.h>
 
 // ps_pipeline.c
 void	ps_pipeline(int cmd, t_stack *a, t_stack *b);
