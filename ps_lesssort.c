@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:26:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/10 13:10:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:18:00 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	ps_lesssort(t_stack *a, t_stack *b, int high)
 		return ((void)ps_pipeline(PUSH_A, a, b));
 	else if (index == 1)
 	{
-		if (a->head->value < high)
+		if (b->head->value < high)
 			ps_pipeline(SWAP_B, a, b);
 		ps_pipeline(PUSH_A, a, b);
 		ps_pipeline(PUSH_A, a, b);

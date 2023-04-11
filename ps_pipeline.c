@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:46:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/10 13:10:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:42:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,22 @@ int	main(int ac, char **av)
 		scanf("%s", read);
 		if (strcmp("EXIT", read) == 0)
 			break;
-		if (strcmp("sa", read) == 0)
-			cmd = SWAP_A
+		if (strcmp(STR_SWAP_A, read) == 0)
+			cmd = SWAP_A;
+		if (strcmp(STR_SWAP_B, read) == 0)
+			cmd = SWAP_B;
+		if (strcmp(STR_PUSH_A, read) == 0)
+			cmd = PUSH_A;
+		if (strcmp(STR_PUSH_B, read) == 0)
+			cmd = PUSH_B;
+		if (strcmp(STR_ROTATE_A, read) == 0)
+			cmd = ROTATE_A;
+		if (strcmp(STR_ROTATE_B, read) == 0)
+			cmd = ROTATE_B;
+		if (strcmp(STR_REV_ROTATE_A, read) == 0)
+			cmd = REV_ROTATE_A;
+		if (strcmp(STR_REV_ROTATE_B, read) == 0)
+			cmd = REV_ROTATE_B;
 		ps_pipeline(cmd, &a, &b);
 		test_print(a, b);
 	}

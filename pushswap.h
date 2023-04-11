@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minerva <minerva@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:35:46 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/10 23:22:46 by minerva          ###   ########.fr       */
+/*   Updated: 2023/04/11 20:25:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@
 void	ps_pipeline(int cmd, t_stack *a, t_stack *b);
 void	ps_a_to_b(t_stack *a, t_stack *b, int i);
 
+//
+void	ps_slowsort(t_stack *a, t_stack *b, int high);
+
 // ps_
 void	ps_moresort(t_stack *a, t_stack *b, int high);
 
+//
 void	ps_lesssort(t_stack *a, t_stack *b, int high);
 
 // ps_utility.c

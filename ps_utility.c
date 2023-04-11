@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ps_utility.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minerva <minerva@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 12:36:47 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/10 23:15:58 by minerva          ###   ########.fr       */
+/*   Updated: 2023/04/11 20:26:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ int ps_bottom_index(t_stack a, int bottom)
 	return (-1);
 }
 
-void	ps_handle_three(t_stack *a, t_stack *b, int high, int index)
-{
-	if (index <= 0)
-		return ;
-    if (index == 1)
-    {
-		if (a->head->value > high)
-			ps_pipeline(SWAP_A, a, b);
-		return ;
-    }
-	if (index == 2)
-		return (void)ps_sort_three(a, b, high);
-}
-
 static int	sb_find_min(t_stack a, int high)
 {
 	int	min;
@@ -62,32 +48,6 @@ static int	sb_find_min(t_stack a, int high)
 		a.head = a.head->next;
 	}
 	return (min);
-}
-
-int	ps_median_pivot(t_stack a, int high)
-{
-	t_node	*run_i;
-	t_node	*run_j;
-	int		n;
-
-	run_i = a.head;
-	while (1)
-	{
-		n = 0;
-		run_j = a.head;
-		while (1)
-		{
-			n += run_i->value < run_j->value;
-			n -= run_i->value > run_j->value;
-			if (run_j->value == high)
-				break ;
-			run_j = run_j->next;
-		}
-		if ((n >= -1 && n <= 1) || run_i->value == high)
-			break ;
-		run_i = run_i->next;
-	}
-	return (run_i->value);
 }
 
 void	ps_sort_three(t_stack *a, t_stack *b, int high)
@@ -115,4 +75,44 @@ void	ps_sort_three(t_stack *a, t_stack *b, int high)
 	if (a->head->value > a->head->next->value)
 		ps_pipeline(SWAP_A, a, b);
 	ps_pipeline(REV_ROTATE_A, a, b);
+}
+
+void	ps_handle_three(t_stack *a, t_stack *b, int high, int index)
+{
+	if (index <= 0)
+		return ;
+    if (index == 1)
+    {
+		if (a->head->value > high)
+			ps_pipeline(SWAP_A, a, b);
+		return ;
+    }
+	if (index == 2)
+		return (void)ps_sort_three(a, b, high);
+}
+
+int	ps_median_pivot(t_stack a, int high)
+{
+	t_node	*run_i;
+	t_node	*run_j;
+	int		n;
+
+	run_i = a.head;
+	while (1)
+	{
+		n = 0;
+		run_j = a.head;
+		while (1)
+		{
+			n += run_i->value < run_j->value;
+			n -= run_i->value > run_j->value;
+			if (run_j->value == high)
+				break ;
+			run_j = run_j->next;
+		}
+		if ((n >= -1 && n <= 1) || run_i->value == high)
+			break ;
+		run_i = run_i->next;
+	}
+	return (run_i->value);
 }
