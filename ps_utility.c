@@ -6,15 +6,15 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 12:36:47 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/11 20:26:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/12 04:40:15 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int ps_bottom_index(t_stack a, int bottom)
+int	ps_bottom_index(t_stack a, int bottom)
 {
-    int	i;
+	int	i;
 
 	i = 0;
 	if (a.head == NULL)
@@ -64,7 +64,7 @@ void	ps_sort_three(t_stack *a, t_stack *b, int high)
 			ps_pipeline(REV_ROTATE_A, a, b);
 		if (a->head->value > a->head->next->value)
 			ps_pipeline(SWAP_A, a, b);
-		return (void)ps_pipeline(REV_ROTATE_A, a ,b);
+		return ((void)ps_pipeline(REV_ROTATE_A, a, b));
 	}
 	k = i;
 	while (i-- > 0)
@@ -81,14 +81,14 @@ void	ps_handle_three(t_stack *a, t_stack *b, int high, int index)
 {
 	if (index <= 0)
 		return ;
-    if (index == 1)
-    {
+	if (index == 1)
+	{
 		if (a->head->value > high)
 			ps_pipeline(SWAP_A, a, b);
 		return ;
-    }
+	}
 	if (index == 2)
-		return (void)ps_sort_three(a, b, high);
+		return ((void)ps_sort_three(a, b, high));
 }
 
 int	ps_median_pivot(t_stack a, int high)

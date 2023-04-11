@@ -6,13 +6,14 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:35:46 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/11 20:25:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/11 22:26:48 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 # include "stack.h"
+#include <stdio.h>
 
 // ps_pipeline.c
 void	ps_pipeline(int cmd, t_stack *a, t_stack *b);
@@ -26,6 +27,9 @@ void	ps_moresort(t_stack *a, t_stack *b, int high);
 
 //
 void	ps_lesssort(t_stack *a, t_stack *b, int high);
+
+//
+void	ps_radixsort(t_stack *a, t_stack *b);
 
 // ps_utility.c
 int     ps_bottom_index(t_stack a, int bottom);

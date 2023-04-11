@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:56:28 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/11 20:31:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/12 04:37:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	sb_median_pivot(t_stack a, int high)
 
 static int	sb_find_less(t_stack a, int pivot)
 {
-    int	i;
+	int	i;
 
 	i = 1;
 	if (a.head == NULL)

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 03:39:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/03/18 17:26:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/12 01:20:09 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	sb_quicksort(int *arr, int low, int high)
 	sb_quicksort(arr, pi + 1, high);
 }
 
+/* OG Function
 int	stack_isduplicate(int *arr, int size, t_mem **head)
 {
 	int	i;
@@ -82,6 +83,26 @@ int	stack_isduplicate(int *arr, int size, t_mem **head)
 	}
 	lm_free(copy, head);
 	return (FALSE);
+}
+*/
+
+int	*stack_isduplicate(int *arr, int size, t_mem **head)
+{
+	int	i;
+	int	*copy;
+
+	i = 1;
+	copy = sb_clone_arr(arr, size, head);
+	if (copy == NULL)
+		stack_exit(head);
+	sb_quicksort(copy, 0, size - 1);
+	while (i < size)
+	{
+		if (copy[i] == copy[i - 1])
+			return (NULL);
+		i++;
+	}
+	return (copy);
 }
 
 /*

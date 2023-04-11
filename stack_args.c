@@ -6,12 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 08:57:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/10 14:21:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/12 04:42:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
-#include <stdio.h>
 
 // size = all_argv_len + (ac - 1) + 1
 // size = all_argv_len + ac
@@ -117,10 +116,33 @@ int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head)
 		(*len)++;
 	arr = sb_intarr(box, *len, &spt, head);
 	lm_flush(&spt);
+	return (arr);
+}
+
+/*
+int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head)
+{
+	t_mem		*spt;
+	char		**box;
+	char		*str;
+	int			*arr;
+
+	spt = NULL;
+	*head = NULL;
+	*len = 0;
+	str = sb_str_transform(ac, av, &spt);
+	box = ft_split(str, ' ', &spt);
+	if (box == NULL)
+		stack_exit(&spt);
+	while (box[*len] != 0)
+		(*len)++;
+	arr = sb_intarr(box, *len, &spt, head);
+	lm_flush(&spt);
 	if (stack_isduplicate(arr, *len, head))
 		stack_exit(head);
 	return (arr);
 }
+*/
 
 /*
 #include <stdio.h>
