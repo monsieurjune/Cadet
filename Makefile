@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/29 03:48:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/04/11 21:52:16 by tponutha         ###   ########.fr        #
+#    Updated: 2023/04/12 15:16:53 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,7 @@ STACK_SRCS	= $(addprefix $(STACK_DIR), $(STACK_FILE))
 
 # Main Directory
 MAIN_DIR	= ./
-MAIN_FILE	= ps_utility.c ps_pipeline.c ps_pushswap.c ps_lesssort.c \
-				ps_moresort.c ps_slowsort.c ps_radixsort.c
+MAIN_FILE	= ps_utility.c ps_pipeline.c ps_pushswap.c ps_slowsort.c ps_radixsort.c
 MAIN_SRCS	= $(addprefix $(MAIN_DIR), $(MAIN_FILE))
 
 # Complie Process
