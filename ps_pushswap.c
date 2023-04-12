@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 01:32:41 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/12 04:38:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/12 04:50:28 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,33 @@ static int	sb_init(int	**arr, int len, t_mem **head)
 	*arr = index;
 	return (TRUE);
 }
+
+/*
+int	main(int ac, char **av)
+{
+	t_mem		*ps_mem;
+	t_stack		a;
+	t_stack		b;
+	int			*arr;
+	int			len;
+
+	if (ac <= 1)
+		return (0);
+	arr = stack_check_n_return(ac, &len, av, &ps_mem);
+	if (!sb_issorted(arr, len))
+	{
+		a = stack_build(arr, len, &ps_mem);
+		b = stack_build(NULL, 0, &ps_mem);
+		lm_free(arr, &ps_mem);
+		if (a.n < 10)
+			ps_slowsort(&a, &b, a.tail->value);
+		else
+			ps_moresort(&a, &b, a.tail->value);
+	}
+	lm_flush(&ps_mem);
+	return (0);
+}
+*/
 
 int	main(int ac, char **av)
 {
