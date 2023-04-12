@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 08:57:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/12 04:42:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:45:44 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int	*stack_check_n_return(int ac, int *len, char **av, t_mem **head)
 	str = sb_str_transform(ac, av, &spt);
 	box = ft_split(str, ' ', &spt);
 	if (box == NULL)
+		stack_exit(&spt);
+	if (box[0] == NULL)
 		stack_exit(&spt);
 	while (box[*len] != 0)
 		(*len)++;
