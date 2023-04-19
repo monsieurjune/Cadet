@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:08:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/19 06:19:59 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:25:06 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ t_data	as_init(void)
 	return (data);
 }
 
-void	as_flush_data(t_data *data)
+int	as_flush_data(t_data *data)
 {
 	as_flush_mem(&data->head);
 	as_close_all(*data);
+	return (0);
 }
 
 void	as_error_exit(t_data *data, const char *err_str)

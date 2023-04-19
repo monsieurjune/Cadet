@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/29 03:48:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/04/19 05:02:29 by tponutha         ###   ########.fr        #
+#    Updated: 2023/04/19 06:31:30 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,23 +17,32 @@ NAME		= push_swap
 CC		= cc
 RM		= rm -f
 CFLAG	= -Wall -Werror -Wextra
+ifeq ($(UNAME), Linux)
+	LIB = -libbsd
+endif
 
 # Listmem Directory
-
+MEM_DIR		= ./
+NEM_HEADER	= astable.h
+MEM_FILE	= astable.c as_malloc.c as_free.c as_file.c
+MEM_SRCS	= $(addprefix $(MEM_DIR), $(MEM_FILE))
 
 # Complie Process
-SRCS	= $(MAIN_SRCS) $(MEM_SRCS) $(STACK_SRCS)
+SRCS	= $(MEM_SRCS)
+INC		= $(MEM_HEADER)
 OBJ		= $(SRCS:.c=.o)
-IFLAG	= -I$(MAIN_DIR)
+IFLAG	= -I$(MEM_DIR)
+UNAME	= $(shell uname -s)
+
 .c.o:
-	$(COM) $(CFLAG) -c $(IFLAG) $< -o $(<:.c=.o)
+	$(CC) $(CFLAG) $(LIB) -c $(IFLAG) $< -o $(<:.c=.o)
 
 # failsafe
 .PHONY: all clean fclean re norm
 
 # MAIN RULES
-$(NAME):	$(OBJ) Makefile
-	$(COM) $(CFLAG) $(OBJ) -o $(NAME)
+$(NAME):	$(OBJ)
+	$(COM) $(CFLAG) $(LIB) $(OBJ) -o $(NAME)
 
 all:	$(NAME)
 
@@ -47,4 +56,4 @@ re:	fclean all
 
 # ETC RULES
 norm:
-	@norminette -R CheckForbiddenSourceHeader $(SRCS)
+	@norminette -R CheckForbiddenSourceHeader $(SRCS) 

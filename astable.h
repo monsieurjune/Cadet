@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 23:47:24 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/19 06:18:27 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:25:01 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_data
 
 // astable.c
 t_data	as_init(void);
-void	as_flush_data(t_data *data);
+int		as_flush_data(t_data *data);
 void	as_error_exit(t_data *data, const char *err_str);
 void	*ft_memset(void *ptr, int c, size_t byte);
 
