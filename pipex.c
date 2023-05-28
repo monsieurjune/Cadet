@@ -12,53 +12,49 @@
 
 #include "pipex.h"
 
-static void	sb_check_file(char *infile, char *outfile)
+int	main(int ac, char **av, char **env)
 {
-	if (infile != NULL)
-	{
-		if (access(infile, R_OK) == -1)
-			perror("Input File Error : ");
-	}
-	if (access(infile, R_OK) == -1)
-	{
-		perror("Output File Error : ");
-		exit(EXIT_FAILURE);
-	}	
-}
-
-static void	sb_heredoc(t_data *data, int ac, char **av, char **envp)
-{
-	int	fd_out;
 	
-	sb_check_file(NULL, av[ac - 1]);
-	fd_out = as_open(*data, av[ac - 1], O_WRONLY);
-	ft_errno_logic(fd_out, data, "Output File Error : ");
-	//
 }
 
-static void	sb_infile(t_data *data, int ac, char **av, char **envp)
-{
-	int	fd_in;
-	int	fd_out;
-	
-	sb_check_file(av[1], av[ac - 1]);
-	fd_in = as_open(*data, av[1], O_RDONLY);
-	ft_errno_logic(fd_out, data, "Input File Error : ");
-	fd_out = as_open(*data, av[ac - 1], O_WRONLY);
-	ft_errno_logic(fd_out, data, "Output File Error : ");
-	//
-}
-
+/*
 int	main(int ac, char **av, char **envp)
 {
-	t_data	data;
+	int	j;
+	int	pid;
+	int fd[2];
+	char str[2];
 
-	if (ac <= 1)
-		return (0);
-	data = as_init();
-	if (ft_strncmp(av[1], "here_doc", sizeof("here_doc")) == 0)
-		sb_heredoc(&data, ac, av, envp);
-	else
-		sb_infile(&data, ac, av, envp);
-	return (as_flush_data(&data));
+	j = 0;
+	pipe(fd);
+	write(fd[1], "A", 1);
+	pid = fork();
+	for (int i = 1; i < ac; i++)
+	{
+		if (pid == 0)
+		{
+			pid = fork();
+			j++;
+			if (pid != 0)
+				break ;
+		}
+	}
+	waitpid(pid, NULL, 0);
+	if (pid == 0)
+	{
+		close(fd[0]);
+		//write(fd[1], "A", 1);
+		close(fd[1]);
+	}
+	else if (pid != 0)
+	{
+		read(fd[0], str, 1);
+		str[1] = '\0';
+		printf("I'm parent %d : doing -> %s (verfiy : %s)\n", pid, av[j], str);
+		str[0]++;
+		write(fd[1], str, 1);
+		close(fd[0]);
+		close(fd[1]);
+	}
 }
+*/

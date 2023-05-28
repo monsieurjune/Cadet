@@ -6,54 +6,69 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/29 03:48:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/04/19 06:31:30 by tponutha         ###   ########.fr        #
+#    Updated: 2023/05/28 17:22:16 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Main properties
-NAME		= push_swap
+NAME		= pipex
+UNAME		= $(shell uname -s)
 
 # Complier & shell thing
 CC		= cc
 RM		= rm -f
 CFLAG	= -Wall -Werror -Wextra
-ifeq ($(UNAME), Linux)
-	LIB = -libbsd
-endif
+DFLAG	= -fsanitize=address
 
 # Listmem Directory
 MEM_DIR		= ./
-NEM_HEADER	= astable.h
-MEM_FILE	= astable.c as_malloc.c as_free.c as_file.c
+NEM_HEADER	= listmem.h
+MEM_FILE	= listfree.c listmem.c
 MEM_SRCS	= $(addprefix $(MEM_DIR), $(MEM_FILE))
 
+# Libft Directory
+LIBFT_DIR		= ./
+LIBFT_HEADER	= libft.h
+LIBFT_FILE		= ft_gnl.c ft_gnl_utils.c ft_split_cmd.c
+LIBFT_SRCS		= $(addprefix $(LIBFT_DIR), $(LIBFT_FILE))
+
+# Pipex Directory
+PIPEX_DIR		= ./
+PIPEX_HEADER	= pipex.h
+PIPEX_FILE		= pipex.c
+PIPEX_SRCS		= $(addprefix $(PIPEX_DIR), $(PIPEX_FILE))
+
 # Complie Process
-SRCS	= $(MEM_SRCS)
-INC		= $(MEM_HEADER)
-OBJ		= $(SRCS:.c=.o)
-IFLAG	= -I$(MEM_DIR)
-UNAME	= $(shell uname -s)
+SRCS		= $(MEM_SRCS) $(LIBFT_SRCS) $(PIPEX_SRCS)
+HEADER		= $(MEM_HEADER) $(LIBFT_HEADER) $(PIPEX_HEADER)
+OBJS		= $(SRCS:.c=.o)
+INCS		= $(addprefix -I, $(HEADER))
 
 .c.o:
-	$(CC) $(CFLAG) $(LIB) -c $(IFLAG) $< -o $(<:.c=.o)
+	$(CC) $(CFLAG) $(INCS) -c $< -o $(<:.c=.o)
 
 # failsafe
 .PHONY: all clean fclean re norm
 
 # MAIN RULES
 $(NAME):	$(OBJ)
-	$(COM) $(CFLAG) $(LIB) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAG) $(OBJS) -o $(NAME)
 
 all:	$(NAME)
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJS)
 
 fclean:	clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re:	fclean all
 
+bonus:	all
+
 # ETC RULES
 norm:
-	@norminette -R CheckForbiddenSourceHeader $(SRCS) 
+	@norminette -R CheckForbiddenSourceHeader $(SRCS) $(HEADER)
+
+debug:	fclean $(OBJS)
+	$(CC) $(CFLAG) $(DFLAG) $(OBJS) -o $(NAME)

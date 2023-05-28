@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_utils.c                                         :+:      :+:    :+:   */
+/*   listmem.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 06:42:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/19 07:20:26 by tponutha         ###   ########.fr       */
+/*   Created: 2023/01/26 23:47:24 by tponutha          #+#    #+#             */
+/*   Updated: 2023/05/27 11:56:46 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef LISTMEM_H
+# define LISTMEM_H
+# include <stdlib.h>
+# include <stdint.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+typedef struct s_mem
 {
-	size_t	i;
+	void			*mem;
+	struct s_mem	*next;
+}	t_mem;
 
-	if (s1 == 0 || s2 == 0 || n == 0)
-		return (0);
-	i = 0;
-	while ((s1[i] == s2[i]) && (s1[i] != 0 || s2[i] != 0) && i < n)
-		i++;
-	return ((unsigned char)s1[i - (i == n)] - (unsigned char)s2[i - (i == n)]);
-}
+// listmem.c
+void	*lm_malloc(size_t byte, size_t n, t_mem **head);
+void	*lm_calloc(size_t byte, size_t n, t_mem **head);
 
-void	ft_errno_logic(int err, t_data *data, const char *str)
-{
-	if (err == -1)
-		as_error_exit(data, str);
-}
+// listfree.c
+void	lm_free(void *byte, t_mem **head);
+void	lm_flush(t_mem **head);
+
+#endif

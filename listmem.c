@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   as_malloc.c                                        :+:      :+:    :+:   */
+/*   listmem.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 23:47:56 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/19 05:07:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:36:29 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "astable.h"
+#include "listmem.h"
 
 // if alloc node fail then free mem
 
-static t_mem	*sb_create_node(void *mem)
+static t_mem	*lm_create_node(void *mem)
 {
 	t_mem	*node;
 
@@ -29,7 +29,7 @@ static t_mem	*sb_create_node(void *mem)
 	return (node);
 }
 
-static void	sb_insert_node(t_mem **head, t_mem *node)
+static void	lm_insert_node(t_mem **head, t_mem *node)
 {
 	t_mem	*oldhead;
 
@@ -40,7 +40,7 @@ static void	sb_insert_node(t_mem **head, t_mem *node)
 	(*head)->next = oldhead;
 }
 
-void	*as_malloc(size_t byte, size_t n, t_mem **head)
+void	*lm_malloc(size_t byte, size_t n, t_mem **head)
 {
 	t_mem		*node;
 	void		*mem;
@@ -50,14 +50,29 @@ void	*as_malloc(size_t byte, size_t n, t_mem **head)
 	mem = malloc(byte * n);
 	if (mem == NULL)
 		return (NULL);
-	node = sb_create_node(mem);
+	node = lm_create_node(mem);
 	if (node == NULL)
 		return (NULL);
-	sb_insert_node(head, node);
+	lm_insert_node(head, node);
 	return (mem);
 }
 
-void	*as_calloc(size_t byte, size_t n, t_mem **head)
+static void	*ft_memset(void *ptr, int c, size_t byte)
+{
+	size_t	i;
+
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (i < byte)
+	{
+		((unsigned char *)ptr)[i] = ((unsigned char *)&c)[0];
+		i++;
+	}
+	return (ptr);
+}
+
+void	*lm_calloc(size_t byte, size_t n, t_mem **head)
 {
 	t_mem		*node;
 	void		*mem;
@@ -68,10 +83,10 @@ void	*as_calloc(size_t byte, size_t n, t_mem **head)
 	mem = malloc(byte);
 	if (mem == NULL)
 		return (NULL);
-	node = sb_create_node(mem);
+	node = lm_create_node(mem);
 	if (node == NULL)
 		return (NULL);
-	sb_insert_node(head, node);
+	lm_insert_node(head, node);
 	return (ft_memset(mem, 0, byte));
 }
 

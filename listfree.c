@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   as_free.c                                          :+:      :+:    :+:   */
+/*   listfree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 00:23:44 by tponutha          #+#    #+#             */
-/*   Updated: 2023/04/19 05:07:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/05/27 11:50:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "astable.h"
+#include "listmem.h"
 
 static void	lm_free_node(t_mem **head, t_mem *node, t_mem *prev)
 {
@@ -22,7 +22,7 @@ static void	lm_free_node(t_mem **head, t_mem *node, t_mem *prev)
 	free(node);
 }
 
-void	as_free(void *byte, t_mem **head)
+void	lm_free(void *byte, t_mem **head)
 {
 	t_mem	*runner;
 	t_mem	*prev;
@@ -41,7 +41,7 @@ void	as_free(void *byte, t_mem **head)
 	}
 }
 
-void	as_flush_mem(t_mem **head)
+void	lm_flush(t_mem **head)
 {
 	t_mem	*front;
 
@@ -54,4 +54,5 @@ void	as_flush_mem(t_mem **head)
 		free(*head);
 		*head = front;
 	}
+	*head = NULL;
 }
