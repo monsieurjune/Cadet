@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 09:51:59 by tponutha          #+#    #+#             */
-/*   Updated: 2023/05/28 16:43:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/02 19:35:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static size_t	sb_strlen_cmd(const char *s, char c)
 
 static char	*sb_strdup_cmd(const char *s, char c, t_mem **head)
 {
-	size_t	count;
 	size_t	len;
 	size_t	i;
 	char	*str;

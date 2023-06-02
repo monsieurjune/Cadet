@@ -6,11 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 00:23:44 by tponutha          #+#    #+#             */
-/*   Updated: 2023/05/27 11:50:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:11:54 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "listmem.h"
+#include "libft.h"
 
 static void	lm_free_node(t_mem **head, t_mem *node, t_mem *prev)
 {
