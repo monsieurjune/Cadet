@@ -5,55 +5,58 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/08/29 03:48:25 by tponutha          #+#    #+#              #
-#    Updated: 2023/04/19 06:31:30 by tponutha         ###   ########.fr        #
+#    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
+#    Updated: 2023/06/03 17:48:21 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Main properties
-NAME		= push_swap
+# Name of Program
+NAME	= fractol
+MLX_DIR	= ./mlx_mac
 
-# Complier & shell thing
+# Compiler Porperties
 CC		= cc
+CFLAG	= -Wall -Werror -Wextra -I$(MLX_DIR)
+DFLAG	= -fsanitize=address
 RM		= rm -f
-CFLAG	= -Wall -Werror -Wextra
-ifeq ($(UNAME), Linux)
-	LIB = -libbsd
-endif
 
-# Listmem Directory
-MEM_DIR		= ./
-NEM_HEADER	= astable.h
-MEM_FILE	= astable.c as_malloc.c as_free.c as_file.c
-MEM_SRCS	= $(addprefix $(MEM_DIR), $(MEM_FILE))
+# MLX Porperties
+MLXFLAG	= -framework OpenGL -framework AppKit
+LIBFLAG	= -L$(MLX_DIR) -lmlx -lm
+MLX		= make -C $(MLX_DIR)
 
-# Complie Process
-SRCS	= $(MEM_SRCS)
-INC		= $(MEM_HEADER)
-OBJ		= $(SRCS:.c=.o)
-IFLAG	= -I$(MEM_DIR)
-UNAME	= $(shell uname -s)
 
+# Source Code
+MAN_DIR		= ./
+MAN_HEADER	= ./fractol.h
+MAN_FILE	= fractol.c
+MAN_SRCS	= $(addprefix $(MAN_DIR), $(MAN_FILE))
+MAN_OBJS	= $(MAN_SRCS:.c=.o)
+
+# Compile Object Files
 .c.o:
-	$(CC) $(CFLAG) $(LIB) -c $(IFLAG) $< -o $(<:.c=.o)
+	$(CC) $(CFLAG) -c $< -o $(<:.c=.o)
 
-# failsafe
-.PHONY: all clean fclean re norm
-
-# MAIN RULES
-$(NAME):	$(OBJ)
-	$(COM) $(CFLAG) $(LIB) $(OBJ) -o $(NAME)
+# Main Rules
+$(NAME):	$(MAN_OBJS)
+	$(MLX)
+	$(CC) $(CFLAG) $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
 
 all:	$(NAME)
 
 clean:
-	$(RM) $(OBJ)
+	$(MLX) clean
+	$(RM) $(MAN_OBJS)
 
 fclean:	clean
 	$(RM) $(NAME)
 
 re:	fclean all
 
-# ETC RULES
+# ETC Rules
 norm:
-	@norminette -R CheckForbiddenSourceHeader $(SRCS) 
+	@norminette -R CheckForbiddenSourceHeader $(MAN_SRCS) $(MAN_HEADER)
+
+debug_man:	$(MAN_OBJS)
+	$(MLX)
+	$(CC) $(CFLAG) $(DFLAG) $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
