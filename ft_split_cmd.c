@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 09:51:59 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/02 19:35:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/05 05:08:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,20 @@ char	**ft_split_cmd(char const *s, char c, t_mem **head)
 		box[len] = NULL;
 	return (box);
 }
+
+/*
+char	**ft_ultra_split(char const *s, char c, t_mem **head)
+{
+	size_t	i;
+	char	**temp;
+	char	**res;
+
+	i = 0;
+	while (s[i] == ' ' || s[i] != 0)
+		i++;
+	temp = ft_split_cmd(&s[i], );
+}
+*/
 
 /*
 #include <stdio.h>

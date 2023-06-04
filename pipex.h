@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 06:37:50 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/02 17:35:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/04 21:15:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,17 @@ typedef struct s_pipex
 }	t_pipex;
 
 /*		px_child_info_bonus.c	*/
-int	**px_allocate_pipe(t_pipex *info);
+int		**px_allocate_pipe(t_pipex *info);
 
 /**/
-int	px_open(const char *path, int oflag, unsigned int mode, const char *msg);
-int	px_close(int fd, const char *msg);
+int		px_open(const char *path, int oflag, unsigned int mode, const char *msg);
+int		px_close(int fd, const char *msg);
+int	px_fork(const char *msg);
+int	px_waitpid(int pid, int *stat, int option, const char *msg);
+void	px_cmd_check(char *cmd, const char *msg);
 
 /**/
-int	sb_pipex_init(t_pipex *info, int ac, char **av, char **env);
+int		px_pipex_init(t_pipex *info, int ac, char **av, char **env);
+int		px_pipex_init2(t_pipex *info, int infile);
 
 #endif
