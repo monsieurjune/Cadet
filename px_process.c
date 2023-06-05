@@ -6,11 +6,35 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 22:35:07 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 04:41:53 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/05 22:16:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	px_cmd_check(char *cmd, const char *msg)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strclen(cmd, 0);
+	if (ft_strnchr(&cmd[i], len, '/') == NULL)
+		return ;
+	if (access(cmd, X_OK) == -1)
+		perror(msg);
+}
+
+/* CHILD PROCESS
+1: close all unused pipe
+2: flush all unused memory
+3: dup2 to pipe that use
+*/
+
+void	sb_child_process(t_pipex *info, char **cmd)
+{
+	
+}
 
 /*
 INSTRUCTION
@@ -29,7 +53,7 @@ void	px_calling_child(t_pipex *info)
 	i = 0;
 	while (i < info->clen)
 	{
-		cmd = ft_split_cmd(info->av[i + 2 + (info->infile == 0)], ' ', &info->head);
+		cmd = px_ultra_split(info->av[i + 2 + (info->infile == 0)], info);
 		if (cmd == NULL)
 			perror(info->shell);
 		else
@@ -44,6 +68,6 @@ void	px_calling_child(t_pipex *info)
 		} 
 		i++;
 	}
-	// close all pipes, close infile
+	// close all pipes
 	// big wait function
 }
