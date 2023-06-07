@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:38:59 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 05:28:09 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/05 22:37:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)s1[i - (i == n)] - (unsigned char)s2[i - (i == n)]);
 }
 
-#include <stdio.h>
 char	*ft_strnchr(const char *str, size_t n, int c)
 {
 	size_t	i;

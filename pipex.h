@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 06:37:50 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 20:51:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:48:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_pipex
 	int				plen;
 	int				*child_pid;
 	int				clen;
+	int				outflag;
 	struct s_mem	*head;
 }	t_pipex;
 
@@ -66,10 +67,16 @@ int		px_open(const char *path, int oflag, unsigned int mode, const char *msg);
 int		px_close(int fd, const char *msg);
 int		px_fork(const char *msg);
 int		px_waitpid(int pid, int *stat, int option, const char *msg);
+int		px_dup2(int oldfd, int newfd, const char *msg);
 
 /**/
 int		px_pipex_init(t_pipex *info, int ac, char **av, char **env);
 int		px_pipex_init2(t_pipex *info, int infile);
+void	px_close_pipe_except(t_pipex *info, int r, int w, int use[]);
+void	px_cmd_check(char *cmd, const char *msg);
+
+/**/
+void	px_calling_child(t_pipex *info);
 
 /**/
 char	**px_ultra_split(const char *s, t_pipex *info);

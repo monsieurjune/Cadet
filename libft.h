@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:17:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 20:50:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:45:11 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_mem
 
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 128
+#  define BUFFER_SIZE 1024
 # else
 #  if BUFFER_SIZE <= 0 || BUFFER_SIZE > 0xfffffff
 #   undef BUFFER_SIZE

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:46:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 21:49:36 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:51:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	px_close(int fd, const char *msg)
 {
 	int	err;
 
+	if (fd == -1)
+		return (-1);
 	err = close(fd);
 	if (err == -1)
 		perror(msg);
@@ -52,3 +54,18 @@ int	px_waitpid(int pid, int *stat, int option, const char *msg)
 	return (id);
 }
 
+int	px_dup2(int oldfd, int newfd, const char *msg)
+{
+	int	fd;
+
+	// (void)msg;
+	// printf("%d : %d\n", oldfd, newfd);
+	fd = dup2(oldfd, newfd);
+	if (fd == -1)
+	{
+		perror(msg);
+		return (oldfd);
+	}
+	px_close(oldfd, msg);
+	return (fd);
+}

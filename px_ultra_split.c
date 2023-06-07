@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_ultra_spilt.c                                   :+:      :+:    :+:   */
+/*   px_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:43:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 23:50:38 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:19:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,69 +83,69 @@ char	**px_ultra_split(const char *s, t_pipex *info)
 // // "" "abhscjjgya bjkbalwkbf jhwrjygkka jkvwkjyf" cat r rm man python3 
 // // "outfile"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-void print_mem(t_mem *head)
-{
-	if (head == NULL)
-		return ;
-	while (head->next != NULL)
-	{
-		printf("(%p) : %p\n", head, head->mem);
-		head = head->next;
-	}
-}
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <unistd.h>
+// void print_mem(t_mem *head)
+// {
+// 	if (head == NULL)
+// 		return ;
+// 	while (head->next != NULL)
+// 	{
+// 		printf("(%p) : %p\n", head, head->mem);
+// 		head = head->next;
+// 	}
+// }
 
-int	main(int ac, char **av, char **env)
-{
-	int 		i = 2;
-	int			j;
-	size_t		n;
-	char		*str;
-	char		**box;
-	t_pipex		info;
+// int	main(int ac, char **av, char **env)
+// {
+// 	int 		i = 2;
+// 	int			j;
+// 	size_t		n;
+// 	char		*str;
+// 	char		**box;
+// 	t_pipex		info;
 
-	info.head = NULL;
-	px_pipex_init(&info, ac, av, env);
-	//px_pipex_init2(&info, ft_strncmp(av[1], "here_doc", 8));
-	printf("PARENT\n");
-	print_mem(info.head);
-	int pid = fork();
-	if (pid == 0)
-	{
-		printf("\n");
-		while (i < ac - 1)
-		{
-			j = 0;
-			//printf("%s\n", av[i]);
-			box = px_ultra_split(av[i], &info);
-			//printf("split (%s)		: ", av[i]);
-			while (box[j] != NULL)
-			{
-				//printf("%s, ", box[j]);
-				lm_free(box[j], &info.head);
-				j++;
-			}
-			//printf("\n");
-			lm_free(box, &info.head);
-			i++;
-		}
-		printf("CHILD\n");
-		print_mem(info.head);
-		lm_flush(&info.head);
-		char *cmd[] = {"/bin/lss", NULL};
-		int e = execve("/bin/lsa", cmd, env);
-		exit(0);
-	}
-	else
-	{
-		int k;
-		wait(&k);
-		//lm_flush(&info.head);
-		// printf("EXIT : %d\n", k);
-		// printf("PATH : %s\n", info.paths[0]);
-	}
-	return (0);
-}
+// 	info.head = NULL;
+// 	px_pipex_init(&info, ac, av, env);
+// 	//px_pipex_init2(&info, ft_strncmp(av[1], "here_doc", 8));
+// 	printf("PARENT\n");
+// 	print_mem(info.head);
+// 	int pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		printf("\n");
+// 		while (i < ac - 1)
+// 		{
+// 			j = 0;
+// 			//printf("%s\n", av[i]);
+// 			box = px_ultra_split(av[i], &info);
+// 			//printf("split (%s)		: ", av[i]);
+// 			while (box[j] != NULL)
+// 			{
+// 				//printf("%s, ", box[j]);
+// 				lm_free(box[j], &info.head);
+// 				j++;
+// 			}
+// 			//printf("\n");
+// 			lm_free(box, &info.head);
+// 			i++;
+// 		}
+// 		printf("CHILD\n");
+// 		print_mem(info.head);
+// 		lm_flush(&info.head);
+// 		char *cmd[] = {"/bin/lss", NULL};
+// 		int e = execve("/bin/lsa", cmd, env);
+// 		exit(0);
+// 	}
+// 	else
+// 	{
+// 		int k;
+// 		wait(&k);
+// 		//lm_flush(&info.head);
+// 		// printf("EXIT : %d\n", k);
+// 		// printf("PATH : %s\n", info.paths[0]);
+// 	}
+// 	return (0);
+// }

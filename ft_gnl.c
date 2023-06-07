@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_gnl_bonus.c                                     :+:      :+:    :+:   */
+/*   ft_gnl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:48:16 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/02 14:05:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:18:06 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,23 +126,23 @@ char	*get_next_line(int fd, t_mem **head)
 	size_t		templen;
 	char		*line;
 	char		*temp;
-	static char	*text[OPEN_MAX + 1];
+	static char	*text;
 
 	if (fd <= -1 || fd > OPEN_MAX)
 		return (NULL);
-	text[fd] = sb_readline(fd, text[fd], head);
-	if (!text[fd])
+	text = sb_readline(fd, text, head);
+	if (!text)
 		return (NULL);
-	i = ft_strclen(text[fd], '\n');
-	templen = ft_strclen(&text[fd][i + (text[fd][i] != 0)], 0);
-	line = ft_strndup(text[fd], i + (text[fd][i] != 0), head);
-	temp = ft_strndup(&text[fd][i + (text[fd][i] != 0)], templen, head);
+	i = ft_strclen(text, '\n');
+	templen = ft_strclen(&text[i + (text[i] != 0)], 0);
+	line = ft_strndup(text, i + (text[i] != 0), head);
+	temp = ft_strndup(&text[i + (text[i] != 0)], templen, head);
 	if (!line || !temp)
-		return (sb_failsafe(text[fd], line, temp, head));
-	lm_free(text[fd], head);
-	text[fd] = temp;
-	if (text[fd][0] == 0)
-		text[fd] = sb_failsafe(text[fd], NULL, NULL, head);
+		return (sb_failsafe(text, line, temp, head));
+	lm_free(text, head);
+	text = temp;
+	if (text[0] == 0)
+		text = sb_failsafe(text, NULL, NULL, head);
 	return (line);
 }
 

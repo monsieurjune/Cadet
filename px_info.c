@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 14:41:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 21:51:24 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:56:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static char	*sb_search_env(char **env, char *search)
 int	px_pipex_init2(t_pipex *info, int infile)
 {
 	info->infile = infile;
+	info->outflag = O_WRONLY | O_CREAT;
+	info->outflag |= O_APPEND * (infile == 0) | O_TRUNC * (infile != 0);
 	info->clen = info->ac - 3 - (info->infile == 0);
 	info->child_pid = lm_malloc(sizeof(int), info->clen, &info->head);
 	if (info->child_pid == NULL)
@@ -61,7 +63,18 @@ int	px_pipex_init(t_pipex *info, int ac, char **av, char **env)
 	return (0);
 }
 
+void	px_cmd_check(char *cmd, const char *msg)
+{
+	int	i;
+	int	len;
 
+	i = 0;
+	len = ft_strclen(cmd, 0);
+	if (ft_strnchr(&cmd[i], len, '/') == NULL)
+		return ;
+	if (access(cmd, X_OK) == -1)
+		perror(msg);
+}
 
 /* BUFFER OVERFLOW
 char	**px_ultra_split(const char *s, int len, t_pipex *info)

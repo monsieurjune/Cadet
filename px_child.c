@@ -6,30 +6,30 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 06:59:09 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/04 22:35:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/05 22:07:51 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	px_close_pipe_except(t_pipex *info, int *r, int *w, int use[])
+void	px_close_pipe_except(t_pipex *info, int r, int w, int use[])
 {
 	int	i;
 
 	i = 0;
-	if (*r <= -1)
+	if (r > -1)
 	{
 		px_close(info->pipebox[i][1], info->shell);
-		use[0] = info->pipebox[*r][0];
+		use[0] = info->pipebox[r][0];
 	}
-	if (*w <= -1)
+	if (w > -1)
 	{
 		px_close(info->pipebox[i][0], info->shell);
-		use[1] = info->pipebox[*w][1];
+		use[1] = info->pipebox[w][1];
 	}
 	while (i < info->plen)
 	{
-		if (i != *r && i != *w)
+		if (i != r && i != w)
 		{
 			px_close(info->pipebox[i][0], info->shell);
 			px_close(info->pipebox[i][1], info->shell);
@@ -73,7 +73,7 @@ int	**px_allocate_pipe(t_pipex *info)
 	int	*pipedes;
 	int	i;
 
-	info->plen = info->ac - 2 - (info->infile == 0);
+	info->plen = info->ac - 3 - (info->infile == 0);
 	i = 0;
 	info->pipebox = lm_malloc(sizeof(int *), info->plen, &info->head);
 	if (info->pipebox == NULL)
