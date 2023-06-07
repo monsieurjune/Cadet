@@ -6,38 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 06:40:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/06 22:32:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:05:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	ft_putstr_fd(char *s, int fd, const char *msg)
-{
-	size_t	len;
-
-	if (s && fd != -1)
-	{
-		len = ft_strclen(s, 0);
-		if (write(fd, s, len) == -1)
-			perror(msg);
-	}
-}
-
-
-static void	sb_read_infile(t_pipex *info)
-{
-	char	*line;
-
-	line = get_next_line(info->infile, &info->head);
-	while (line != NULL)
-	{
-		ft_putstr_fd(line, info->pipebox[0][1], info->shell);
-		lm_free(line, &info->head);
-		line = get_next_line(info->infile, &info->head);
-	}
-	px_close(info->infile, info->shell);
-}
 
 /* PIPEX INSTRUCTION
 1: allocate pipe
@@ -54,23 +27,25 @@ int	main(int ac, char **av, char **env)
 
 	if (ac < 5)
 		return (EXIT_SUCCESS);
-	if (px_pipex_init(&info, ac, av, env))
-		return (EXIT_FAILURE);
-	if (px_pipex_init2(&info, ft_strncmp(av[1], "here_doc", 8)))
-		return (EXIT_FAILURE);
-	if (info.infile == 0)
-		info.infile = 0; /// check_here_doc
-	else
-		info.infile = px_open(av[1], O_RDONLY, 0, info.shell);
-	if (info.infile != -1)
-		sb_read_infile(&info);
+	px_pipex_first_init(&info, ac, av, env);
+	px_pipex_second_init(&info, ft_strncmp(av[1], "here_doc", 8));
 	px_calling_child(&info);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 /*
 int	main(int ac, char **av, char **envp)
 {
+	int i = 0;
+	while (i < info.cmd_len)
+	{
+		printf("%d - %d\n", info.pbox[i][0], info.pbox[i][1]);
+		close(info.pbox[i][0]);
+		close(info.pbox[i][1]);
+		i++;
+	}
+	lm_flush(&info.head);
+
 	printf("%s\n", sb_search_env(env, av[1]));
 	int	j;
 	int	pid;

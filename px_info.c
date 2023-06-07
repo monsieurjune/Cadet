@@ -6,11 +6,57 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 14:41:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/06 13:56:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:14:20 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static int	**sb_assign_pipe(t_pipex *info)
+{
+	int	i;
+	int	err_i;
+
+	i = 0;
+	while (i < info->cmd_len)
+	{
+		if (pipe(info->pbox[i]) == -1)
+		{
+			perror("PIPE");
+			err_i = i;
+			break ;
+		}
+		i++;
+	}
+	if (i == info->cmd_len)
+		return (info->pbox);
+	i = 0;
+	while (i < err_i)
+	{
+		px_close(info->pbox[i][0], "CLOSE PIPE");
+		px_close(info->pbox[i][1], "CLOSE PIPE");
+		i++;
+	}
+	return (NULL);
+}
+
+static int	**sb_allocate_pipe(t_pipex *info)
+{
+	int	i;
+
+	info->pbox = lm_malloc(sizeof(int *), info->cmd_len, &info->head);
+	if (info->pbox == NULL)
+		return (perror(info->shell), NULL);
+	i = 0;
+	while (i < info->cmd_len)
+	{
+		info->pbox[i] = lm_malloc(sizeof(int), 2, &info->head);
+		if (info->pbox[i] == NULL)
+			return (perror(info->shell), NULL);
+		i++;
+	}
+	return (sb_assign_pipe(info));
+}
 
 static char	*sb_search_env(char **env, char *search)
 {
@@ -33,48 +79,60 @@ static char	*sb_search_env(char **env, char *search)
 	return (NULL);
 }
 
-int	px_pipex_init2(t_pipex *info, int infile)
+void	px_pipex_second_init(t_pipex *info, int cmp)
 {
-	info->infile = infile;
-	info->outflag = O_WRONLY | O_CREAT;
-	info->outflag |= O_APPEND * (infile == 0) | O_TRUNC * (infile != 0);
-	info->clen = info->ac - 3 - (info->infile == 0);
-	info->child_pid = lm_malloc(sizeof(int), info->clen, &info->head);
-	if (info->child_pid == NULL)
-		return (perror(info->shell), lm_flush(&info->head), 1);
-	info->pipebox = px_allocate_pipe(info);
-	if (info->pipebox == NULL)
-		return (perror(info->shell), lm_flush(&info->head), 1);
-	return (0);
+	info->start = 2;
+	if (cmp == 0)
+		info->start = 3;
+	info->cmd_len = info->ac - 3 - (info->start == 3);
+	info->child = lm_malloc(sizeof(int), info->cmd_len, &info->head);
+	if (info->child == NULL)
+	{
+		perror(info->shell);
+		lm_flush(&info->head);
+		exit(EXIT_FAILURE);
+	}
+	info->pbox = sb_allocate_pipe(info);
+	if (info->pbox == NULL)
+	{
+		perror(info->shell);
+		lm_flush(&info->head);
+		exit(EXIT_FAILURE);
+	}
 }
 
-int	px_pipex_init(t_pipex *info, int ac, char **av, char **env)
+void	px_pipex_first_init(t_pipex *info, int ac, char **av, char **env)
 {
+	char	*env_shell;
+	char	*env_path;
+
+	env_shell = sb_search_env(env, "SHELL");
+	env_path = sb_search_env(env, "PATH");
 	info->ac = ac;
 	info->av = av;
 	info->env = env;
 	info->head = NULL;
-	info->shell = ft_strrchr(sb_search_env(env, "SHELL"), '/') + 1;
-	info->pipebox = NULL;
-	info->child_pid = NULL;
-	info->paths = ft_split_cmd(sb_search_env(env, "PATH"), ':', &info->head);
+	info->shell = ft_strrchr(env_shell, '/') + 1;
+	info->paths = ft_split_cmd(env_path, ':', &info->head);
 	if (info->paths == NULL)
-		return (perror(info->shell), 1);
-	return (0);
+	{
+		perror(info->shell);
+		exit(EXIT_FAILURE);
+	}
 }
 
-void	px_cmd_check(char *cmd, const char *msg)
-{
-	int	i;
-	int	len;
+// void	px_cmd_check(char *cmd, const char *msg)
+// {
+// 	int	i;
+// 	int	len;
 
-	i = 0;
-	len = ft_strclen(cmd, 0);
-	if (ft_strnchr(&cmd[i], len, '/') == NULL)
-		return ;
-	if (access(cmd, X_OK) == -1)
-		perror(msg);
-}
+// 	i = 0;
+// 	len = ft_strclen(cmd, 0);
+// 	if (ft_strnchr(&cmd[i], len, '/') == NULL)
+// 		return ;
+// 	if (access(cmd, X_OK) == -1)
+// 		perror(msg);
+// }
 
 /* BUFFER OVERFLOW
 char	**px_ultra_split(const char *s, int len, t_pipex *info)

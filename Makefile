@@ -6,13 +6,12 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/02 14:12:15 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/06 22:23:56 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/07 13:34:50 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name of Program
 NAME		= pipex
-NAME_BONUS	= pipex
 
 # Compiler properties
 CC		= cc
@@ -31,7 +30,7 @@ LIBOBJS		= $(LIBSRCS:.c=.o)
 
 # Common file
 COMDIR		= ./
-COMFILE		= px_child.c px_info.c px_perror.c px_process.c px_ultra_split.c
+COMFILE		= px_perror.c px_process.c px_info.c px_stream.c px_ultra_split.c
 COMHEADER	= ./pipex.h
 COMSRCS		= $(addprefix $(COMDIR), $(COMFILE))
 COMOBJS		= $(COMSRCS:.c=.o)
@@ -72,10 +71,10 @@ fclean:	clean
 
 re:	fclean all
 
-bonus:	$(NAME_BONUS)
+bonus:	$(NAME)
 
-$(NAME_BONUS):	$(BOBJS)
-	$(CC) $(CFLAG) $(BOBJS) -o $(NAME_BONUS)
+$(NAME):	$(BOBJS)
+	$(CC) $(CFLAG) $(BOBJS) -o $(NAME)
 
 # ETC Rules
 val:

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 09:51:59 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/05 05:08:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:14:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ static char	*sb_strdup_cmd(const char *s, char c, t_mem **head)
 	return (str);
 }
 
+static char **sb_failsafe(char **box, int n, t_mem **head)
+{
+	int	i;
+
+	i = 0;
+	while (i <= n)
+	{
+		lm_free(box[i], head);
+		i++;
+	}
+	lm_free(box, head);
+	return (NULL);
+}
+
 static char	**sb_alloc_box(const char *s, char c, size_t len, t_mem **head)
 {
 	char	flag;
@@ -77,7 +91,7 @@ static char	**sb_alloc_box(const char *s, char c, size_t len, t_mem **head)
 		{
 			box[n] = sb_strdup_cmd(s, c, head);
 			if (box[n] == NULL)
-				return (NULL);
+				return (sb_failsafe(box, n, head));
 			n += flag--;
 		}
 		else if (!flag && *s == c)

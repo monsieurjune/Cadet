@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:43:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/06 22:19:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:51:10 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ static char	*sb_cat_path(const char *cmd, int n, t_pipex *info)
 		if (path == NULL)
 			return (NULL);
 		if (access(path, F_OK) == 0)
+		{
+			errno = 0;
 			return (path);
+		}
 		lm_free(path, &info->head);
 		i++;
 	}
+	errno = 0;
 	return (ft_strndup(cmd, n, &info->head));
 }
 
@@ -45,7 +49,7 @@ static char	**sb_assign_temp(t_pipex *info, const char *s, int *i, int *len)
 		(*i)++;
 	temp = ft_split_cmd(&s[*i], ' ', &info->head);
 	if (temp == NULL)
-		return (perror(info->shell), NULL);
+		return (NULL);
 	while (temp[*len] != NULL)
 		(*len)++;
 	return (temp);
@@ -60,13 +64,13 @@ char	**px_ultra_split(const char *s, t_pipex *info)
 
 	temp = sb_assign_temp(info, s, &i, &len);
 	if (temp == NULL)
-		return (perror(info->shell), NULL);
+		return (NULL);
 	box = lm_malloc(sizeof(char *), len + 2, &info->head);
 	if (box == NULL)
-		return (perror(info->shell), NULL);
+		return (NULL);
 	box[0] = sb_cat_path(s, i, info);
 	if (box[0] == NULL)
-		return (perror(info->shell), NULL);
+		return (NULL);
 	i = 1;
 	while (i < len + 1)
 	{
