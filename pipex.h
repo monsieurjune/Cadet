@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 06:37:50 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 00:13:56 by tponutha         ###   ########.fr       */
+/*   Created: 2023/06/09 03:57:42 by tponutha          #+#    #+#             */
+/*   Updated: 2023/06/09 03:59:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	px_pipex_first_init(t_pipex *info, int ac, char **av, char **env);
 void	px_pipex_second_init(t_pipex *info, int cmp);
 
 /**/
-void	px_calling_child(t_pipex *info);
+void	px_calling_child(t_pipex *info, int extra);
 
 /**/
 char	**px_ultra_split(const char *s, t_pipex *info);

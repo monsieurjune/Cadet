@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 09:43:28 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 00:03:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 04:19:00 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,6 @@ void	px_exit(int isexe)
 	}
 	exit(0);
 }
-
-// if (ft_strrchr(cmd[0], '/') != NULL)
-			// 	if (access(cmd[0], X_OK) == -1)
-			// 		px_path_perror(info, cmd[0]);
-			// if (ft_strrchr(cmd[0], '/') == NULL)
-			// 	px_cmd_perror(info, cmd[0]);
 
 int	px_cmd_check(char *cmd, t_pipex *info)
 {

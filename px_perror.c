@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:03:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/08 10:08:54 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 04:18:43 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static char	*sb_half_msg(t_pipex *info, char *s, int len)
 	char	*msg2;
 	char	*msg;
 
-	
 	msg1 = ft_strjoin(info->shell, ": ", &info->head);
 	if (msg1 == NULL)
 		return (NULL);
@@ -82,24 +81,19 @@ void	px_cmd_perror(t_pipex *info, char *s)
 	}
 	ft_putstr_fd(msg2, STDERR_FILENO, info->shell);
 	lm_free(msg1, &info->head);
-	lm_free(msg2, &info->head); 
+	lm_free(msg2, &info->head);
 }
 
 void	px_path_perror(t_pipex *info, const char *path)
 {
 	char	*msg1;
-	char	*msg2;
 	char	*msg;
 
 	msg1 = ft_strjoin(info->shell, ": ", &info->head);
 	if (msg1 == NULL)
 		return (perror(info->shell));
-	msg2 = ft_strjoin(path, ": ", &info->head);
-	if (msg2 == NULL)
-		return (perror(info->shell), lm_free(msg1, &info->head));
-	msg = ft_strjoin(msg1, msg2, &info->head);
+	msg = ft_strjoin(msg1, path, &info->head);
 	lm_free(msg1, &info->head);
-	lm_free(msg2, &info->head);
 	if (msg == NULL)
 		return (perror(info->shell));
 	perror(msg);

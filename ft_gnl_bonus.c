@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_gnl.c                                           :+:      :+:    :+:   */
+/*   ft_gnl_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 20:48:16 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/06 21:18:06 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 04:10:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ GNL INSTRUCTION
 // merge text and buff together
 // and free input text & buffer
 
-static char	*sb_buffmanage(char *text, char *buffer, size_t buffsize, t_mem **head)
+static char	*sb_buffmanage(char *text, char *buffer, size_t bs, t_mem **head)
 {
 	char	*str;
 	size_t	size;
 
-	size = ft_strclen(text, 0) + buffsize + 1;
+	size = ft_strclen(text, 0) + bs + 1;
 	str = lm_malloc(sizeof(char), size, head);
 	if (str)
 		str = ft_strcat(str, text, buffer);

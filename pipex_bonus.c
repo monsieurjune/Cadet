@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 06:40:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/08 04:18:02 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 03:59:52 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,18 @@
 int	main(int ac, char **av, char **env)
 {
 	t_pipex	info;
+	int		cmp;
+	int		in;
 
 	if (ac < 5)
 		return (EXIT_SUCCESS);
+	cmp = ft_strncmp(av[1], "here_doc", 9);
+	if (cmp == 0 && ac < 6)
+		return (EXIT_SUCCESS);
 	px_pipex_first_init(&info, ac, av, env);
-	px_pipex_second_init(&info, ft_strncmp(av[1], "here_doc", 8));
-	px_calling_child(&info);
+	in = px_heredoc(&info, cmp);
+	px_pipex_second_init(&info, cmp);
+	px_calling_child(&info, in);
 	return (errno);
 }
 

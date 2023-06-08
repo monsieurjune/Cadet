@@ -6,18 +6,21 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:04:17 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 00:08:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 04:17:31 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	sb_read_infile(t_pipex *info, char **cmd)
+static void	sb_read_infile(t_pipex *info, char **cmd, int extra)
 {
 	int	e;
 	int	in;
 
-	in = px_open(info->av[1], O_RDONLY, 0, info);
+	if (extra == -1)
+		in = px_open(info->av[1], O_RDONLY, 0, info);
+	else
+		in = extra;
 	if (in != -1)
 	{
 		e = px_double_dup(cmd[0], in, info->pbox[1][1], info);
@@ -55,12 +58,12 @@ static void	sb_write_outfile(t_pipex *info, char **cmd, int i)
 	px_exit(out);
 }
 
-static void	sb_child_process(t_pipex *info, char **cmd, int i)
+static void	sb_child_process(t_pipex *info, char **cmd, int i, int extra)
 {
 	int	e;
 
 	if (i == 0)
-		return (sb_read_infile(info, cmd));
+		return (sb_read_infile(info, cmd, extra));
 	else if (i == info->cmd_len - 1)
 		return (sb_write_outfile(info, cmd, i));
 	else
@@ -86,15 +89,15 @@ void	sb_big_wait(t_pipex *info)
 	{
 		if (info->child[i] != -1)
 		{
-			e = px_waitpid(info->child[i], &stat, 0, info->shell);
-			if (e != -1 && stat != 0)
+			e = px_waitpid(info->child[i], &stat, WUNTRACED, info->shell);
+			if (e != -1)
 				errno = WEXITSTATUS(stat) % 255;
 		}
 		i++;
 	}
 }
 
-void	px_calling_child(t_pipex *info)
+void	px_calling_child(t_pipex *info, int extra)
 {
 	int		i;
 	int		pid;
@@ -109,7 +112,7 @@ void	px_calling_child(t_pipex *info)
 			cmd = px_ultra_split(info->av[info->start + i], info);
 			if (cmd == NULL && errno != 0)
 				perror(info->shell);
-			return (sb_child_process(info, cmd, i));
+			return (sb_child_process(info, cmd, i, extra));
 		}
 		else
 			info->child[i] = pid;
