@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 06:37:50 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/07 14:56:29 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:18:21 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_pipex
 }	t_pipex;
 
 /**/
-int		px_open(const char *path, int oflag, unsigned int mode, const char *msg);
+int		px_open(const char *path, int oflag, unsigned int mode, t_pipex *info);
 int		px_close(int fd, const char *msg);
 int		px_fork(const char *msg);
 int		px_waitpid(int pid, int *stat, int option, const char *msg);
@@ -55,7 +55,7 @@ char	**px_ultra_split(const char *s, t_pipex *info);
 
 void	ft_putstr_fd(const char *s, int fd, const char *msg);
 void	px_cmd_perror(t_pipex *info, char *s);
-void	px_path_perror(t_pipex *info, char *path);
+void	px_path_perror(t_pipex *info, const char *path);
 
 // void	px_close_pipe(t_pipex *info, int n);
 void	px_close_pipe(t_pipex *info);

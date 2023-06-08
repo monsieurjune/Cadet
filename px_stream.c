@@ -6,26 +6,19 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 05:48:51 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/07 14:56:47 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:14:26 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	px_open(const char *path, int oflag, unsigned int mode, const char *msg)
+int	px_open(const char *path, int oflag, unsigned int mode, t_pipex *info)
 {
-	int	fd;
+	int		fd;
 
-	(void)msg;
 	fd = open(path, oflag, mode);
 	if (fd == -1)
-	{
-		ft_putstr_fd(msg, STDERR_FILENO, msg);
-		ft_putstr_fd(": ", STDERR_FILENO, msg);
-		ft_putstr_fd(path, STDERR_FILENO, msg);
-		ft_putstr_fd(": ", STDERR_FILENO, msg);
-		perror("");
-	}
+		px_path_perror(info, path);
 	return (fd);
 }
 

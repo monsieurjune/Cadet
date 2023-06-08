@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 06:40:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/07 13:05:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/08 04:18:02 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int ac, char **av, char **env)
 	px_pipex_first_init(&info, ac, av, env);
 	px_pipex_second_init(&info, ft_strncmp(av[1], "here_doc", 8));
 	px_calling_child(&info);
-	return (0);
+	return (errno);
 }
 
 /*

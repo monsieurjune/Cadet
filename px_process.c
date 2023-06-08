@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:04:17 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/07 15:06:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/08 10:06:30 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static void	sb_read_infile(t_pipex *info, char **cmd)
 {
-	int	e;
 	int	in;
 
-	e = 0;
-	in = px_open(info->av[1], O_RDONLY, 0, info->shell);
+	in = px_open(info->av[1], O_RDONLY, 0, info);
 	if (in != -1)
 	{
 		if (px_dup2(in, STDIN_FILENO, info->shell) != -1 && \
@@ -26,7 +24,7 @@ static void	sb_read_infile(t_pipex *info, char **cmd)
 			cmd != NULL)
 		{
 			px_close_pipe(info);
-			e = execve(cmd[0], cmd, info->env);
+			execve(cmd[0], cmd, info->env);
 		}
 		else
 		{
@@ -36,12 +34,11 @@ static void	sb_read_infile(t_pipex *info, char **cmd)
 		px_close(in, info->shell);
 	}
 	lm_flush(&info->head);
-	exit(e);
+	// exit(e);
 }
 
 static void	sb_write_outfile(t_pipex *info, char **cmd, int i)
 {
-	int	e;
 	int	oflag;
 	int	out;
 
@@ -49,7 +46,7 @@ static void	sb_write_outfile(t_pipex *info, char **cmd, int i)
 		oflag = O_WRONLY | O_CREAT | O_TRUNC;
 	else
 		oflag = O_WRONLY | O_CREAT | O_APPEND;
-	out = px_open(info->av[info->ac - 1], oflag, 0644, info->shell);
+	out = px_open(info->av[info->ac - 1], oflag, 0644, info);
 	if (out != -1)
 	{
 		if (px_dup2(info->pbox[i][0], STDIN_FILENO, info->shell) != -1 && \
@@ -57,7 +54,7 @@ static void	sb_write_outfile(t_pipex *info, char **cmd, int i)
 			cmd != NULL)
 		{
 			px_close_pipe(info);
-			e = execve(cmd[0], cmd, info->env);
+			execve(cmd[0], cmd, info->env);
 		}
 		else
 		{
@@ -67,14 +64,11 @@ static void	sb_write_outfile(t_pipex *info, char **cmd, int i)
 		px_close(out, info->shell);
 	}
 	lm_flush(&info->head);
-	exit(e);
+	// exit(e);
 }
 
 static void	sb_child_process(t_pipex *info, char **cmd, int i)
 {
-	int		e;
-
-	e = 0;
 	if (i == 0)
 		return (sb_read_infile(info, cmd));
 	else if (i == info->cmd_len - 1)
@@ -86,7 +80,7 @@ static void	sb_child_process(t_pipex *info, char **cmd, int i)
 			cmd != NULL)
 		{
 			px_close_pipe(info);
-			e = execve(cmd[0], cmd, info->env);
+			execve(cmd[0], cmd, info->env);
 		}
 		else
 		{
@@ -94,7 +88,7 @@ static void	sb_child_process(t_pipex *info, char **cmd, int i)
 			perror(info->shell);
 		}
 		lm_flush(&info->head);
-		exit(e);
+		exit(errno);
 	}
 }
 
@@ -109,9 +103,9 @@ void	sb_big_wait(t_pipex *info)
 	{
 		if (info->child[i] != -1)
 		{
-			e = px_waitpid(info->child[i], &stat, WUNTRACED, info->shell);
+			e = px_waitpid(info->child[i], &stat, 0, info->shell);
 			if (e != -1 && stat != 0)
-				px_cmd_perror(info, info->av[info->start + i]);
+				errno = WEXITSTATUS(stat);
 		}
 		i++;
 	}
@@ -132,8 +126,17 @@ void	px_calling_child(t_pipex *info)
 			cmd = px_ultra_split(info->av[info->start + i], info);
 			if (cmd == NULL)
 				perror(info->shell);
-			else if (access(cmd[0], X_OK) == -1)
-				px_path_perror(info, cmd[0]);
+			
+
+			if (ft_strrchr(cmd[0], '/') != NULL)
+				if (access(cmd[0], X_OK) == -1)
+					px_path_perror(info, cmd[0]);
+			if (ft_strrchr(cmd[0], '/') == NULL)
+				px_cmd_perror(info, cmd[0]);
+
+
+
+				
 			return (sb_child_process(info, cmd, i));
 		}
 		else
