@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:43:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/07 13:51:10 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/08 23:22:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static char	**sb_assign_temp(t_pipex *info, const char *s, int *i, int *len)
 {
 	char	**temp;
 
+	if (s == NULL)
+		return (lm_calloc(sizeof(char), 1, &info->head));
 	*i = 0;
 	*len = 0;
 	while (s[*i] == ' ' && s[*i] != 0)

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 06:37:50 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/07 17:18:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:13:56 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,9 @@ void	px_path_perror(t_pipex *info, const char *path);
 // void	px_close_pipe(t_pipex *info, int n);
 void	px_close_pipe(t_pipex *info);
 
+/**/
+void	px_exit(int isexe);
+int		px_cmd_check(char *cmd, t_pipex *info);
+int		px_double_dup(char *cmd, int r, int w, t_pipex *info);
 
 #endif

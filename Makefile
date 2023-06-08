@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/02 14:12:15 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/07 13:34:50 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/09 00:04:17 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ LIBOBJS		= $(LIBSRCS:.c=.o)
 
 # Common file
 COMDIR		= ./
-COMFILE		= px_perror.c px_process.c px_info.c px_stream.c px_ultra_split.c
+COMFILE		= px_perror.c px_process.c px_info.c px_stream.c px_ultra_split.c \
+				px_exit.c
 COMHEADER	= ./pipex.h
 COMSRCS		= $(addprefix $(COMDIR), $(COMFILE))
 COMOBJS		= $(COMSRCS:.c=.o)

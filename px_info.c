@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 14:41:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/07 14:14:20 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:14:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int	**sb_assign_pipe(t_pipex *info)
 	i = 0;
 	while (i < err_i)
 	{
-		px_close(info->pbox[i][0], "CLOSE PIPE");
-		px_close(info->pbox[i][1], "CLOSE PIPE");
+		px_close(info->pbox[i][0], info->shell);
+		px_close(info->pbox[i][1], info->shell);
 		i++;
 	}
 	return (NULL);

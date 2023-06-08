@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:04:17 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/08 10:06:30 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:08:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,28 @@
 
 static void	sb_read_infile(t_pipex *info, char **cmd)
 {
+	int	e;
 	int	in;
 
 	in = px_open(info->av[1], O_RDONLY, 0, info);
 	if (in != -1)
 	{
-		if (px_dup2(in, STDIN_FILENO, info->shell) != -1 && \
-			px_dup2(info->pbox[1][1], STDOUT_FILENO, info->shell) != -1 && \
-			cmd != NULL)
-		{
-			px_close_pipe(info);
-			execve(cmd[0], cmd, info->env);
-		}
-		else
-		{
-			px_close_pipe(info);
-			perror(info->shell);
-		}
+		e = px_double_dup(cmd[0], in, info->pbox[1][1], info);
+		e &= px_cmd_check(cmd[0], info);
+		px_close_pipe(info);
 		px_close(in, info->shell);
+		if (e)
+			execve(cmd[0], cmd, info->env);
 	}
 	lm_flush(&info->head);
-	// exit(e);
+	px_exit(in);
 }
 
 static void	sb_write_outfile(t_pipex *info, char **cmd, int i)
 {
 	int	oflag;
 	int	out;
+	int	e;
 
 	if (info->start != 3)
 		oflag = O_WRONLY | O_CREAT | O_TRUNC;
@@ -49,46 +44,34 @@ static void	sb_write_outfile(t_pipex *info, char **cmd, int i)
 	out = px_open(info->av[info->ac - 1], oflag, 0644, info);
 	if (out != -1)
 	{
-		if (px_dup2(info->pbox[i][0], STDIN_FILENO, info->shell) != -1 && \
-			px_dup2(out, STDOUT_FILENO, info->shell) != -1 && \
-			cmd != NULL)
-		{
-			px_close_pipe(info);
-			execve(cmd[0], cmd, info->env);
-		}
-		else
-		{
-			px_close_pipe(info);
-			perror(info->shell);
-		}
+		e = px_double_dup(cmd[0], info->pbox[i][0], out, info);
+		e &= px_cmd_check(cmd[0], info);
+		px_close_pipe(info);
 		px_close(out, info->shell);
+		if (e)
+			execve(cmd[0], cmd, info->env);
 	}
 	lm_flush(&info->head);
-	// exit(e);
+	px_exit(out);
 }
 
 static void	sb_child_process(t_pipex *info, char **cmd, int i)
 {
+	int	e;
+
 	if (i == 0)
 		return (sb_read_infile(info, cmd));
 	else if (i == info->cmd_len - 1)
 		return (sb_write_outfile(info, cmd, i));
 	else
 	{
-		if (px_dup2(info->pbox[i][0], STDIN_FILENO, info->shell) != -1 && \
-			px_dup2(info->pbox[i + 1][1], STDOUT_FILENO, info->shell) != -1 && \
-			cmd != NULL)
-		{
-			px_close_pipe(info);
+		e = px_double_dup(cmd[0], info->pbox[i][0], info->pbox[i + 1][1], info);
+		e &= px_cmd_check(cmd[0], info);
+		px_close_pipe(info);
+		if (e)
 			execve(cmd[0], cmd, info->env);
-		}
-		else
-		{
-			px_close_pipe(info);
-			perror(info->shell);
-		}
 		lm_flush(&info->head);
-		exit(errno);
+		px_exit(1);
 	}
 }
 
@@ -105,7 +88,7 @@ void	sb_big_wait(t_pipex *info)
 		{
 			e = px_waitpid(info->child[i], &stat, 0, info->shell);
 			if (e != -1 && stat != 0)
-				errno = WEXITSTATUS(stat);
+				errno = WEXITSTATUS(stat) % 255;
 		}
 		i++;
 	}
@@ -124,19 +107,8 @@ void	px_calling_child(t_pipex *info)
 		if (pid == 0)
 		{
 			cmd = px_ultra_split(info->av[info->start + i], info);
-			if (cmd == NULL)
+			if (cmd == NULL && errno != 0)
 				perror(info->shell);
-			
-
-			if (ft_strrchr(cmd[0], '/') != NULL)
-				if (access(cmd[0], X_OK) == -1)
-					px_path_perror(info, cmd[0]);
-			if (ft_strrchr(cmd[0], '/') == NULL)
-				px_cmd_perror(info, cmd[0]);
-
-
-
-				
 			return (sb_child_process(info, cmd, i));
 		}
 		else
