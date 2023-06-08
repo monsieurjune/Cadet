@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 09:43:28 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 04:19:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 04:37:39 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	px_cmd_check(char *cmd, t_pipex *info)
 		return (1);
 	}
 	px_cmd_perror(info, cmd);
+	errno = ENOENT;
 	return (0);
 }
 

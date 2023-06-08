@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 03:56:45 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 04:13:28 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 04:24:58 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ int	main(int ac, char **av, char **env)
 	px_pipex_first_init(&info, ac, av, env);
 	px_pipex_second_init(&info, 1);
 	px_calling_child(&info, -1);
-	return (0);
+	return (errno);
 }
