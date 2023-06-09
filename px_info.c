@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 14:41:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 01:17:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:18:24 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	**sb_assign_pipe(t_pipex *info)
 	{
 		if (pipe(info->pbox[i]) == -1)
 		{
-			perror("PIPE");
+			perror(info->shell);
 			err_i = i;
 			break ;
 		}
