@@ -6,13 +6,19 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/10 17:23:02 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/11 05:09:38 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name of Program
 NAME		= fractol
-
+ifeq ($(uname), Linux)
+	MLX_DIR = $(LINUX_DIR)
+	MLX_FLAG = $(LINUX_FLAG)
+else
+	MLX_DIR = $(MAC_DIR)
+	MLX_FLAG = $(MAC_FLAG)
+endif
 
 # Compiler Porperties
 CC		= cc
@@ -25,15 +31,6 @@ MAC_DIR		= ./mlx_mac
 MAC_FLAG	= -framework OpenGL -framework AppKit
 LINUX_DIR	= ./mlx_linux
 LINUX_FLAG	= -L/usr/lib -lXext -lz -lX11
-
-ifeq ($(uname), $("Linux"))
-	MLX_DIR = $(LINUX_DIR)
-	MLX_FLAG = $(LINUX_FLAG)
-	CFLAG += -I/usr/include
-else
-	MLX_DIR = $(MAC_DIR)
-	MLX_FLAG = $(MAC_FLAG)
-endif
 
 MLX		= make -C $(MLX_DIR)
 LIBFLAG	= -L$(MLX_DIR) -lmlx -lm
