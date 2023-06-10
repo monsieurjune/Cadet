@@ -6,25 +6,37 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/03 17:48:21 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/10 17:23:02 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name of Program
-NAME	= fractol
-MLX_DIR	= ./mlx_mac
+NAME		= fractol
+
 
 # Compiler Porperties
 CC		= cc
-CFLAG	= -Wall -Werror -Wextra -I$(MLX_DIR)
+CFLAG	= -Wall -Werror -Wextra -O3 -I$(MLX_DIR)
 DFLAG	= -fsanitize=address
 RM		= rm -f
 
 # MLX Porperties
-MLXFLAG	= -framework OpenGL -framework AppKit
-LIBFLAG	= -L$(MLX_DIR) -lmlx -lm
-MLX		= make -C $(MLX_DIR)
+MAC_DIR		= ./mlx_mac
+MAC_FLAG	= -framework OpenGL -framework AppKit
+LINUX_DIR	= ./mlx_linux
+LINUX_FLAG	= -L/usr/lib -lXext -lz -lX11
 
+ifeq ($(uname), $("Linux"))
+	MLX_DIR = $(LINUX_DIR)
+	MLX_FLAG = $(LINUX_FLAG)
+	CFLAG += -I/usr/include
+else
+	MLX_DIR = $(MAC_DIR)
+	MLX_FLAG = $(MAC_FLAG)
+endif
+
+MLX		= make -C $(MLX_DIR)
+LIBFLAG	= -L$(MLX_DIR) -lmlx -lm
 
 # Source Code
 MAN_DIR		= ./
@@ -40,7 +52,7 @@ MAN_OBJS	= $(MAN_SRCS:.c=.o)
 # Main Rules
 $(NAME):	$(MAN_OBJS)
 	$(MLX)
-	$(CC) $(CFLAG) $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
+	$(CC) $(CFLAG) $(MAN_OBJS) $(LIBFLAG) $(MLX_FLAG) -o $(NAME)
 
 all:	$(NAME)
 
