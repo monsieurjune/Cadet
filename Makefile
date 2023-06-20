@@ -6,17 +6,17 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/10 17:23:02 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/20 09:13:39 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name of Program
-NAME		= fractol
+NAME		= so_long
 
 
 # Compiler Porperties
 CC		= cc
-CFLAG	= -Wall -Werror -Wextra -O3 -I$(MLX_DIR)
+CFLAG	= -Wall -Werror -Wextra -O3 -g
 DFLAG	= -fsanitize=address
 RM		= rm -f
 
@@ -26,7 +26,7 @@ MAC_FLAG	= -framework OpenGL -framework AppKit
 LINUX_DIR	= ./mlx_linux
 LINUX_FLAG	= -L/usr/lib -lXext -lz -lX11
 
-ifeq ($(uname), $("Linux"))
+ifeq ($(shell uname), Linux)
 	MLX_DIR = $(LINUX_DIR)
 	MLX_FLAG = $(LINUX_FLAG)
 	CFLAG += -I/usr/include
@@ -40,8 +40,8 @@ LIBFLAG	= -L$(MLX_DIR) -lmlx -lm
 
 # Source Code
 MAN_DIR		= ./
-MAN_HEADER	= ./fractol.h
-MAN_FILE	= fractol.c
+MAN_HEADER	= ./so_long.h
+MAN_FILE	= so_long.c
 MAN_SRCS	= $(addprefix $(MAN_DIR), $(MAN_FILE))
 MAN_OBJS	= $(MAN_SRCS:.c=.o)
 
