@@ -6,18 +6,16 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/20 09:13:39 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/21 17:58:14 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name of Program
 NAME		= so_long
 
-
 # Compiler Porperties
 CC		= cc
-CFLAG	= -Wall -Werror -Wextra -O3 -g
-DFLAG	= -fsanitize=address
+CFLAG	= -Wall -Werror -Wextra -O3
 RM		= rm -f
 
 # MLX Porperties
@@ -69,6 +67,10 @@ re:	fclean all
 norm:
 	@norminette -R CheckForbiddenSourceHeader $(MAN_SRCS) $(MAN_HEADER)
 
-debug_man:	$(MAN_OBJS)
+debug_san:	$(MAN_OBJS)
 	$(MLX)
-	$(CC) $(CFLAG) $(DFLAG) $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
+	$(CC) $(CFLAG) -g -fsanitize=address $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
+
+debug_leak:	$(MAN_OBJS)
+	$(MLX)
+	$(CC) $(CFLAG) -g $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
