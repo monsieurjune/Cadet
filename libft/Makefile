@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 22:05:44 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/22 23:15:02 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/27 00:28:42 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,21 @@ MAN = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 	ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_substr.c \
 	ft_tolower.c ft_toupper.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
 	ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-	ft_malloc.c ft_flush.c ft_free.c ft_strclen.c ft_strndup.c ft_strcdup.c
+	ft_malloc.c ft_flush.c ft_free.c ft_strclen.c ft_strndup.c ft_strcdup.c \
+	get_next_line.c
 
 BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 
-COM = cc
+COM		= cc
 
-FLAG = -Wall -Werror -Wextra
+FLAG	= -Wall -Werror -Wextra -g -fsanitize=address,undefined
 
-RM = rm -f
+# ifdef DEBUG
+#     FLAG += $(DFLAG)
+# endif
+
+RM		= rm -f
 
 SRCMAN = $(addprefix $(DIRC), $(MAN))
 

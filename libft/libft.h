@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 05:10:49 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/22 23:11:30 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/26 22:39:23 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,22 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 # ifndef SIZE_MAX
 #  if __WORDSIZE == 64
 #   define SIZE_MAX 18446744073709551615UL
 #  else
 #   define SIZE_MAX 4294967295U
+#  endif
+# endif
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# else
+#  if BUFFER_SIZE <= 0 || BUFFER_SIZE > 0xfffffff
+#   undef BUFFER_SIZE
+#   define BUFFER_SIZE 1024
 #  endif
 # endif
 
@@ -78,10 +88,11 @@ char	*ft_strcdup(const char *src, char c, t_list **head); //
 char	*ft_substr(char const *s, unsigned int start, size_t len, t_list **head); //
 char	*ft_strjoin(char const *s1, char const *s2, t_list **head); //
 char	*ft_strtrim(char const *s1, char const *set, t_list **head); //
-char	**ft_split(char const *s, char c, t_list **head); //
-char	*ft_itoa(int n, t_list **head); //
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char), t_list **head); //
-void	ft_striteri(char *s, void (*f)(unsigned int, char*)); //
+char	**ft_split(char const *s, char c, t_list **head);
+char	*ft_itoa(int n, t_list **head);
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char), t_list **head);
+void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+char	*get_next_line(int fd, t_list **head);
 
 /*		PART II (fd)*/
 void	ft_putchar_fd(char c, int fd);
