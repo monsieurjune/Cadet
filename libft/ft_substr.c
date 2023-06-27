@@ -6,13 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 01:27:00 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/22 18:29:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:42:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len, t_list **head)
+char	*ft_substr(char const *s, unsigned int s0, size_t len, t_list **head)
 {
 	size_t	i;
 	size_t	slen;
@@ -21,7 +21,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len, t_list **head)
 	if (!s)
 		return (NULL);
 	slen = ft_strlen(s);
-	i = (size_t)start;
+	i = (size_t)s0;
 	if (i > slen)
 		return (ft_calloc(1, sizeof(char), head));
 	if (len + i > slen)

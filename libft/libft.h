@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 05:10:49 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/26 22:39:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:42:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,19 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 
 /*		PART II	(heap)	*/
-void	*ft_malloc(size_t byte, size_t size, t_list **head); //
-void	*ft_calloc(size_t byte, size_t size, t_list **head); //
-void	ft_free(void *mem, t_list **head); //
-void	ft_flush(t_list **head); //
-char	*ft_strdup(const char *src, t_list **head); //
-char	*ft_strndup(const char *src, size_t len, t_list **head); //
-char	*ft_strcdup(const char *src, char c, t_list **head); //
-char	*ft_substr(char const *s, unsigned int start, size_t len, t_list **head); //
-char	*ft_strjoin(char const *s1, char const *s2, t_list **head); //
-char	*ft_strtrim(char const *s1, char const *set, t_list **head); //
+void	*ft_malloc(size_t byte, size_t size, t_list **head);
+void	*ft_calloc(size_t byte, size_t size, t_list **head);
+void	ft_free(void *mem, t_list **head);
+void	ft_flush(t_list **head);
+char	*ft_strdup(const char *src, t_list **head);
+char	*ft_strndup(const char *src, size_t len, t_list **head);
+char	*ft_strcdup(const char *src, char c, t_list **head);
+char	*ft_substr(char const *s, unsigned int s0, size_t len, t_list **head);
+char	*ft_strjoin(char const *s1, char const *s2, t_list **head);
+char	*ft_strtrim(char const *s1, char const *set, t_list **head);
 char	**ft_split(char const *s, char c, t_list **head);
 char	*ft_itoa(int n, t_list **head);
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char), t_list **head);
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char), t_list **h);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*get_next_line(int fd, t_list **head);
 
