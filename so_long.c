@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 08:55:04 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/26 23:57:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/27 13:40:02 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,9 @@ SO_LONG INSTRUCTION
 int	main(int ac, char **av)
 {
 	t_data	data;
-	char	*cmp;
 
 	if (ac != 2)
 		return (EXIT_SUCCESS);
-	cmp = ft_strchr(ft_strrchr(av[1], '/'), '.');
-	if (ft_strncmp(cmp, ".ber", sizeof(".ber") - 1) != 0)
-	{
-		sl_print_error("Not a '.ber' files");
-		return (EXIT_SUCCESS);
-	}
 	sl_mapping(av[1], &data);
 	ft_flush(&data.head);
 	return (0);

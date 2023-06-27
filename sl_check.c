@@ -6,52 +6,70 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:09:27 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/27 00:35:19 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:00:33 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	sb_isnt_x_wall(t_data *data)
+char	**sb_copy_map(char **box, int height, t_list **head)
 {
-	int	x;
+	char	**copy;
+	int		y;
 
-	x = 0;
-	while (x < data->width)
+	copy = ft_malloc(sizeof(char *), height + 1, head);
+	if (copy == NULL)
+		return (NULL);
+	y = 0;
+	while (box[y] != NULL)
 	{
-		if (data->map[0][x] != WALL)
-			return (sl_print_error("Map isn't surround by wall"), 1);
-		x++;
+		copy[y] = ft_strdup(box[y], head);
+		if (copy[y] == NULL)
+			return (ft_flush(head), NULL);
+		y++;
 	}
-	x = 0;
-	while (x < data->width)
-	{
-		if (data->map[data->height - 1][x] != WALL)
-			return (sl_print_error("Map isn't surround by wall"), 1);
-		x++;
-	}
-	return (0);
+	copy[y] = NULL;
+	return (copy);
 }
 
-static int	sb_isnt_y_wall(t_data *data)
+int	sl_copy_data(t_data data, t_data *copy)
 {
-	int	y;
-	
-	y = 0;
-	while (y < data->height)
+	copy->width = data.width;
+	copy->height = data.height;
+	copy->is_surround = data.is_surround;
+	copy->p_pos[0] = data.p_pos[0];
+	copy->p_pos[1] = data.p_pos[1];
+	copy->p_pos[0] = data.p_pos[0];
+	copy->p_pos[1] = data.p_pos[1];
+	copy->exit_no = data.exit_no;
+	copy->player_no = data.player_no;
+	copy->col_point = data.col_point;
+	copy->head = NULL;
+	copy->map = sb_copy_map(data.map, data.height, &copy->head);
+	return (copy->map == NULL);
+}
+
+void	sl_floodfill(t_data *copy, int x, int y)
+{
+	if ((x == 0 || x == copy->width - 1 || y == 0 || y == copy->height - 1) \
+		&& copy->map[y][x] != WALL)
 	{
-		if (data->map[y][0] != WALL)
-			return (sl_print_error("Map isn't surround by wall"), 1);
-		y++;
+		copy->is_surround = 0;
+		return ;
 	}
-	y = 0;
-	while (y < data->height)
-	{
-		if (data->map[y][data->width - 1] != WALL)
-			return (sl_print_error("Map isn't surround by wall"), 1);
-		y++;
-	}
-	return (0);
+	else if (copy->map[y][x] == WALL)
+		return ;
+	else if (copy->map[y][x] == COLLECT)
+		copy->col_point -= 1;
+	else if (copy->map[y][x] == EXIT)
+		copy->exit_no -= 1;
+	else if (copy->map[y][x] == PLAYER)
+		copy->player_no -= 1;
+	copy->map[y][x] = WALL;
+	sl_floodfill(copy, x - 1, y);
+	sl_floodfill(copy, x + 1, y);
+	sl_floodfill(copy, x, y - 1);
+	sl_floodfill(copy, x, y + 1);
 }
 
 static int	sb_count_map(t_data *data)
@@ -71,6 +89,8 @@ static int	sb_count_map(t_data *data)
 				data->exit_no += 1;
 			else if (data->map[y][x] == COLLECT)
 				data->col_point += 1;
+			else if (ft_strchr(LEGAL, data->map[y][x]) == NULL)
+				return (1);
 			x++;
 		}
 		y++;
@@ -83,19 +103,18 @@ int	sl_mapcheck(t_data *data)
 	data->col_point = 0;
 	data->exit_no = 0;
 	data->player_no = 0;
-	if (sb_isnt_x_wall(data))
-		return (1);
-	if (sb_isnt_y_wall(data))
-		return (1);
+	data->is_surround = 1;
 	if (sb_count_map(data))
 	{
 		ft_putstr_fd("Error\n", STDERR_FILENO);
 		if (data->col_point < 1)
 			ft_putstr_fd("Map must has >=1 Collectable\n", STDERR_FILENO);
-		if (data->exit_no != 1)
-			ft_putstr_fd("Map must has 1 Exit", STDERR_FILENO);
-		if (data->player_no != 1)
-			ft_putstr_fd("Map must has 1 Player", STDERR_FILENO);
+		else if (data->exit_no != 1)
+			ft_putstr_fd("Map must has 1 Exit\n", STDERR_FILENO);
+		else if (data->player_no != 1)
+			ft_putstr_fd("Map must has 1 Player\n", STDERR_FILENO);
+		else
+			ft_putstr_fd("Map contain Illegal charactor(s)\n", STDERR_FILENO);
 		return (1);
 	}
 	return (0);

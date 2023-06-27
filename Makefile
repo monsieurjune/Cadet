@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/27 00:41:16 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/27 17:36:08 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,24 +19,12 @@ CFLAG	= -Wall -Werror -Wextra -O3 -g -fsanitize=address,undefined
 RM		= rm -f
 
 # MLX Porperties
-MAC_DIR		= ./mlx_mac
-MAC_FLAG	= -framework OpenGL -framework AppKit
-LINUX_DIR	= ./mlx_linux
-LINUX_FLAG	= -L/usr/lib -lXext -lz -lX11
 LIBFT_DIR	= ./libft
-
-ifeq ($(shell uname), Linux)
-	MLX_DIR = $(LINUX_DIR)
-	MLX_FLAG = $(LINUX_FLAG)
-	CFLAG += -I/usr/include
-else
-	MLX_DIR = $(MAC_DIR)
-	MLX_FLAG = $(MAC_FLAG)
-endif
-
-MLX		= make -C $(MLX_DIR)
-LIBFT	= make -C $(LIBFT_DIR)
-LIBFLAG	= -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lm -lft
+MLX_DIR		= ./mlx
+MLX_FLAG	= -framework OpenGL -framework AppKit
+MLX			= make -C $(MLX_DIR)
+LIBFT		= make -C $(LIBFT_DIR)
+LIBFLAG		= -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lm -lft
 
 # Source Code
 MAN_DIR		= ./

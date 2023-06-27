@@ -6,16 +6,15 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 08:55:07 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/27 00:16:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:36:21 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include "./mlx_mac/mlx.h"
+# include "./mlx/mlx.h"
 # include <fcntl.h>
 # include "./libft/libft.h"
-#include <stdio.h>
 
 # ifndef ESC
 #  define ESC 53
@@ -114,6 +113,7 @@ typedef struct s_data
 	int				player_no;
 	int				exit_no;
 	int				col_point;
+	int				is_surround;
 	struct s_list	*head;
 }	t_data;
 
