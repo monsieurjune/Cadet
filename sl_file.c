@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:26:57 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/27 16:51:23 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 23:23:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	sb_count_nl(char *path)
 	if (fd == -1)
 		return (-1);
 	cmp = ft_strchr(ft_strrchr(path, '/'), '.');
-	if (ft_strncmp(cmp, ".ber", sizeof(".ber") - 1) != 0)
+	if (ft_strncmp(cmp, ".ber", sizeof(".ber")) != 0)
 		return (sl_print_error("Not a '.ber' files"), close(fd), -1);
 	nl = 0;
 	n = read(fd, &buff, 1);

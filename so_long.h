@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 08:55:07 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/28 20:47:45 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 23:14:23 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	sl_init_solong(t_data *data, char *title);
 
 /*		*/
 int		sl_key(int keycode, t_data *data);
-int		sl_red(int keycode, t_data *data);
+int		sl_red(t_data *data);
 
 /*		*/
 int		sl_open(char *path, int option);
