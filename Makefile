@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/28 20:30:31 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/28 21:02:18 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ MLX_DIR		= ./mlx
 MLX_FLAG	= -framework OpenGL -framework AppKit
 MLX			= make -C $(MLX_DIR)
 LIBFT		= make -C $(LIBFT_DIR)
-LIBFLAG		= -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lm -lft
+LIBFLAG		= -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft
 
 # Source Code
 MAN_DIR		= ./
@@ -62,10 +62,10 @@ re:	fclean all
 norm:
 	@norminette -R CheckForbiddenSourceHeader $(MAN_SRCS) $(MAN_HEADER) $(LIBFT_DIR)/*.c $(LIBFT_DIR)/*.h
 
-debug_san:	$(MAN_OBJS)
-	$(MLX)
-	$(CC) $(CFLAG) -g -fsanitize=address,undefined $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
+# debug_san:	$(MAN_OBJS)
+# 	$(MLX)
+# 	$(CC) $(CFLAG) -g -fsanitize=address,undefined $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
 
-debug_leak:	$(MAN_OBJS)
-	$(MLX)
-	$(CC) $(CFLAG) -g $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)
+# debug_leak:	$(MAN_OBJS)
+# 	$(MLX)
+# 	$(CC) $(CFLAG) -g $(MAN_OBJS) $(LIBFLAG) $(MLXFLAG) -o $(NAME)

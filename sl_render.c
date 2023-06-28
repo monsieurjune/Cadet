@@ -6,11 +6,10 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:51:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/28 20:08:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:03:53 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# define GL_SILENCE_DEPRECATION
 #include "so_long.h"
 
 void	sl_image_free(t_data *data)
@@ -79,7 +78,7 @@ static void	sb_render_map(t_data *data)
 		x = 0;
 		while (x < data->width)
 		{
-			sb_put_image(data, x , y);
+			sb_put_image(data, x, y);
 			x++;
 		}
 		y++;

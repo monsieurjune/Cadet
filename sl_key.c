@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:07:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/28 20:48:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:04:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	sb_render_move(t_data *data, int x0, int y0)
 	void	*win;
 	int		off_x;
 	int		off_y;
-	
+
 	mlx = data->mlx;
 	win = data->window;
 	off_x = data->p_pos[1] * data->img_width;

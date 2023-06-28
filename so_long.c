@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 08:55:04 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/28 20:57:12 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:03:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	main(int ac, char **av)
 		return (EXIT_SUCCESS);
 	sl_mapping(av[1], &data);
 	sl_init_solong(&data, "so_long");
-	mlx_hook(data.window, 2, 1L<<0, sl_key, &data);
-	mlx_hook(data.window, 17, 1L<<17, sl_red, &data);
+	mlx_hook(data.window, 2, 1L << 0, sl_key, &data);
+	mlx_hook(data.window, 17, 1L << 17, sl_red, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }
