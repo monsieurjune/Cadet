@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:07:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/28 17:30:08 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:48:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,12 @@ int	sl_key(int keycode, t_data *data)
 	}
 	else
 		sb_move_player(data, keycode);
+	return (0);
+}
+
+int	sl_red(int keycode, t_data *data)
+{
+	(void)keycode;
+	sl_image_free(data);
 	return (0);
 }
