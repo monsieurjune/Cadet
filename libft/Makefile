@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 22:05:44 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/27 00:28:42 by tponutha         ###   ########.fr        #
+#    Updated: 2023/06/28 20:29:30 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 
 COM		= cc
 
-FLAG	= -Wall -Werror -Wextra -g -fsanitize=address,undefined
+FLAG	= -Wall -Werror -Wextra -O3 -std=c17#-g -fsanitize=address,undefined
 
 # ifdef DEBUG
 #     FLAG += $(DFLAG)
@@ -48,19 +48,19 @@ OBJBONUS = $(OBJMAN) $(SRCBONUS:.c=.o)
 .c.o:
 	$(COM) $(FLAG) -c $< -o $(<:.c=.o)
 
+.PHONY:	all clean fclean re
+
 all:	$(NAME)
 
 $(NAME):	$(OBJBONUS)
 	ar rcs $(NAME) $(OBJBONUS)
 
 clean:
-	$(RM) $(OBJBONUS)
+	@$(RM) $(OBJBONUS)
 
 fclean:	clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 bonus:	all
 
 re:	fclean all
-
-.PHONY:	all clean fclean re

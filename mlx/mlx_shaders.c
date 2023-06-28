@@ -1,8 +1,8 @@
 //  mlx_shaders.c
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#define GL_SILENCE_DEPRECATION
 #include <OpenGL/gl3.h>
 #include "mlx_int.h"
 

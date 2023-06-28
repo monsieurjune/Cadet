@@ -6,14 +6,14 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 08:55:07 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/27 17:36:21 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:08:16 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include "./mlx/mlx.h"
 # include <fcntl.h>
+# include "./mlx/mlx.h"
 # include "./libft/libft.h"
 
 # ifndef ESC
@@ -105,6 +105,8 @@ typedef struct s_data
 	void			*wall;
 	void			*collect;
 	void			*exit;
+	int				img_width;
+	int				img_height;
 	char			**map;
 	int				width;
 	int				height;
@@ -114,6 +116,7 @@ typedef struct s_data
 	int				exit_no;
 	int				col_point;
 	int				is_surround;
+	int				move;
 	struct s_list	*head;
 }	t_data;
 
@@ -128,8 +131,17 @@ int		sl_copy_data(t_data data, t_data *copy);
 void	sl_floodfill(t_data *copy, int x, int y);
 
 /*		*/
+void	sl_image_free(t_data *data);
+void	sl_init_solong(t_data *data, char *title);
+
+/*		*/
+int		sl_key(int keycode, t_data *data);
+
+/*		*/
 int		sl_open(char *path, int option);
 void	sl_print_error(char *second);
 void	sl_exit(t_list **head, int status);
+void	sl_drestroy_image(void *mlx, void *image);
+void	*sl_image(t_data *data, char *path, int *width, int *height);
 
 #endif

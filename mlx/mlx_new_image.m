@@ -3,7 +3,7 @@
 // by Ol
 //
 
-
+#define GL_SILENCE_DEPRECATION
 #import <Cocoa/Cocoa.h>
 #import <OpenGL/gl3.h>
 
@@ -190,8 +190,8 @@ int     mlx_destroy_image(mlx_ptr_t *mlx_ptr, mlx_img_list_t *img_todel)
     }
 
 
-  free(img_todel->buffer);
-  free(img_todel);
+//   free(img_todel->buffer);
+//   free(img_todel);
 
   //  printf("destroy image done.\n");
   return (0);

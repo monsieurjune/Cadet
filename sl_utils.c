@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 15:05:22 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/26 18:52:26 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:23:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,18 @@ void	sl_exit(t_list **head, int status)
 {
 	ft_flush(head);
 	exit(status);
+}
+
+void	*sl_image(t_data *data, char *path, int *width, int *height)
+{
+	void	*img;
+
+	img = mlx_xpm_file_to_image(data->mlx, path, width, height);
+	return (img);
+}
+
+void	sl_drestroy_image(void *mlx, void *image)
+{
+	if (image != NULL)
+		mlx_destroy_image(mlx, image);
 }

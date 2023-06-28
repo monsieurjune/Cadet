@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:09:27 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/27 17:00:33 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:10:48 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static int	sb_count_map(t_data *data)
 
 int	sl_mapcheck(t_data *data)
 {
+	data->move = 0;
 	data->col_point = 0;
 	data->exit_no = 0;
 	data->player_no = 0;
