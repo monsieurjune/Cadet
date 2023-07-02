@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/27 22:05:44 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/28 23:18:28 by tponutha         ###   ########.fr        #
+#    Updated: 2023/07/02 17:11:24 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 
 COM		= cc
 
-FLAG	= -Wall -Werror -Wextra -O3 -std=c17 -g -fsanitize=address,undefined
+FLAG	= -Wall -Werror -Wextra -O3# -g -fsanitize=address,undefined
 
 # ifdef DEBUG
 #     FLAG += $(DFLAG)

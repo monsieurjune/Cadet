@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:26:57 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/28 23:23:59 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/02 17:18:57 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static int	sb_count_nl(char *path)
 	int		n;
 	int		fd;
 
+	cmp = ft_strchr(ft_strrchr(path, '/'), '.');
+	if (ft_strncmp(cmp, ".ber", 5) != 0 || cmp == NULL)
+		return (sl_print_error("Not a '.ber' files"), -1);
 	fd = sl_open(path, O_RDONLY);
 	if (fd == -1)
 		return (-1);
-	cmp = ft_strchr(ft_strrchr(path, '/'), '.');
-	if (ft_strncmp(cmp, ".ber", sizeof(".ber")) != 0)
-		return (sl_print_error("Not a '.ber' files"), close(fd), -1);
 	nl = 0;
 	n = read(fd, &buff, 1);
 	while (n != 0 && n != -1)
@@ -92,9 +92,10 @@ static int	sb_is_not_rectangular(char **box, int nlen, t_data *data)
 	}
 	data->width = ref;
 	data->height = i;
-	if (i != nlen)
-		sl_print_error("Map isn't rectangular");
-	return (i != nlen);
+	(void)nlen;
+	// if (i != nlen)
+	// 	sl_print_error("Map isn't rectangular");
+	return (0);
 }
 
 static void	sb_find_position(t_data *data)

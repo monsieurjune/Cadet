@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 05:09:46 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/28 23:17:45 by tponutha         ###   ########.fr        #
+#    Updated: 2023/07/02 17:11:33 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		= so_long
 
 # Compiler Porperties
 CC		= cc
-CFLAG	= -Wall -Werror -Wextra -O3 -g -fsanitize=address,undefined
+CFLAG	= -Wall -Werror -Wextra -O3# -g -fsanitize=address,undefined
 RM		= rm -f
 
 # MLX Porperties
