@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:26:57 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/02 17:18:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/02 21:13:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	**sb_get_box(char *path, t_list **head, int *len)
 // i = height
 // ref = width
 
-static int	sb_is_not_rectangular(char **box, int nlen, t_data *data)
+static int	sb_is_not_rectangular(char **box, t_data *data)
 {
 	int	len;
 	int	ref;
@@ -92,9 +92,6 @@ static int	sb_is_not_rectangular(char **box, int nlen, t_data *data)
 	}
 	data->width = ref;
 	data->height = i;
-	(void)nlen;
-	// if (i != nlen)
-	// 	sl_print_error("Map isn't rectangular");
 	return (0);
 }
 
@@ -150,7 +147,7 @@ void	sl_mapping(char *path, t_data *data)
 	data->map = sb_get_box(path, &data->head, &nlen);
 	if (data->map == NULL)
 		sl_exit(&data->head, EXIT_SUCCESS);
-	if (sb_is_not_rectangular(data->map, nlen, data))
+	if (sb_is_not_rectangular(data->map, data))
 		sl_exit(&data->head, EXIT_SUCCESS);
 	if (sl_mapcheck(data))
 		sl_exit(&data->head, EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:07:12 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/28 23:19:39 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/02 21:16:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	sl_key(int keycode, t_data *data)
 
 int	sl_red(t_data *data)
 {
-	(void)data;
 	sl_image_free(data);
 	return (0);
 }
