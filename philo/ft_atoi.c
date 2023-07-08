@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 17:50:43 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/08 15:35:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/08 15:09:18 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 // NOTE : when overflow value will be negative
 
+static int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
 int	ft_atoi(const char *str)
 {
-	long	neg;
-	long	sum;
+	int	neg;
+	int	sum;
 
 	if (!str)
 		return (0);
@@ -32,7 +37,7 @@ int	ft_atoi(const char *str)
 	{
 		sum = (sum * 10) + (*str - '0');
 		if (sum < 0)
-			return (-1 * (neg != -1));
+			return (-1);
 		str++;
 	}
 	return (neg * sum);
