@@ -6,67 +6,65 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/08 18:53:53 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:27:14 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	*sb_run(void *arg)
-{
-	int		n;
-	t_philo	*philo;
+/* EVEN
+1.) odd-th philo start eat first
+	- odd-th philo call mutex on table
+	- even-th philo start thinking & idle
+	- odd-th philo start sleeping & return fork
+2.) even-th philo start eating after odd-th philo sleep
+	- even-th philo call mutex on table
+	- even-th philo start sleeping & return fork
+	- odd-th philo wake up & thinking ~1ms
+		- if there is enough fork on table then eat again
+		- else idle until there is fork
+*/
 
-	n = 0;
-	philo = (t_philo *)arg;
-	while (philo->no_die == 0)
+void	*ph_run_even(void *arg)
+{
+	t_philo	*phi;
+	int		success;
+
+	phi = (t_philo *)arg;
+	success = 0;
+	if (phi->i % 2 == 0)
+		success = ph_get_fork(phi);
+	while (success != -1)
 	{
-		if (n == 0)
-			//
-		
-		n++;	
+		if (success)
+		{
+			if (ph_eat(phi) == -1)
+				break ;
+			if (ph_sleep(phi) == -1)
+				break ;
+		}
+		success = ph_think(phi);
 	}
 	return (NULL);
 }
 
-static void	sb_mass_detach(t_thd info)
+void	ph_sim(t_philo *philo, void *f(void *))
 {
-	int	i;
+	int		i;
+	int		j;
 
 	i = 0;
-	while (i < info.n)
+	j = 0;
+	(void)f;
+	while (i < philo->info->philo_n)
 	{
-		pthread_detach(info.tbox[i]);
+		if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
+			break ;
 		i++;
 	}
-	free(info.tbox);
-}
-
-static void	sb_mass_create(t_philo *philo, t_thd *info)
-{
-	int	i;
-
-	i = 0;
-	while (i < info->n)
+	while (j < i)
 	{
-		if (pthread_create(&info->tbox[i], NULL, sb_run, &philo[i]) != 0)
-		{
-			info->n = i;
-			return ;
-		}
-		i++;
+		pthread_join(philo->id, NULL);
+		j++;
 	}
-}
-
-void	ph_sim(t_philo *philo)
-{
-	t_thd			info;
-	struct timeval	t_die;
-
-	info.tbox = malloc(sizeof(pthread_t) * philo->philo_no);
-	if (info.tbox == NULL)
-		return ;
-	sb_mass_create(philo, &info);
-	sb_mass_detach(info);
-	// 
 }

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/08 18:52:34 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:30:38 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,67 @@
 # include <string.h>
 # include <stdio.h>
 # include <pthread.h>
-# include <stdint.h>
 
 # ifndef DELAY_T
-#  define DELAY_T 2000
+#  define DELAY_T 1000
 # endif
 
 typedef pthread_mutex_t	t_mutex;
 typedef struct timeval	t_time;
-
-typedef struct	s_thd
+typedef enum	e_stat
 {
-	pthread_t	*tbox;
-	int			n;
-}	t_thd;
+	_first,
+	_take,
+	_think,
+	_idle,
+	_eat,
+	_sleep,
+	_die
+}	t_stat;
 
-typedef struct	s_philo
+typedef struct s_info
 {
-	int				i;
-	unsigned int	philo_no;
-	unsigned int	die_t;
-	unsigned int	eat_t;
-	unsigned int	sleep_t;
-	unsigned int	end_no;
-	unsigned int	life_t;
-	int				is_end;
-	int				*no_die;
-	char			*table;
+	t_time			epoch;
+	int				philo_n;
+	int				end_n;
+	unsigned int	die_ms;
+	unsigned int	eat_ms;
+	unsigned int	sleep_ms;
+	t_mutex			*lock;
+}	t_info;
+
+typedef struct s_philo
+{
+	int					i;
+	t_stat				status;
+	pthread_t			id;
+	unsigned int		life_ms;
+	const struct s_info	*info;
+	int					*who_die;
+	char				*table;
 }	t_philo;
 
-/*		from libft		*/
-int		ft_atoi(const char *str);
-void	ph_sim(t_philo *philo);
+
+/*		LIBFT'ISH THING		*/
+int				ft_philo_atoi(const char *str);
+
+/*		PHILO THING			*/
+
+/*		ph_sim.c		*/
+void			ph_sim(t_philo *philo, void *f(void *));
+void			*ph_run_even(void *arg);
+
+/*		ph_act.c		*/
+int				ph_delay(t_philo *phi, unsigned int t_max);
+int				ph_get_fork(t_philo *phi);
+int				ph_think(t_philo *phi);
+int				ph_eat(t_philo *phi);
+int				ph_sleep(t_philo *phi);
+
+/*		ph_utils.c		*/
+size_t			ft_strclen(const char *str, char c);
+long			ph_timestamp(t_time now, t_time epoch);
+void			ph_print_philo(int i, t_stat s, t_time epoch);
+int				ph_check_die(t_philo *phi);
 
 #endif

@@ -6,40 +6,11 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/08 19:30:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:17:45 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	sb_ms_to_us(int n)
-{
-	int	tmp;
-
-	tmp = n;
-	n *= 1000;
-	if (tmp > n)
-		return (0);
-	return (n);
-}
-
-static int	sb_convert_number(char *arg)
-{
-	int	i;
-	int	res;
-
-	i = 0;
-	while (arg[i] != 0)
-	{
-		if (arg[i] < '0' || arg[i] > '9')
-			return (0);
-		i++;
-	}
-	res = ft_atoi(arg);
-	if (res <= 0)
-		return (0);
-	return (res);
-}
 
 /* AV list (ac : 4-5)
 1: philo no
@@ -49,49 +20,42 @@ static int	sb_convert_number(char *arg)
 5: (optional) end no
 */
 
-static int	sb_sample(int ac, char **av, int *no_die, t_philo *sample)
+static int	sb_take_info(t_info	*data, t_mutex *lock, int ac, char **av)
 {
-	int	philo_no;
-
-	sample->no_die = no_die;
-	philo_no = sb_convert_number(av[1]);
-	sample->die_t = sb_ms_to_us(sb_convert_number(av[2]));
-	sample->eat_t = sb_ms_to_us(sb_convert_number(av[3]));
-	sample->sleep_t = sb_ms_to_us(sb_convert_number(av[4]));
-	sample->is_end = (ac == 6);
-	if (sample->is_end)
-		sample->end_no = sb_convert_number(av[5]);
+	gettimeofday(&data->epoch, NULL);
+	if (ac == 5)
+		data->end_n = -1;
 	else
-		sample->end_no = 0;
-	if (philo_no <= 0 || sample->die_t <= 0 || sample->eat_t <= 0)
-		return (0);
-	if (sample->is_end && sample->end_no <= 0)
-		return (0);
-	sample->philo_no = philo_no;
-	return (sample->sleep_t >= 0);
+		data->end_n = ft_philo_atoi(av[5]);
+	data->philo_n = ft_philo_atoi(av[1]);
+	data->die_ms = ft_philo_atoi(av[2]);
+	data->eat_ms = ft_philo_atoi(av[3]);
+	data->sleep_ms = ft_philo_atoi(av[4]);
+	if (pthread_mutex_init(lock, NULL) != 0)
+		return (1);
+	data->lock = lock;
+	if (data->end_n == 0 || data->philo_n == 0 || data->eat_ms == 0)
+		return (1);
+	return (data->die_ms == 0 || data->sleep_ms == 0);
 }
 
-static t_philo	*sb_philo_init(t_philo sample, char *table)
+static t_philo	*sb_init(t_info *data, int *who_die, char *table)
 {
 	int		i;
 	t_philo	*philo;
 
 	i = 0;
-	philo = malloc(sizeof(t_philo) * sample.philo_no);
+	philo = malloc(sizeof(t_philo) * data->philo_n);
 	if (philo == NULL)
 		return (free(table), NULL);
-	while (i < sample.philo_no)
+	while (i < data->philo_n)
 	{
 		philo[i].i = i;
-		philo[i].philo_no = sample.philo_no;
-		philo[i].die_t = sample.die_t;
-		philo[i].eat_t = sample.eat_t;
-		philo[i].end_no = sample.end_no;
-		philo[i].is_end = sample.is_end;
-		philo[i].life_t = sample.life_t;
-		philo[i].sleep_t = sample.sleep_t;
+		philo->status = _first;
+		philo[i].info = data;
+		philo[i].life_ms = 0;
 		philo[i].table = table;
-		philo[i].no_die = sample.no_die;
+		philo[i].who_die = who_die;
 		i++;
 	}
 	return (philo);
@@ -99,24 +63,27 @@ static t_philo	*sb_philo_init(t_philo sample, char *table)
 
 int	main(int ac, char **av)
 {
-	t_philo	sample;
-	t_philo	*philo;
+	int		who_die;
 	char	*table;
-	int		no_die;
-	
-	no_die = 0;
-	if (ac > 6 || ac < 5)
-		return (EXIT_SUCCESS);
-	if (sb_sample(ac, av, &no_die, &sample))
-		return (EXIT_SUCCESS);
-	table = malloc(sizeof(char *) * sample.philo_no);
+	t_info	data;
+	t_philo	*philo;
+	t_mutex	lock;
+
+	if (ac != 6 && ac != 5)
+		return (EXIT_FAILURE);
+	if (sb_take_info(&data, &lock, ac, av))
+		return (EXIT_FAILURE);
+	table = malloc(sizeof(char) * data.philo_n);
 	if (table == NULL)
 		return (EXIT_FAILURE);
-	memset(table, 1, sizeof(char *) * sample.philo_no);
-	philo = sb_philo_init(sample, table);
+	who_die = -1;
+	philo = sb_init(&data, &who_die, table);
 	if (philo == NULL)
 		return (EXIT_FAILURE);
-	ph_sim(philo);
+	memset(table, 1, sizeof(char) * data.philo_n);
+	if (data.philo_n % 2 == 0)
+		ph_sim(philo, ph_run_even);
+	pthread_mutex_destroy(&lock);
 	free(philo);
 	free(table);
 	return (EXIT_SUCCESS);

@@ -6,23 +6,23 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 15:58:59 by tponutha          #+#    #+#              #
-#    Updated: 2023/07/08 15:54:48 by tponutha         ###   ########.fr        #
+#    Updated: 2023/07/20 22:04:47 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Program Name
 NAME	= philo
 
-# Compiler Properties
+# Compiler Properties 
 CC		= cc
-CFLAG	= -Wall -Werror -Wextra -lpthread -g
+CFLAG	= -Wall -Werror -Wextra -std=c17 -g #-fsanitize=address,undefined
 RM		= rm -f
 
 # File
 MAN_DIR		= ./
 MAN_HEADER	= ./philo.h
-MAN_FILE	= philo.c
-MAN_SRCS	= $(addprefix $(DIRC), $(MAN))
+MAN_FILE	= philo.c ft_utils.c ph_sim.c ph_die.c ph_act.c
+MAN_SRCS	= $(addprefix $(MAN_DIR), $(MAN_FILE))
 MAN_OBJS	= $(MAN_SRCS:.c=.o)
 
 # Compiler Process
@@ -35,7 +35,7 @@ MAN_OBJS	= $(MAN_SRCS:.c=.o)
 all:	$(NAME)
 
 $(NAME):	$(MAN_OBJS)
-	$(CC) $(CFLAG) -o $(NAME)
+	$(CC) $(CFLAG) -lpthread $(MAN_OBJS) -o $(NAME)
 
 clean:
 	$(RM) $(MAN_OBJS)
