@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:30:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/20 22:30:24 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/21 19:58:22 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,10 @@ long	ph_timestamp(t_time now, t_time epoch)
 ◦ timestamp_in_ms X died
 */
 
-void	ph_print_philo(int i, t_stat stat, t_time epoch)
+void	ph_print_philo(int i, t_stat stat, t_time now, t_time epoch)
 {
 	char	*str;
 	long	ms;
-	t_time	now;
 
 	str = NULL;
 	if (stat == _take)
@@ -110,4 +109,3 @@ void	ph_print_philo(int i, t_stat stat, t_time epoch)
 	ms = ph_timestamp(now, epoch);
 	printf("\033[0;31m%ldms \033[0;32m%d \033[0;33m%s\n\033[0m", ms, i + 1, str);
 }
-

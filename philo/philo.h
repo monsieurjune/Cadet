@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/20 22:30:38 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/24 20:23:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include <pthread.h>
 
 # ifndef DELAY_T
-#  define DELAY_T 1000
+#  define DELAY_T 50
 # endif
 
-typedef pthread_mutex_t	t_mutex;
 typedef struct timeval	t_time;
+
 typedef enum	e_stat
 {
 	_first,
@@ -44,8 +44,14 @@ typedef struct s_info
 	unsigned int	die_ms;
 	unsigned int	eat_ms;
 	unsigned int	sleep_ms;
-	t_mutex			*lock;
 }	t_info;
+
+typedef struct s_lock
+{
+	pthread_mutex_t	lock;
+	pthread_mutex_t	print;
+	pthread_mutex_t	grim;
+}	t_lock;
 
 typedef struct s_philo
 {
@@ -54,6 +60,7 @@ typedef struct s_philo
 	pthread_t			id;
 	unsigned int		life_ms;
 	const struct s_info	*info;
+	struct s_lock		*locker;
 	int					*who_die;
 	char				*table;
 }	t_philo;
@@ -78,7 +85,7 @@ int				ph_sleep(t_philo *phi);
 /*		ph_utils.c		*/
 size_t			ft_strclen(const char *str, char c);
 long			ph_timestamp(t_time now, t_time epoch);
-void			ph_print_philo(int i, t_stat s, t_time epoch);
+void			ph_print_philo(int i, t_stat stat, t_time now, t_time epoch);
 int				ph_check_die(t_philo *phi);
 
 #endif

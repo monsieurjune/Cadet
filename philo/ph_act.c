@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:26:11 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/20 22:14:54 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/21 20:01:02 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	ph_eat(t_philo *phi)
 	j = j * (j != phi->info->philo_n);
 	if (ph_check_die(phi))
 		return (-1);
-	pthread_mutex_lock(phi->info->lock);
+	pthread_mutex_lock(phi->locker->grim);
 	phi->life_ms = 0;
 	pthread_mutex_unlock(phi->info->lock);
 	ph_print_philo(phi->i, _eat, phi->info->epoch);
