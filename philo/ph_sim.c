@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/28 03:44:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/28 03:48:30 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,17 @@ void	ph_sim(t_philo *philo, int is_even)
 	static int		i = 0;
 	static int		j = 0;
 
-	if (is_even)
+	while (i < philo->info->philo_n && is_even)
 	{
-		while (i < philo->info->philo_n)
-		{
-			if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
-				break ;
-			i++;
-		}
+		if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
+			break ;
+		i++;
 	}
-	else
+	while (i < philo->info->philo_n && !is_even)
 	{
-		while (i < philo->info->philo_n)
-		{
-			if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
-				break ;
-			i++;
-		}
+		if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
+			break ;
+		i++;
 	}
 	while (j < i)
 	{

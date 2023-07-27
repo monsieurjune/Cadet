@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/28 03:41:59 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/28 03:53:41 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ typedef struct s_philo
 	int					*who_die;
 	char				*table;
 }	t_philo;
-
-
-/*		LIBFT'ISH THING		*/
-
 
 /*		PHILO THING			*/
 
