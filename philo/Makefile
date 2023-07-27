@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 15:58:59 by tponutha          #+#    #+#              #
-#    Updated: 2023/07/20 22:04:47 by tponutha         ###   ########.fr        #
+#    Updated: 2023/07/28 03:44:37 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ RM		= rm -f
 # File
 MAN_DIR		= ./
 MAN_HEADER	= ./philo.h
-MAN_FILE	= philo.c ft_utils.c ph_sim.c ph_die.c ph_act.c
+MAN_FILE	= philo.c ft_utils.c ph_sim.c ph_act.c ph_mutex.c
 MAN_SRCS	= $(addprefix $(MAN_DIR), $(MAN_FILE))
 MAN_OBJS	= $(MAN_SRCS:.c=.o)
 

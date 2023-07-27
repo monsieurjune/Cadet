@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/20 22:27:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/28 03:44:07 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,28 @@ void	*ph_run_even(void *arg)
 	return (NULL);
 }
 
-void	ph_sim(t_philo *philo, void *f(void *))
+void	ph_sim(t_philo *philo, int is_even)
 {
-	int		i;
-	int		j;
+	static int		i = 0;
+	static int		j = 0;
 
-	i = 0;
-	j = 0;
-	(void)f;
-	while (i < philo->info->philo_n)
+	if (is_even)
 	{
-		if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
-			break ;
-		i++;
+		while (i < philo->info->philo_n)
+		{
+			if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
+				break ;
+			i++;
+		}
+	}
+	else
+	{
+		while (i < philo->info->philo_n)
+		{
+			if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
+				break ;
+			i++;
+		}
 	}
 	while (j < i)
 	{

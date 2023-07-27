@@ -6,12 +6,13 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/24 20:23:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/28 03:41:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+# define _XOPEN_SOURCE 500
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
@@ -51,6 +52,7 @@ typedef struct s_lock
 	pthread_mutex_t	lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	grim;
+	pthread_mutex_t	age;
 }	t_lock;
 
 typedef struct s_philo
@@ -67,13 +69,12 @@ typedef struct s_philo
 
 
 /*		LIBFT'ISH THING		*/
-int				ft_philo_atoi(const char *str);
+
 
 /*		PHILO THING			*/
 
 /*		ph_sim.c		*/
-void			ph_sim(t_philo *philo, void *f(void *));
-void			*ph_run_even(void *arg);
+void			ph_sim(t_philo *philo, int is_even);
 
 /*		ph_act.c		*/
 int				ph_delay(t_philo *phi, unsigned int t_max);
@@ -84,8 +85,11 @@ int				ph_sleep(t_philo *phi);
 
 /*		ph_utils.c		*/
 size_t			ft_strclen(const char *str, char c);
+int				ft_philo_atoi(const char *str);
 long			ph_timestamp(t_time now, t_time epoch);
-void			ph_print_philo(int i, t_stat stat, t_time now, t_time epoch);
+
+/*		ph_mutex.c		*/
+void			ph_print_philo(t_philo *phi, t_time now, t_stat stat);
 int				ph_check_die(t_philo *phi);
 
 #endif

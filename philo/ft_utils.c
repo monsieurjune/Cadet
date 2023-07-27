@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:30:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/21 19:58:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/28 03:41:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,36 +76,5 @@ long	ph_timestamp(t_time now, t_time epoch)
 
 	s = now.tv_sec - epoch.tv_sec;
 	us = now.tv_usec - epoch.tv_usec;
-	if (us < 0)
-		us *= -1;
 	return (s * 1000 + us / 1000);
-}
-
-/*
-◦ timestamp_in_ms X has taken a fork
-◦ timestamp_in_ms X is eating
-◦ timestamp_in_ms X is sleeping
-◦ timestamp_in_ms X is thinking
-◦ timestamp_in_ms X died
-*/
-
-void	ph_print_philo(int i, t_stat stat, t_time now, t_time epoch)
-{
-	char	*str;
-	long	ms;
-
-	str = NULL;
-	if (stat == _take)
-		str = "has taken a fork";
-	else if (stat == _think)
-		str = "is thinking";
-	else if (stat == _eat)
-		str = "is eating";
-	else if (stat == _sleep)
-		str = "is sleeping";
-	else if (stat == _die)
-		str = "die";
-	gettimeofday(&now, NULL);
-	ms = ph_timestamp(now, epoch);
-	printf("\033[0;31m%ldms \033[0;32m%d \033[0;33m%s\n\033[0m", ms, i + 1, str);
 }
