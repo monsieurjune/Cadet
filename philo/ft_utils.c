@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:30:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/28 03:41:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/28 04:19:05 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,4 @@ int	ft_philo_atoi(const char *str)
 	if (res <= 0)
 		return (0);
 	return (res);
-}
-
-long	ph_timestamp(t_time now, t_time epoch)
-{
-	long	s;
-	long	us;
-
-	s = now.tv_sec - epoch.tv_sec;
-	us = now.tv_usec - epoch.tv_usec;
-	return (s * 1000 + us / 1000);
 }

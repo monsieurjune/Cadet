@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 15:58:59 by tponutha          #+#    #+#              #
-#    Updated: 2023/07/28 03:44:37 by tponutha         ###   ########.fr        #
+#    Updated: 2023/07/30 05:23:43 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ NAME	= philo
 
 # Compiler Properties 
 CC		= cc
-CFLAG	= -Wall -Werror -Wextra -std=c17 -g #-fsanitize=address,undefined
+CFLAG	= -Wall -Werror -Wextra# -g -fsanitize=address,undefined
 RM		= rm -f
 
 # File
 MAN_DIR		= ./
 MAN_HEADER	= ./philo.h
-MAN_FILE	= philo.c ft_utils.c ph_sim.c ph_act.c ph_mutex.c
+MAN_FILE	= philo.c ft_utils.c ph_sim.c ph_act.c ph_mutex.c ph_time.c
 MAN_SRCS	= $(addprefix $(MAN_DIR), $(MAN_FILE))
 MAN_OBJS	= $(MAN_SRCS:.c=.o)
 
@@ -34,7 +34,7 @@ MAN_OBJS	= $(MAN_SRCS:.c=.o)
 
 all:	$(NAME)
 
-$(NAME):	$(MAN_OBJS)
+$(NAME):	$(MAN_OBJS) $(MAN_HEADER)
 	$(CC) $(CFLAG) -lpthread $(MAN_OBJS) -o $(NAME)
 
 clean:
