@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/30 05:36:57 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/07/31 08:38:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ph_print_philo(t_philo *phi, t_time now, t_stat stat)
 	if (stat == _take)
 		str = "\033[0;32mhas taken a fork\n\033[0m";
 	else if (stat == _think)
-		str = "\033[0;33mis thinking\n\034[0m";
+		str = "\033[0;33mis thinking\n\033[0m";
 	else if (stat == _eat)
 		str = "\033[0;34mis eating\n\033[0m";
 	else if (stat == _sleep)
@@ -129,7 +129,7 @@ void	ph_aging(t_philo *philo)
 		else
 			state = sb_aging_limit(philo, philo->info->philo_n);
 	}
-	if (philo->who_die[0] > 0)
+	if (philo->who_die[0] >= 0)
 		ph_print_philo(&philo[philo->who_die[0]], end, _die);
 }
 
