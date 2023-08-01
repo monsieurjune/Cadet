@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/30 05:02:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:48:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,18 @@ typedef struct s_philo
 {
 	int					i;
 	int					eat_n;
-	// int					odd_start;
 	pthread_t			id;
 	unsigned int		life_ms;
 	const struct s_info	*info;
 	struct s_lock		*locker;
 	int					*who_die;
+	int					*odd_stop;
 	char				*table;
 }	t_philo;
 
 /*		ph_sim.c		*/
 void			ph_sim(t_philo *philo, int is_even);
+void			ph_odd_change(t_philo *phi);
 
 /*		ph_act.c		*/
 int				ph_delay(t_philo *phi, unsigned int t_max);

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/30 04:48:28 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:01:28 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	sb_take_info(t_info	*data, t_lock *locker, int ac, char **av)
 	return (data->die_ms == 0 || data->sleep_ms == 0);
 }
 
-static t_philo	*sb_init(t_info *data, t_lock *lkr, int *who_die, char *table)
+static t_philo	*sb_init(t_info *data, t_lock *lkr, int ptr[], char *table)
 {
 	int		i;
 	t_philo	*philo;
@@ -92,16 +92,24 @@ static t_philo	*sb_init(t_info *data, t_lock *lkr, int *who_die, char *table)
 		philo[i].info = data;
 		philo[i].life_ms = 0;
 		philo[i].table = table;
-		philo[i].who_die = who_die;
+		philo[i].who_die = &ptr[0];
+		philo[i].odd_stop = &ptr[1];
 		philo[i].locker = lkr;
 		i++;
 	}
 	return (philo);
 }
 
+// TODO : 1.) Use mutex for fork instead of table
+// TODO : 2.) ./philo 5 800 200 200 mustn't die
+// TODO : 3.) Don't print think if can't get fork
+// TODO : 4.) delay ~1ms for get_fork after even get first fork
+// TODO : 5.) don't check, just get fork asap
+// TODO : 6.) think just for only print
+
 int	main(int ac, char **av)
 {
-	int		who_die;
+	int		ptr[2];
 	char	*table;
 	t_info	data;
 	t_philo	*philo;
@@ -114,8 +122,11 @@ int	main(int ac, char **av)
 	table = malloc(sizeof(char) * data.philo_n);
 	if (table == NULL)
 		return (EXIT_FAILURE);
-	who_die = -1;
-	philo = sb_init(&data, &locker, &who_die, table);
+	ptr[0] = -1;
+	ptr[1] = -1;
+	if (data.philo_n % 2 != 0)
+		ptr[1] = data.philo_n - 1;
+	philo = sb_init(&data, &locker, &ptr[0], table);
 	if (philo == NULL)
 		return (EXIT_FAILURE);
 	ph_sim(philo, data.philo_n % 2 == 0);

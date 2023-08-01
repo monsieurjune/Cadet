@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/31 08:38:59 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/01 12:20:03 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ static int	sb_aging_limit(t_philo *philo, int n)
 	{
 		pthread_mutex_lock(&philo->locker->grim);
 		philo->who_die[0] = i;
-		if (complete == philo->info->end_n)
+		if (complete == philo->info->philo_n)
 			philo->who_die[0] = -2;
 		pthread_mutex_unlock(&philo->locker->grim);
 	}
-	return (i == n && complete != philo->info->end_n);
+	return (i == n && complete != philo->info->philo_n);
 }
 
 // TODO : fix death delay

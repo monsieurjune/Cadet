@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/30 04:30:46 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:25:49 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,38 @@
 		- else idle until there is fork
 */
 
-// void	*ph_run_odd(void *arg)
-// {
-// 	t_philo	*phi;
-// 	int		success;
+void	ph_odd_change(t_philo *phi)
+{
+	pthread_mutex_lock(&phi->locker->lock);
+	if (phi->odd_stop[0] == 0)
+		phi->odd_stop[0] = phi->info->philo_n - 1;
+	else if (phi->odd_stop[0] == phi->info->philo_n - 1)
+		phi->odd_stop[0] = 0;
+	pthread_mutex_unlock(&phi->locker->lock);
+}
 
-// 	phi = (t_philo *)arg;
-// 	success = 0;
-	
-// 	return (NULL);
-// }
+void	*ph_run_odd(void *arg)
+{
+	t_philo	*phi;
+	int		success;
+
+	phi = (t_philo *)arg;
+	success = 0;
+	if (phi->i % 2 == 0 && phi->i != phi->odd_stop[0])
+		success = ph_get_fork(phi);
+	while (success != -1)
+	{
+		if (success)
+		{
+			if (ph_eat(phi) == -1)
+				break ;
+			if (ph_sleep(phi) == -1)
+				break ;
+		}
+		success = ph_think(phi);
+	}
+	return (NULL);
+}
 
 void	*ph_run_even(void *arg)
 {
