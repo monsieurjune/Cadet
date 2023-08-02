@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:26:11 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/01 11:28:22 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 05:05:25 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,14 @@ int	ph_delay(t_philo *phi, unsigned int delay_ms)
 {
 	t_time			start_ms;
 	t_time			end_ms;
-	t_time			start_us;
-	t_time			end_us;
 
 	gettimeofday(&start_ms, NULL);
 	end_ms = ph_time_add(start_ms, delay_ms);
 	while (ph_is_time_exceed(end_ms) != 1)
 	{
-		gettimeofday(&start_us, NULL);
-		end_us = ph_time_add(start_us, 1);
-		while (ph_is_time_exceed(end_us) != 1)
-		{
-			if (ph_check_die(phi))
-				return (-1);
-			usleep(DELAY_US);
-		}
+		if (ph_check_die(phi))
+			return (-1);
+		usleep(DELAY_US);
 	}
 	return (1);
 }
@@ -54,8 +47,10 @@ int	ph_get_fork(t_philo *phi)
 	if (ph_check_die(phi))
 		return (-1);
 	i = phi->i;
-	j = i + 1;
-	j = j * (j != phi->info->philo_n);
+	j = (i + 1) % phi->info->philo_n;
+	if (phi->info->philo_n % 2 == 1)
+		if (!ft_offset(phi) || phi->i == phi->odd_stop[0])
+			return (0);
 	pthread_mutex_lock(&phi->locker->lock);
 	get_fork = (phi->table[i] == 1 && phi->table[j] == 1 && i != j);
 	if (get_fork && phi->i != phi->odd_stop[0])
@@ -65,7 +60,7 @@ int	ph_get_fork(t_philo *phi)
 		ph_print_philo(phi, now, _take);
 	}
 	pthread_mutex_unlock(&phi->locker->lock);
-	return (get_fork);
+	return (get_fork && phi->i != phi->odd_stop[0]);
 }
 
 // // it will stop only when it got fork or die
@@ -89,7 +84,7 @@ int	ph_think(t_philo *phi)
 	gettimeofday(&now, NULL);
 	if (ph_check_die(phi))
 		return (-1);
-	ph_print_philo(phi, now, _think);
+	// ph_print_philo(phi, now, _think);
 	while (state == 0)
 	{
 		if (ph_delay(phi, 1) == -1)
@@ -108,11 +103,10 @@ int	ph_eat(t_philo *phi)
 	int		j;
 
 	gettimeofday(&now, NULL);
-	j = phi->i + 1;
-	j = j * (j != phi->info->philo_n);
+	j = (phi->i + 1) % phi->info->philo_n;
 	if (ph_check_die(phi))
 		return (-1);
-	if (phi->i == 0 || phi->i == phi->info->philo_n - 1)
+	if (phi->i == ((phi->odd_stop[0] + 1) % phi->info->philo_n))
 		ph_odd_change(phi);
 	pthread_mutex_lock(&phi->locker->age);
 	phi->life_ms = 0;
@@ -130,11 +124,16 @@ int	ph_eat(t_philo *phi)
 
 int	ph_sleep(t_philo *phi)
 {
+	int		state;
 	t_time	now;
 	
 	gettimeofday(&now, NULL);
 	if (ph_check_die(phi))
 		return (-1);
 	ph_print_philo(phi, now, _sleep);
-	return (ph_delay(phi, phi->info->sleep_ms));
+	state = ph_delay(phi, phi->info->sleep_ms);
+	gettimeofday(&now, NULL);
+	if (state != -1)
+		ph_print_philo(phi, now, _think);
+	return (state);
 }

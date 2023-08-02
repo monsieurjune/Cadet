@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/01 12:20:03 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 00:54:17 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	sb_aging_limit(t_philo *philo, int n)
 	i = 0;
 	complete = 0;
 	pthread_mutex_lock(&philo->locker->age);
-	while (i < n && complete < philo->info->end_n)
+	while (i < n)
 	{
 		philo[i].life_ms += 1;
 		complete += philo[i].eat_n >= philo->info->end_n;
@@ -129,8 +129,6 @@ void	ph_aging(t_philo *philo)
 		else
 			state = sb_aging_limit(philo, philo->info->philo_n);
 	}
-	if (philo->who_die[0] >= 0)
-		ph_print_philo(&philo[philo->who_die[0]], end, _die);
 }
 
 // gettimeofday(&start_us, NULL);

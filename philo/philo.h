@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/01 11:48:42 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:06:35 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int				ph_eat(t_philo *phi);
 int				ph_sleep(t_philo *phi);
 
 /*		ph_utils.c		*/
+int				ft_offset(t_philo *phi);
 size_t			ft_strclen(const char *str, char c);
 int				ft_philo_atoi(const char *str);
 

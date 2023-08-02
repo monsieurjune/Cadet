@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:30:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/07/28 04:19:05 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:37:34 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,14 @@ int	ft_philo_atoi(const char *str)
 	if (res <= 0)
 		return (0);
 	return (res);
+}
+
+int	ft_offset(t_philo *phi)
+{
+	int	offset;
+
+	offset = phi->odd_stop[0] + phi->i;
+	if (phi->i < phi->odd_stop[0])
+		offset++;
+	return (offset % 2 == 1);
 }

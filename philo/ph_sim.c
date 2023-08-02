@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/01 11:25:49 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:58:00 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@
 void	ph_odd_change(t_philo *phi)
 {
 	pthread_mutex_lock(&phi->locker->lock);
-	if (phi->odd_stop[0] == 0)
-		phi->odd_stop[0] = phi->info->philo_n - 1;
-	else if (phi->odd_stop[0] == phi->info->philo_n - 1)
-		phi->odd_stop[0] = 0;
+	phi->odd_stop[0] += 1;
+	phi->odd_stop[0] %= phi->info->philo_n;
+	// printf("%d\n", phi->odd_stop[0]);
 	pthread_mutex_unlock(&phi->locker->lock);
 }
 
@@ -42,7 +41,7 @@ void	*ph_run_odd(void *arg)
 
 	phi = (t_philo *)arg;
 	success = 0;
-	if (phi->i % 2 == 0 && phi->i != phi->odd_stop[0])
+	if (ft_offset(phi) && phi->i != phi->odd_stop[0])
 		success = ph_get_fork(phi);
 	while (success != -1)
 	{
@@ -85,6 +84,7 @@ void	ph_sim(t_philo *philo, int is_even)
 {
 	static int		i = 0;
 	static int		j = 0;
+	t_time			now;
 
 	while (i < philo->info->philo_n && is_even)
 	{
@@ -94,11 +94,14 @@ void	ph_sim(t_philo *philo, int is_even)
 	}
 	while (i < philo->info->philo_n && !is_even)
 	{
-		if (pthread_create(&philo->id, NULL, ph_run_even, &philo[i]) != 0)
+		if (pthread_create(&philo->id, NULL, ph_run_odd, &philo[i]) != 0)
 			break ;
 		i++;
 	}
 	ph_aging(philo);
+	gettimeofday(&now, NULL);
+	if (philo->who_die[0] >= 0)
+		ph_print_philo(&philo[philo->who_die[0]], now, _die);
 	while (j < i)
 	{
 		pthread_join(philo->id, NULL);
