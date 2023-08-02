@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/03 04:58:00 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/02 22:46:29 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ph_odd_change(t_philo *phi)
 	pthread_mutex_lock(&phi->locker->lock);
 	phi->odd_stop[0] += 1;
 	phi->odd_stop[0] %= phi->info->philo_n;
-	// printf("%d\n", phi->odd_stop[0]);
 	pthread_mutex_unlock(&phi->locker->lock);
 }
 

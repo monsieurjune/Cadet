@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:26:11 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/03 05:05:25 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/02 22:47:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	ph_think(t_philo *phi)
 	gettimeofday(&now, NULL);
 	if (ph_check_die(phi))
 		return (-1);
-	// ph_print_philo(phi, now, _think);
 	while (state == 0)
 	{
 		if (ph_delay(phi, 1) == -1)
@@ -126,7 +125,7 @@ int	ph_sleep(t_philo *phi)
 {
 	int		state;
 	t_time	now;
-	
+
 	gettimeofday(&now, NULL);
 	if (ph_check_die(phi))
 		return (-1);
