@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:26:11 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/02 22:47:32 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 07:31:41 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ph_get_fork(t_philo *phi)
 	if (phi->info->philo_n % 2 == 1)
 		if (!ft_offset(phi) || phi->i == phi->odd_stop[0])
 			return (0);
-	pthread_mutex_lock(&phi->locker->lock);
+	pthread_mutex_lock(phi->lock);
 	get_fork = (phi->table[i] == 1 && phi->table[j] == 1 && i != j);
 	if (get_fork && phi->i != phi->odd_stop[0])
 	{
@@ -59,7 +59,7 @@ int	ph_get_fork(t_philo *phi)
 		phi->table[j] = 0;
 		ph_print_philo(phi, now, _take);
 	}
-	pthread_mutex_unlock(&phi->locker->lock);
+	pthread_mutex_unlock(phi->lock);
 	return (get_fork && phi->i != phi->odd_stop[0]);
 }
 
@@ -105,8 +105,6 @@ int	ph_eat(t_philo *phi)
 	j = (phi->i + 1) % phi->info->philo_n;
 	if (ph_check_die(phi))
 		return (-1);
-	if (phi->i == ((phi->odd_stop[0] + 1) % phi->info->philo_n))
-		ph_odd_change(phi);
 	pthread_mutex_lock(&phi->locker->age);
 	phi->life_ms = 0;
 	phi->eat_n += 1;
@@ -114,10 +112,12 @@ int	ph_eat(t_philo *phi)
 	ph_print_philo(phi, now, _eat);
 	if (ph_delay(phi, phi->info->eat_ms) == -1)
 		return (-1);
-	pthread_mutex_lock(&phi->locker->lock);
+	if (phi->i == ((phi->odd_stop[0] + 1) % phi->info->philo_n))
+		ph_odd_change(phi);
+	pthread_mutex_lock(phi->lock);
 	phi->table[phi->i] = 1;
 	phi->table[j] = 1;
-	pthread_mutex_unlock(&phi->locker->lock);
+	pthread_mutex_unlock(phi->lock);
 	return (1);
 }
 

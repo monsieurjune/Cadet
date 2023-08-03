@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:33 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/02 22:46:29 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 07:24:59 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	ph_sim(t_philo *philo, int is_even)
 {
 	static int		i = 0;
 	static int		j = 0;
-	t_time			now;
 
 	while (i < philo->info->philo_n && is_even)
 	{
@@ -98,9 +97,7 @@ void	ph_sim(t_philo *philo, int is_even)
 		i++;
 	}
 	ph_aging(philo);
-	gettimeofday(&now, NULL);
-	if (philo->who_die[0] >= 0)
-		ph_print_philo(&philo[philo->who_die[0]], now, _die);
+	ph_print_die(philo);
 	while (j < i)
 	{
 		pthread_join(philo->id, NULL);

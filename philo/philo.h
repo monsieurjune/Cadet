@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/03 04:06:35 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 07:24:38 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # endif
 
 typedef struct timeval	t_time;
+typedef pthread_mutex_t	t_mutex;
 
 typedef enum e_stat
 {
@@ -65,6 +66,7 @@ typedef struct s_philo
 	unsigned int		life_ms;
 	const struct s_info	*info;
 	struct s_lock		*locker;
+	pthread_mutex_t		*lock;
 	int					*who_die;
 	int					*odd_stop;
 	char				*table;
@@ -85,6 +87,7 @@ int				ph_sleep(t_philo *phi);
 int				ft_offset(t_philo *phi);
 size_t			ft_strclen(const char *str, char c);
 int				ft_philo_atoi(const char *str);
+void			ph_print_die(t_philo *philo);
 
 /*		ph_mutex.c		*/
 void			ph_print_philo(t_philo *phi, t_time now, t_stat stat);
@@ -95,5 +98,7 @@ void			ph_aging(t_philo *philo);
 long			ph_timestamp(t_time now, t_time epoch);
 t_time			ph_time_add(t_time t1, unsigned int delay_ms);
 int				ph_is_time_exceed(t_time end);
+void			*ph_free_lock(t_mutex *forks, int n);
+t_mutex			*ph_alloc_lock(int n);
 
 #endif

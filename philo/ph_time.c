@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:30:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/02 22:46:14 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 07:03:37 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,38 @@ int	ph_is_time_exceed(t_time end)
 	else if (now.tv_usec >= end.tv_usec)
 		return (1);
 	return (0);
+}
+
+void	*ph_free_lock(t_mutex *forks, int n)
+{
+	int	j;
+
+	j = 0;
+	while (j < n)
+	{
+		pthread_mutex_destroy(&forks[j]);
+		j++;
+	}
+	free(forks);
+	return (NULL);
+}
+
+t_mutex	*ph_alloc_lock(int n)
+{
+	t_mutex	*forks;
+	int		i;
+
+	i = 0;
+	forks = malloc(sizeof(t_mutex) * n);
+	if (forks == NULL)
+		return (NULL);
+	while (i < n)
+	{
+		if (pthread_mutex_init(&forks[i], NULL) != 0)
+			break ;
+		i++;
+	}
+	if (i != n)
+		return (ph_free_lock(forks, i));
+	return (forks);
 }

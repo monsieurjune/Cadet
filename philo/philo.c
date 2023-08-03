@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/02 22:46:04 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 07:25:13 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 static int	sb_clean_process(t_philo *philo, t_lock *locker, char *table)
 {
-	pthread_mutex_destroy(&locker->lock);
+	ph_free_lock(philo->lock, philo->info->philo_n);
 	pthread_mutex_destroy(&locker->grim);
 	pthread_mutex_destroy(&locker->print);
 	pthread_mutex_destroy(&locker->age);
@@ -79,12 +79,15 @@ static t_philo	*sb_init(t_info *data, t_lock *lkr, int ptr[], char *table)
 {
 	int		i;
 	t_philo	*philo;
+	t_mutex	*locks;
 
 	i = 0;
 	philo = malloc(sizeof(t_philo) * data->philo_n);
 	if (philo == NULL)
 		return (free(table), NULL);
-	memset(table, 1, sizeof(char) * data->philo_n);
+	locks = ph_alloc_lock(data->philo_n);
+	if (locks == NULL)
+		return (free(table), free(philo), NULL);
 	while (i < data->philo_n)
 	{
 		philo[i].i = i;
@@ -92,6 +95,7 @@ static t_philo	*sb_init(t_info *data, t_lock *lkr, int ptr[], char *table)
 		philo[i].info = data;
 		philo[i].life_ms = 0;
 		philo[i].table = table;
+		philo[i].lock = &locks[i];
 		philo[i].who_die = &ptr[0];
 		philo[i].odd_stop = &ptr[1];
 		philo[i].locker = lkr;
@@ -122,6 +126,7 @@ int	main(int ac, char **av)
 	table = malloc(sizeof(char) * data.philo_n);
 	if (table == NULL)
 		return (EXIT_FAILURE);
+	memset(table, 1, sizeof(char) * data.philo_n);
 	ptr[0] = -1;
 	ptr[1] = -1;
 	if (data.philo_n % 2 != 0)

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:30:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/02 22:47:40 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/03 07:25:32 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,17 @@ int	ft_offset(t_philo *phi)
 	if (phi->i < phi->odd_stop[0])
 		offset++;
 	return (offset % 2 == 1);
+}
+
+void	ph_print_die(t_philo *philo)
+{
+	t_time	now;
+
+	if (philo->who_die[0] < 0)
+		return ;
+	pthread_mutex_lock(&philo->locker->grim);
+	gettimeofday(&now, NULL);
+	usleep(100);
+	ph_print_philo(&philo[philo->who_die[0]], now, _die);
+	pthread_mutex_unlock(&philo->locker->grim);
 }
