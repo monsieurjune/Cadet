@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/05 15:58:59 by tponutha          #+#    #+#              #
-#    Updated: 2023/08/03 07:44:35 by tponutha         ###   ########.fr        #
+#    Updated: 2023/08/03 09:10:38 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME	= philo
 
 # Compiler Properties 
 CC		= cc
-CFLAG	= -Wall -Werror -Wextra# -g# -fsanitize=address,undefined
+CFLAG	= -Wall -Werror -Wextra# -g# -fsanitize=thread# -fsanitize=address,undefined
 RM		= rm -f
 
 # File
