@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:26:11 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/03 07:31:41 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:24:16 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	ph_get_fork(t_philo *phi)
 		if (!ft_offset(phi) || phi->i == phi->odd_stop[0])
 			return (0);
 	pthread_mutex_lock(phi->lock);
+	pthread_mutex_lock(phi->lock2);
 	get_fork = (phi->table[i] == 1 && phi->table[j] == 1 && i != j);
 	if (get_fork && phi->i != phi->odd_stop[0])
 	{
@@ -59,6 +60,7 @@ int	ph_get_fork(t_philo *phi)
 		phi->table[j] = 0;
 		ph_print_philo(phi, now, _take);
 	}
+	pthread_mutex_unlock(phi->lock2);
 	pthread_mutex_unlock(phi->lock);
 	return (get_fork && phi->i != phi->odd_stop[0]);
 }
@@ -115,8 +117,10 @@ int	ph_eat(t_philo *phi)
 	if (phi->i == ((phi->odd_stop[0] + 1) % phi->info->philo_n))
 		ph_odd_change(phi);
 	pthread_mutex_lock(phi->lock);
+	pthread_mutex_lock(phi->lock2);
 	phi->table[phi->i] = 1;
 	phi->table[j] = 1;
+	pthread_mutex_unlock(phi->lock2);
 	pthread_mutex_unlock(phi->lock);
 	return (1);
 }

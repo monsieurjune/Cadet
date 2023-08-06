@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:35 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/03 07:25:13 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:24:50 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,10 @@ static int	sb_take_info(t_info	*data, t_lock *locker, int ac, char **av)
 
 static t_philo	*sb_init(t_info *data, t_lock *lkr, int ptr[], char *table)
 {
-	int		i;
-	t_philo	*philo;
-	t_mutex	*locks;
+	static int		i = 0;
+	t_philo			*philo;
+	t_mutex			*locks;
 
-	i = 0;
 	philo = malloc(sizeof(t_philo) * data->philo_n);
 	if (philo == NULL)
 		return (free(table), NULL);
@@ -96,6 +95,7 @@ static t_philo	*sb_init(t_info *data, t_lock *lkr, int ptr[], char *table)
 		philo[i].life_ms = 0;
 		philo[i].table = table;
 		philo[i].lock = &locks[i];
+		philo[i].lock2 = &locks[(i + 1) % data->philo_n];
 		philo[i].who_die = &ptr[0];
 		philo[i].odd_stop = &ptr[1];
 		philo[i].locker = lkr;
@@ -103,13 +103,6 @@ static t_philo	*sb_init(t_info *data, t_lock *lkr, int ptr[], char *table)
 	}
 	return (philo);
 }
-
-// TODO : 1.) Use mutex for fork instead of table
-// TODO : 2.) ./philo 5 800 200 200 mustn't die
-// TODO : 3.) Don't print think if can't get fork
-// TODO : 4.) delay ~1ms for get_fork after even get first fork
-// TODO : 5.) don't check, just get fork asap
-// TODO : 6.) think just for only print
 
 int	main(int ac, char **av)
 {

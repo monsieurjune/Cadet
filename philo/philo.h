@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 00:20:42 by tponutha          #+#    #+#             */
-/*   Updated: 2023/08/03 07:24:38 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:20:40 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_philo
 	const struct s_info	*info;
 	struct s_lock		*locker;
 	pthread_mutex_t		*lock;
+	pthread_mutex_t		*lock2;
 	int					*who_die;
 	int					*odd_stop;
 	char				*table;
