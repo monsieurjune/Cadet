@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:04:17 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 04:17:31 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:30:42 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	px_calling_child(t_pipex *info, int extra)
 		if (pid == 0)
 		{
 			cmd = px_ultra_split(info->av[info->start + i], info);
+			printf("cmd0 = %s\n", cmd[1]);
 			if (cmd == NULL && errno != 0)
 				perror(info->shell);
 			return (sb_child_process(info, cmd, i, extra));

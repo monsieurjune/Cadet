@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 12:17:08 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 04:19:18 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:59:04 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdlib.h>
-# include <stdint.h>
+# ifdef __linux
+#  include <stdint.h>
+# endif
 
 typedef struct s_mem
 {

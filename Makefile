@@ -6,7 +6,7 @@
 #    By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/02 14:12:15 by tponutha          #+#    #+#              #
-#    Updated: 2023/06/09 04:21:46 by tponutha         ###   ########.fr        #
+#    Updated: 2023/08/06 04:44:36 by tponutha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ endif
 
 all:	$(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME):	$(OBJ) $(COMHEADER)
 	$(CC) $(CFLAG) $(OBJ) -o $(NAME)
 
 clean:
@@ -78,5 +78,5 @@ fclean:	clean
 
 re:	fclean all
 
-bonus:
+bonus:	$(BONUSHEADER)
 	@make WITH_BONUS=1 $(NAME)

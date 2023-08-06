@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:43:53 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 01:17:07 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/07 01:04:12 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static char	*sb_cat_path(const char *cmd, int n, t_pipex *info)
 {
 	int		i;
 	char	*path;
+	int		err;
 
 	i = 0;
+	err = errno;
 	if (ft_strnchr(cmd, n, '/') != NULL || cmd[0] == 0)
 		return (ft_strndup(cmd, n, &info->head));
 	while (info->paths[i] != NULL)
@@ -26,14 +28,11 @@ static char	*sb_cat_path(const char *cmd, int n, t_pipex *info)
 		if (path == NULL)
 			return (NULL);
 		if (access(path, F_OK) == 0)
-		{
-			errno = 0;
-			return (path);
-		}
+			return (errno = err, path);
 		lm_free(path, &info->head);
 		i++;
 	}
-	errno = 0;
+	errno = err;
 	return (ft_strndup(cmd, n, &info->head));
 }
 
@@ -57,6 +56,27 @@ static char	**sb_assign_temp(t_pipex *info, const char *s, int *i, int *len)
 	return (temp);
 }
 
+static char	*sb_remove_quote(char *s)
+{
+	size_t	len[2];
+	size_t	offset;
+	char	*str;
+
+	len[0] = ft_strclen(s, 0);
+	if (ft_strnchr(s, len[0], '\x27') > ft_strnchr(s, len[0], '"'))
+		str = ft_strnchr(s, len[0], '\x27');
+	else
+	 	str = ft_strnchr(s, len[0], '"');
+	if (str == NULL)
+		str = s;
+	else
+	 	str++;
+	len[1] = ft_strclen(str, 0);
+	offset = len[0] - len[1];
+	str[len[1] - offset] = 0;
+	return (str);
+}
+
 char	**px_ultra_split(const char *s, t_pipex *info)
 {
 	char	**box;
@@ -76,7 +96,7 @@ char	**px_ultra_split(const char *s, t_pipex *info)
 	i = 1;
 	while (i < len + 1)
 	{
-		box[i] = temp[i - 1];
+		box[i] = sb_remove_quote(temp[i - 1]);
 		i++;
 	}
 	box[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: tponutha <tponutha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 09:51:59 by tponutha          #+#    #+#             */
-/*   Updated: 2023/06/09 04:19:49 by tponutha         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:29:45 by tponutha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ TEST CASE
 4:	'"a"a" """""'
 5:	'cat -e'
 6:	'a "  bhbw   dafb" "naflfa"'
+7: "grep " ""
 */
 
 static size_t	sb_strlen_cmd(const char *s, char c)
@@ -87,16 +88,16 @@ static char	**sb_alloc_box(const char *s, char c, size_t len, t_mem **head)
 	flag = 1;
 	while (*s && box != NULL)
 	{
-		if (flag && *s != c)
+		if (flag && *s != c && count % 2 == 0)
 		{
 			box[n] = sb_strdup_cmd(s, c, head);
 			if (box[n] == NULL)
 				return (sb_failsafe(box, n, head));
 			n += flag--;
 		}
-		else if (!flag && *s == c)
+		else if (!flag && *s == c && count % 2 == 0)
 			flag = 1;
-		count += (s[len] == '\x27' || s[len] == '"');
+		count += (*s == '\x27' || *s == '"');
 		s++;
 	}
 	return (box);
@@ -120,11 +121,11 @@ char	**ft_split_cmd(char const *s, char c, t_mem **head)
 	count = 0;
 	while (s[i])
 	{
-		if (flag && s[i] != c)
+		if (flag && s[i] != c && count % 2 == 0)
 			len += flag--;
-		else if (!flag && s[i] == c)
+		else if (!flag && s[i] == c && count % 2 == 0)
 			flag = 1;
-		count += (s[len] == '\x27' || s[len] == '"');
+		count += (s[i] == '\x27' || s[i] == '"');
 		i++;
 	}
 	box = sb_alloc_box(s, c, len, head);
@@ -147,38 +148,38 @@ char	**ft_ultra_split(char const *s, char c, t_mem **head)
 }
 */
 
-/*
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-int	main(int ac, char **av)
-{
-	int 	i = 1;
-	int		j;
-	size_t	n;
-	char	*str;
-	char	**box;
-	t_mem	*head = NULL;
 
-	while (i < ac)
-	{
-		n = sb_strlen_cmd(av[i], ' ');
-		str = ft_strdup_cmd(av[i], ' ', &head);
-		printf("strlen: (%s) = %ld\n", av[i], n);
-		j = 0;
-		box = ft_split_cmd(av[i], ' ', &head);
-		printf("split: ");
-		while (box[j] != NULL)
-		{
-			printf("%s | ", box[j]);
-			j++;
-		}
-		printf("\n");
-		lm_free(str, &head);
-		i++;
-	}
-	lm_flush(&head);
-	return (0);
-}
-*/
+// cc -Wall -Werror -Wextra listfree.c listmem.c ft_split_cmd.c
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <unistd.h>
+// int	main(int ac, char **av)
+// {
+// 	int 	i = 1;
+// 	int		j;
+// 	size_t	n;
+// 	char	*str;
+// 	char	**box;
+// 	t_mem	*head = NULL;
+
+// 	while (i < ac)
+// 	{
+// 		n = sb_strlen_cmd(av[i], ' ');
+// 		str = sb_strdup_cmd(av[i], ' ', &head);
+// 		printf("strlen: (%s) = %ld\n", av[i], n);
+// 		j = 0;
+// 		box = ft_split_cmd(av[i], ' ', &head);
+// 		printf("split: ");
+// 		while (box[j] != NULL)
+// 		{
+// 			printf("%s | ", box[j]);
+// 			j++;
+// 		}
+// 		printf("\n");
+// 		lm_free(str, &head);
+// 		i++;
+// 	}
+// 	lm_flush(&head);
+// 	return (0);
+// }
